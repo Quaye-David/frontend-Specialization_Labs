@@ -54,3 +54,15 @@ const double = (array) => {
 }
 console.log("Original Array: ", myArray);
 console.log("Doubled Array: ", double(myArray));
+
+console.log("\n--------------------------------------------------------\n");
+
+
+// b. A function that filters all the even numbers in an array
+const filterEven = (array) => {
+    return array.filter(num => num % 2 === 0);
+}
+console.log("Original Array: ", myArray);
+console.log("Even Numbers: ", filterEven(myArray));
+
+console.log("\n--------------------------------------------------------\n");
