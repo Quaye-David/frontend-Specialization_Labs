@@ -14,3 +14,12 @@ console.log("Capitalized String: ", capitalize(string));
 
 console.log("\n--------------------------------------------------------\n");
 
+
+// b. A function that reverses a string
+const reverse = (string) => {
+    return string.split('').reverse().join('');
+}
+console.log("Original String: ", string);
+console.log("Reversed String: ", reverse(string));
+
+console.log("\n--------------------------------------------------------\n");
