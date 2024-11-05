@@ -8,3 +8,53 @@ const sortAscButton = document.getElementById('sort-asc');
 const sortDescButton = document.getElementById('sort-desc');
 const filterActiveButton = document.getElementById('filter-active');
 const filterCompletedButton = document.getElementById('filter-completed');
+
+//Array to store todo items
+let todos = [];
+
+
+//Function to add todo item
+function createTodoItem(todo) {
+
+    //Create the main todo item container
+    const todoItem = document.createElement('div');
+    todoItem.classList.add('todo-item');
+
+    //Add the 'completed' class if the todo item is completed
+    if (todo.completed) {
+        todoItem.classList.add('completed');
+    }
+
+    //create the todo content content element
+    const todoContent = document.createElement('div');
+    todoContent.textContent = `${todo.title} - ${todo.dueDate.toLocalDateString()}`;
+    if (todo.description) {
+        todoContent.textContent += ` - ${todo.description}`;
+    }
+
+    //Create the todo actions container
+    const todoActions = document.createElement('div');
+    todoActions.classList.add('todo-actions');
+
+    //Create the complete/undo button
+    const completeButton = document.createElement('button');
+    completeButton.textContent = todo.completed ? 'Undo' : 'Complete';
+    completeButton.addEventListener('click', () => toggleTodoComplete(todo));
+
+    //create the delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.classList.add('delete');
+    deleteButton.addEventListener('click', () => deleteTodoItem(todo));
+
+    //Append the buttons to the actions container
+    todoActions.appendChild(completeButton);
+    todoActions.appendChild(deleteButton);
+    todoActions.appendChild(editButton);
+
+    //Append the content and actions to the main todo item
+    todoItem.appendChild(todoContent);
+    todoItem.appendChild(todoActions);
+
+    return todoItem;
+}
