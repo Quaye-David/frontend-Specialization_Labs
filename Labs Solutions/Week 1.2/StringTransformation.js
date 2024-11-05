@@ -34,3 +34,10 @@ console.log(`Is "racecar" a palindrome? ${isPalindrome("racecar")}`);
 console.log(`Is "hello" a palindrome? ${isPalindrome("hello")}`);
 
 console.log("\n--------------------------------------------------------\n");
+
+// d. A function that counts the number of words in a string
+const countWords = (string) => {
+    return string.split(' ').length;
+}
+console.log("Original String: ", string);
+console.log("Number of Words: ", countWords(string));
