@@ -6,7 +6,7 @@ let people = [
     {
         firstName: "Dave",
         lastName: "Quaye",
-        age: 25,
+        age: 12,
         occupation: "Frontend Developer"
     },
     {
@@ -34,5 +34,19 @@ const fullName = (person) => {
     console.log(`My name is ${person.firstName} ${person.lastName}`);
  }
  fullName(person);
+
+console.log("\n--------------------------------------------------------\n");
+
+
+
+// b. A function that checks if the person is an adult 18 years and above
+const isAdult = (person) => {
+    if (person.age >= 18) {
+        console.log("I am an adult");
+    } else {
+        console.log("I am not an adult");
+    }
+}
+isAdult(person);
 
 console.log("\n--------------------------------------------------------\n");
