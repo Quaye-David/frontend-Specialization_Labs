@@ -58,3 +58,36 @@ function createTodoItem(todo) {
 
     return todoItem;
 }
+
+function addTodo() {
+    // Get the values from the input feilds
+    const title = titleInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const dueDate = new Date(dueDateInput.value);
+
+    //Validate the input
+    if (title && dueDate) {
+        //Create a new todo item
+        const todo = {
+            title,
+            description,
+            dueDate,
+            completed: false
+        };
+
+        //Add the todo item to the array
+        todos.push(todo);
+
+        //Create the todo item element and append it to the list
+        const todoItem = createTodoItem(todo);
+        todoList.appendChild(todoItem);
+
+        //Clear the input fields
+        titleInput.value = '';
+        descriptionInput.value = '';
+        dueDateInput.value = '';
+
+    } else {
+        alert('Please enter a title and due date');
+    }
+}
