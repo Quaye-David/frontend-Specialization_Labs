@@ -66,3 +66,18 @@ console.log("Original Array: ", myArray);
 console.log("Even Numbers: ", filterEven(myArray));
 
 console.log("\n--------------------------------------------------------\n");
+
+
+// c. A function that sums all the numbers in an array manually
+const sum = (array) => {
+    let total = 0;
+    for (let num of array) {
+        total += num;
+    }
+    return total;
+}
+console.log("Original Array: ", myArray);
+console.log("Sum of Numbers: ", sum(myArray));
+
+console.log("\n--------------------------------------------------------\n");
+
