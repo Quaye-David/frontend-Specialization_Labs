@@ -81,3 +81,11 @@ console.log("Sum of Numbers: ", sum(myArray));
 
 console.log("\n--------------------------------------------------------\n");
 
+
+// d. A function that calculates the average of all the numbers in an array
+const average = (array) => {
+    return array.reduce((acc, num) => acc + num, 0) / array.length;
+}
+console.log("Average of numbers in the array: ", average(myArray));
+
+console.log("\n--------------------------------------------------------\n");
