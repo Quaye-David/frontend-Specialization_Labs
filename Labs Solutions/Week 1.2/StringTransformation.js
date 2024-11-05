@@ -41,3 +41,16 @@ const countWords = (string) => {
 }
 console.log("Original String: ", string);
 console.log("Number of Words: ", countWords(string));
+
+console.log("\n--------------------------------------------------------\n");
+
+
+// 2. Array Transformation
+let myArray = [1, 2, 3, 4, 5];
+
+// a. A function that doubles all the numbers in an array
+const double = (array) => {
+    return array.map(num => num * 2);
+}
+console.log("Original Array: ", myArray);
+console.log("Doubled Array: ", double(myArray));
