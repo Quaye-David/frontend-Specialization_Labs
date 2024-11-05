@@ -21,9 +21,12 @@ const isAdult = (person) => person.age >= 18;
 
 // Combining functions to create new functionality
 const reverseAndCapitalize = compose(capitalize, reverseString);
-const getFullNameAndCheckAdult = compose(isAdult, fullName);
+const getFullNameAndCheckAdult = (person) => {
+    const name = fullName(person);
+    const adultStatus = isAdult(person);
+    return { name, adultStatus };
+};
 
-// Test the composed functions
 console.log(reverseAndCapitalize("JavaScript Frontend"));
 
 let person = {
@@ -33,6 +36,7 @@ let person = {
     occupation: "Backend Developer"
 };
 
-console.log(getFullNameAndCheckAdult(person));
+const result = getFullNameAndCheckAdult(person);
+console.log(`Full Name: ${result.name}, Is Adult: ${result.adultStatus}`);
 
 console.log("--------------------------------------------------------\n");
