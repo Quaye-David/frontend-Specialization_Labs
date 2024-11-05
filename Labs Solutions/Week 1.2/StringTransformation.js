@@ -23,3 +23,14 @@ console.log("Original String: ", string);
 console.log("Reversed String: ", reverse(string));
 
 console.log("\n--------------------------------------------------------\n");
+
+
+// c. A function that checks if a string is a palindrome (reads the same backward as forward)
+const isPalindrome = (string) => {
+    return string === string.split('').reverse().join('');
+}
+console.log(`Is "A man, a plan, a canal, Panama" a palindrome? ${isPalindrome("A man, a plan, a canal, Panama")}`);
+console.log(`Is "racecar" a palindrome? ${isPalindrome("racecar")}`);
+console.log(`Is "hello" a palindrome? ${isPalindrome("hello")}`);
+
+console.log("\n--------------------------------------------------------\n");
