@@ -30,7 +30,7 @@ let people = [
   {
     firstName: "Akosua",
     lastName: "Adjei",
-    age: 25,
+    age: 14,
     occupation: "Data Scientist",
   },
 ];
