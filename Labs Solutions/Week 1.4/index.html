@@ -8,8 +8,32 @@
 </head>
 <body>
     <body>
+        <section class="hero">
+            <div class="hero-inner">
+                <h1 class="hero-title">Interactive Image Gallery</h1>
+                <p class="hero-subtitle">Click on an image to view it in full size.</p>
+            </div>
+        </section>
+
+        <section class="gallery">
         <div class="gallery-container">
-            <div class="gallery-grid" id="galleryGrid"></div>
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-item">
+                    <img src="images/thumb1.jpg" alt="Thumbnail 1" class="gallery-thumbnail" data-full="images/full1.jpg" data-caption="Caption for image 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/thumb2.jpg" alt="Thumbnail 2" class="gallery-thumbnail" data-full="images/full2.jpg" data-caption="Caption for image 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/thumb3.jpg" alt="Thumbnail 3" class="gallery-thumbnail" data-full="images/full3.jpg" data-caption="Caption for image 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/thumb4.jpg" alt="Thumbnail 4" class="gallery-thumbnail" data-full="images/full4.jpg" data-caption="Caption for image 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="images/thumb5.jpg" alt="Thumbnail 5" class="gallery-thumbnail" data-full="images/full5.jpg" data-caption="Caption for image 5">
+                </div>
+            </div>
         </div>
     
         <div class="lightbox" id="lightbox">
@@ -21,5 +45,6 @@
                 <button class="close-button" id="closeButton">×</button>
             </div>
         </div>
+    </section>
 </body>
 </html>
