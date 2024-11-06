@@ -9,10 +9,10 @@ const sortDescButton = document.getElementById('sort-desc');
 const filterActiveButton = document.getElementById('filter-active');
 const filterCompletedButton = document.getElementById('filter-completed');
 
-// Array to store todo items
+// Array to store to-do items
 let todos = [];
 
-// Function to create a new todo item element
+// Function to create a new to-do item element
 function createTodoItem(todo) {
   const todoItem = document.createElement('div');
   todoItem.classList.add('todo-item');
@@ -53,7 +53,7 @@ function createTodoItem(todo) {
   return todoItem;
 }
 
-// Function to add a new todo item
+// Function to add a new to-do item
 function addTodo() {
   const title = titleInput.value.trim();
   const description = descriptionInput.value.trim();
@@ -89,7 +89,7 @@ function clearForm() {
   dueDateInput.value = '';
 }
 
-// Function to render the todo list
+// Function to render the to-do list
 function renderTodos() {
   todoList.innerHTML = '';
 
@@ -99,7 +99,7 @@ function renderTodos() {
   });
 }
 
-// Function to toggle the completion status of a todo item
+// Function to toggle the completion status of a to-do item
 function toggleTodoCompletion(todo) {
   todo.completed = !todo.completed;
   const todoItem = document.querySelector(`[data-id="${todo.id}"]`);
@@ -110,7 +110,20 @@ function toggleTodoCompletion(todo) {
   }
 }
 
-// Function to edit an existing todo item
+function filterTodos(completed) {
+  if (completed === null) {
+    renderTodos();
+  } else {
+    const filteredTodos = todos.filter(todo => todo.completed === completed);
+    todoList.innerHTML = ''; // Clear the current list
+    filteredTodos.forEach(todo => {
+      const todoItem = createTodoItem(todo);
+      todoList.appendChild(todoItem);
+    });
+  }
+}
+
+// Function to edit an existing to-do item
 function editTodo(todo) {
   const newTitle = prompt('Enter the new title:', todo.title);
   const newDescription = prompt('Enter the new description:', todo.description);
@@ -129,7 +142,7 @@ function editTodo(todo) {
   }
 }
 
-// Function to delete a todo item
+// Function to delete a to-do item
 function deleteTodo(todo) {
   todos = todos.filter(t => t !== todo);
   renderTodos();
@@ -145,16 +158,6 @@ function sortTodosAsc() {
 function sortTodosDesc() {
   todos.sort((a, b) => b.dueDate - a.dueDate);
   renderTodos();
-}
-
-// Function to filter todos by completion status
-function filterTodos(completed) {
-  if (completed === null) {
-    renderTodos();
-  } else {
-    const filteredTodos = todos.filter(todo => todo.completed === completed);
-    renderTodos();
-  }
 }
 
 // Function to show an error message
