@@ -1,31 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-Do List</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="todo-container">
-    <h1>To-Do List</h1>
-    <div class="todo-form">
-      <input type="text" id="title" placeholder="Title" required>
-      <input type="text" id="description" placeholder="Description (optional)">
-      <input type="datetime-local" id="due-date" required>
-      <button id="add-todo">Add</button>
+    <div class="container">
+        <header>
+            <h1>Task Tracker</h1>
+        </header>
+
+        <main>
+            <form id="task-form">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        id="task-input" 
+                        name="title"
+                        placeholder="Add Task..."
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <textarea 
+                        id="task-description" 
+                        name="description"
+                        placeholder="Add Description..."
+                        rows="3"
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <input 
+                        type="datetime-local" 
+                        id="task-date"
+                        name="dueDate"
+                        required
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary">Add Task</button>
+            </form>
+
+            <section class="controls">
+                <div class="sort-controls">
+                    <select id="sort-select" class="form-control">
+                        <option value="">Sort by due date</option>
+                        <option value="asc">Earliest first</option>
+                        <option value="desc">Latest first</option>
+                    </select>
+                </div>
+                
+                <div class="filter-controls">
+                    <select id="filter-select" class="form-control">
+                        <option value="all">All tasks</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="tasks-container">
+                <ul id="tasks-list" class="tasks-list"></ul>
+            </section>
+        </main>
     </div>
 
-    <div id="todo-list"></div>
-
-    <div class="todo-actions">
-      <button id="sort-asc">Sort by Due Date (Ascending)</button>
-      <button id="sort-desc">Sort by Due Date (Descending)</button>
-      <button id="filter-active">Show Active</button>
-      <button id="filter-completed">Show Completed</button>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
