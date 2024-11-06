@@ -4,40 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Image Gallery</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section class="header">
-        <h1>Interactive Image Gallery</h1>
-        <p class="gallery-description">An interactive image gallery made using HTML CSS and JavaScript.</p>
-    </section>
-    <section>
-        <div class="gallery">
-            <div class="gallery-text">
-                <h2>Image Gallery</h2>
-                <p>Click on the images to view them in full size.</p>
-            </div>
-            <div class="gallery-items">
-                <div class="gallery-item">
-                    <img src="images/image1.jpg" alt="1" class="gallery-image">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/image2.jpg" alt="2" class="gallery-image">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/image3.jpg" alt="3" class="gallery-image">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/image4.jpg" alt="4" class="gallery-image">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/image5.jpg" alt="5" class="gallery-image">
-                </div>
-                <div class="gallery-item">
-                    <img src="images/image6.jpg" alt="6" class="gallery-image">
-                </div>
+    <body>
+        <div class="gallery-container">
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    
+        <div class="lightbox" id="lightbox">
+            <div class="lightbox-content">
+                <img src="" alt="" class="lightbox-image" id="lightboxImage">
+                <div class="lightbox-caption" id="lightboxCaption"></div>
+                <button class="nav-button prev-button" id="prevButton">←</button>
+                <button class="nav-button next-button" id="nextButton">→</button>
+                <button class="close-button" id="closeButton">×</button>
             </div>
         </div>
-    </section>
 </body>
 </html>
