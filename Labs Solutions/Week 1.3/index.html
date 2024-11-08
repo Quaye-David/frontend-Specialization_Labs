@@ -8,86 +8,53 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header Section -->
-        <header class="header">
+        <header>
             <h1>Interactive Todo List</h1>
         </header>
+        
+        <main class="two-col-layout">
+            <section class="col form-col">
+                <form id="todo-form">
+                    <div class="form-group">
+                        <label for="todo-title">Title</label>
+                        <input type="text" id="todo-title" name="title" required>
+                    </div>
 
-        <!-- Add Todo Form -->
-        <section class="add-todo-section">
-            <form id="todo-form" class="todo-form">
-                <div class="form-group">
-                    <label for="todo-title">Title</label>
-                    <input 
-                        type="text" 
-                        id="todo-title" 
-                        name="title" 
-                        required 
-                        placeholder="Enter todo title"
-                        class="form-input"
-                    >
-                </div>
+                    <div class="form-group">
+                        <label for="todo-description">Description</label>
+                        <textarea id="todo-description" name="description"></textarea>
+                    </div>
 
-                <div class="form-group">
-                    <label for="todo-description">Description (optional)</label>
-                    <textarea 
-                        id="todo-description" 
-                        name="description" 
-                        placeholder="Enter todo description"
-                        class="form-input"
-                    ></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="todo-due-date">Due Date &amp; Time</label>
+                        <input type="datetime-local" id="todo-due-date" name="dueDateTime" required>
+                    </div>
 
-                <div class="form-group">
-                    <label for="todo-due-date">Due Date & Time</label>
-                    <input 
-                        type="datetime-local" 
-                        id="todo-due-date" 
-                        name="dueDateTime" 
-                        required
-                        class="form-input"
-                    >
-                </div>
-
-                <button type="submit" class="btn btn-primary">Add Todo</button>
-            </form>
-        </section>
-
-        <!-- Todo List Controls -->
-        <section class="todo-controls">
-            <div class="controls-group">
-                <div class="sort-group">
-                    <label for="sort-select">Sort by:</label>
-                    <select id="sort-select" class="select-input">
-                        <option value="due-asc">Due Date (Earliest First)</option>
-                        <option value="due-desc">Due Date (Latest First)</option>
-                        <option value="created-asc">Created Date (Oldest First)</option>
-                        <option value="created-desc">Created Date (Newest First)</option>
+                    <button type="submit">Add Todo</button>
+                </form>
+            </section>
+            <section class="col list-col">
+                <div class="controls">
+                    <select id="sort-select">
+                        <option value="due-asc">Due Date ↑</option>
+                        <option value="due-desc">Due Date ↓</option>
+                        <option value="created-asc">Created ↑</option>
+                        <option value="created-desc">Created ↓</option>
                     </select>
-                </div>
 
-                <div class="filter-group">
-                    <label for="filter-select">Show:</label>
-                    <select id="filter-select" class="select-input">
-                        <option value="all">All</option>
+                    <select id="filter-select">
+                        <option value="all">All Tasks</option>
                         <option value="active">Active</option>
                         <option value="completed">Completed</option>
                     </select>
                 </div>
-            </div>
-        </section>
 
-        <!-- Todo List Container -->
-        <section class="todo-list-section">
-            <ul id="todo-list" class="todo-list">
-                <!-- Todo items will be dynamically inserted here -->
-            </ul>
-        </section>
+                <ul id="todo-list"></ul>
+            </section>
+        </main>
 
-        <!-- Status Messages -->
-        <div id="status-message" class="status-message" role="alert"></div>
+        <div id="status-message" role="alert"></div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
