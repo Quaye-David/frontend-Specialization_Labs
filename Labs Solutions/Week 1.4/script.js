@@ -63,33 +63,16 @@ createThumbnails();
 // When the thumbnail is clicked, open the lightbox
 function openLightbox(event) {
     if (event.target.classList.contains('gallery-thumbnail')) {
-        const clickedIndex = Array.from(galleryGrid.children).indexOf(event.target.parentElement);
-
-        lightboxImage.src = imageData[clickedIndex].fullImage;
-        lightboxImage.alt = imageData[clickedIndex].caption;
-        lightboxCaption.textContent = imageData[clickedIndex].caption;
-
-        // Show the lightbox
+        currentImageIndex = Array.from(galleryGrid.children).indexOf(event.target.parentElement);
         lightbox.style.display = 'flex';
-
-        // // Style the lightbox content
-        // lightboxContent.style.display = 'flex';
-        // lightboxContent.style.flexDirection = 'column';
-        // lightboxContent.style.alignItems = 'center';
-        // lightboxContent.style.justifyContent = 'center';
-        // lightboxContent.style.width = '100%';
-        // lightboxContent.style.height = '100%';
-        // lightboxImage.style.maxWidth = '90%';
-        // lightboxImage.style.maxHeight = '80%';
-        // lightboxImage.style.border = '5px solid white';
-        lightboxImage.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
-        
-        lightboxCaption.style.marginTop = '10px';
-        lightboxCaption.style.color = 'white';
-        lightboxCaption.style.fontSize = '1.2em';
-        lightboxCaption.style.textAlign = 'center';
+        // Force reflow
+        lightbox.offsetWidth;
+        lightbox.classList.add('active');
+        updateLightboxImage(currentImageIndex);
+        updateNavigationButtons();
     }
 }
+
 
 // Close the lightbox
 lightboxClose.addEventListener('click', () => {
@@ -99,9 +82,9 @@ lightboxClose.addEventListener('click', () => {
 // Adding an event listener to the gallery grid
 galleryGrid.addEventListener('click', openLightbox);
 
-// Add function to update button states
+// Function to update the navigation buttons
 function updateNavigationButtons() {
-    // Disable prev button if at start
+    // Disable previous button if at start
     if (currentImageIndex === 0) {
         lightboxPrev.disabled = true;
         lightboxPrev.classList.add('disabled');
@@ -122,22 +105,28 @@ function updateNavigationButtons() {
 
 let currentImageIndex = 0;
 
-
-function openLightbox(event) {
-    if (event.target.classList.contains('gallery-thumbnail')) {
-        currentImageIndex = Array.from(galleryGrid.children).indexOf(event.target.parentElement);
-        updateLightboxImage(currentImageIndex);
-        updateNavigationButtons();
-        lightbox.style.display = 'flex';
-    }
-}
-
-
 function updateLightboxImage(index) {
+    const direction = index > currentImageIndex ? 'next' : 'prev';
+    
+    // Remove previous animation classes
+    lightboxImage.classList.remove('slide-in-next', 'slide-in-prev');
+    
+    // Set new image
     lightboxImage.src = imageData[index].fullImage;
     lightboxImage.alt = imageData[index].caption;
     lightboxCaption.textContent = imageData[index].caption;
+    
+    // Add new animation class
+    lightboxImage.classList.add(`slide-in-${direction}`);
 }
+
+
+lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+    setTimeout(() => {
+        lightbox.style.display = 'none';
+    }, 300); // Match the transition duration in CSS
+});
 
 lightboxNext.addEventListener('click', () => {
     if (!lightboxNext.disabled) {
@@ -155,3 +144,14 @@ lightboxPrev.addEventListener('click', () => {
     }
 });
 
+document.addEventListener('keydown', (e) => {
+    if (lightbox.classList.contains('active')) {
+        if (e.key === 'Escape') {
+            lightboxClose.click();
+        } else if (e.key === 'ArrowRight' && !lightboxNext.disabled) {
+            lightboxNext.click();
+        } else if (e.key === 'ArrowLeft' && !lightboxPrev.disabled) {
+            lightboxPrev.click();
+        }
+    }
+});
