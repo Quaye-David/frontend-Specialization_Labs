@@ -31,8 +31,7 @@ header {
   text-align: center;
 }
 
-/* Two Column Layout */
-.two-col-layout {
+.main-container {
   display: grid;
   grid-template-columns: 350px 1fr;
   gap: 2rem;
@@ -40,7 +39,7 @@ header {
 }
 
 @media (max-width: 768px) {
-  .two-col-layout {
+  .main-container {
       grid-template-columns: 1fr;
   }
 }
@@ -93,7 +92,6 @@ button:hover {
   opacity: 0.9;
 }
 
-/* List Styles */
 .list-col {
   background: white;
   border-radius: 0.5rem;

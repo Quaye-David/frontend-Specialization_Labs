@@ -1,7 +1,7 @@
 // Data structure
 let todos = [];
 
-// Helper functions
+// Helper functions for data manipulation and storage
 const generateId = () => Date.now().toString(36) + Math.random().toString(36);
 const saveToStorage = () => localStorage.setItem("todos", JSON.stringify(todos));
 const loadFromStorage = () => {
@@ -15,7 +15,6 @@ const loadFromStorage = () => {
     }
 };
 
-// Core todo operations
 const createTodo = (todoData) => {
     const { title, description = "", dueDateTime } = todoData;
     if (!title || !dueDateTime) throw new Error("Title and due date are required");
@@ -75,7 +74,6 @@ const createTodoElement = (todo) => {
         </div>
     `;
 
-    // Event listeners
     li.querySelector("input").onchange = () => {
         updateTodo(todo.id, { completed: !todo.completed });
     };
