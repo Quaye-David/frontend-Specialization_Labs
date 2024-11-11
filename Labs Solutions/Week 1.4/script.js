@@ -35,6 +35,11 @@ const imageData = [
         thumbImage: 'assets/image (5).jpg',
         caption: 'Mountain area during sunset with cloudy sky'
     },
+    {
+        fullImage: 'assets/image (6).jpg',
+        thumbImage: 'assets/image (6).jpg',
+        caption: 'A close-up photo of a dear'
+    },
     //Video object
     // {
     //     fullImage: 'assets/video.mp4',
@@ -43,39 +48,110 @@ const imageData = [
     // }
 ];
 
-// Implementation of the thumbnail creation function
+//Error handling interface
+const GalleryErrors = {
+    INVALID_IMAGE: 'Invalid image data provided',
+    MISSING_IMAGE: 'Image source is required',
+    INVALID_INDEX: 'Invalid image index',
+    LIGHTBOX_ERROR: 'Lightbox operation failed',
+    DOM_ERROR: 'DOM element not found'
+};
+
+//Helper function to validate image object data
+const validateImageData = ({ fullImage, thumbImage, caption }) => {
+    const errors = [];
+
+    if (!fullImage?.trim()) {
+        errors.push('Full image path is required');
+    }
+    if (!thumbImage?.trim()) {
+        errors.push('Thumbnail image path is required');
+    }
+    if (!caption?.trim()) {
+        errors.push('Image caption is required');
+    }
+
+    return {
+        isValid: errors.length === 0,
+        errors
+    };
+};
+
+//Error display utility function
+const showError = (message, duration = 3000) => {
+    const errorContainer = document.createElement('div');
+    errorContainer.className = 'gallery-error';
+    errorContainer.textContent = message;
+    document.body.appendChild(errorContainer);
+    
+    setTimeout(() => errorContainer.remove(), duration);
+};
+
+
+// Updated Implementation of the thumbnail creation function with error handling
 function createThumbnails() {
-    imageData.forEach((image, index) => {
-        const galleryItem = document.createElement('div');
-        galleryItem.classList.add('gallery-item');
+    try {
+        imageData.forEach((imageItem, index) => {
+            const { fullImage, thumbImage, caption } = imageItem;
+            
+            const validation = validateImageData({ fullImage, thumbImage, caption });
+            if (!validation.isValid) {
+                throw new Error(`Image ${index + 1}: ${validation.errors.join(', ')}`);
+            }
 
-        const thumbnail = document.createElement('div');
-        thumbnail.classList.add('gallery-thumbnail');
-        thumbnail.style.backgroundImage = `url('${image.thumbImage}')`;
-        thumbnail.style.backgroundSize = 'cover';
-        thumbnail.style.backgroundPosition = 'center';
-        thumbnail.dataset.full = image.fullImage;
-        thumbnail.dataset.caption = image.caption;
-        thumbnail.addEventListener('click', openLightbox);
+            const galleryItem = document.createElement('div');
+            galleryItem.classList.add('gallery-item');
 
-        galleryItem.appendChild(thumbnail);
-        galleryGrid.appendChild(galleryItem);
-    });
+            const thumbnail = document.createElement('div');
+            thumbnail.classList.add('gallery-thumbnail');
+            thumbnail.style.backgroundImage = `url('${thumbImage}')`;
+            thumbnail.style.backgroundSize = 'cover';
+            thumbnail.style.backgroundPosition = 'center';
+            thumbnail.dataset.full = fullImage;
+            thumbnail.dataset.caption = caption;
+            thumbnail.addEventListener('click', openLightbox);
+
+            galleryItem.appendChild(thumbnail);
+            galleryGrid.appendChild(galleryItem);
+        });
+    } catch (error) {
+        showError(`Gallery creation failed: ${error.message}`);
+    }
 }
 
 // Show the thumbnails
 createThumbnails();
 
 // When the thumbnail is clicked, open the lightbox
+// Updated openLightbox with error handling
 function openLightbox(event) {
-    if (event.target.classList.contains('gallery-thumbnail')) {
-        currentImageIndex = Array.from(galleryGrid.children).indexOf(event.target.parentElement);
+    try {
+        const { target } = event;
+        if (!target.classList.contains('gallery-thumbnail')) {
+            throw new Error(GalleryErrors.INVALID_IMAGE);
+        }
+
+        const galleryItems = Array.from(galleryGrid.children);
+        const currentItem = target.parentElement;
+        
+        if (!currentItem) {
+            throw new Error(GalleryErrors.DOM_ERROR);
+        }
+
+        currentImageIndex = galleryItems.indexOf(currentItem);
+        
+        if (currentImageIndex === -1) {
+            throw new Error(GalleryErrors.INVALID_INDEX);
+        }
+
         lightbox.style.display = 'flex';
-        // Force reflow
-        void lightbox.offsetWidth;
+        void lightbox.offsetWidth; // Force reflow
         lightbox.classList.add('active');
+        
         updateLightboxImage(currentImageIndex);
         updateNavigationButtons();
+    } catch (error) {
+        showError(`Failed to open lightbox: ${error.message}`);
     }
 }
 
@@ -111,19 +187,26 @@ function updateNavigationButtons() {
 
 let currentImageIndex = 0;
 
+// Updated updateLightboxImage with error handling
 function updateLightboxImage(index) {
-    const direction = index > currentImageIndex ? 'next' : 'prev';
-    
-    // Remove previous animation classes
-    lightboxImage.classList.remove('slide-in-next', 'slide-in-prev');
-    
-    // Set new image
-    lightboxImage.src = imageData[index].fullImage;
-    lightboxImage.alt = imageData[index].caption;
-    lightboxCaption.textContent = imageData[index].caption;
-    
-    // Add new animation class
-    lightboxImage.classList.add(`slide-in-${direction}`);
+    try {
+        if (index < 0 || index >= imageData.length) {
+            throw new Error(GalleryErrors.INVALID_INDEX);
+        }
+
+        const { fullImage, caption } = imageData[index];
+        const direction = index > currentImageIndex ? 'next' : 'prev';
+
+        lightboxImage.classList.remove('slide-in-next', 'slide-in-prev');
+        
+        lightboxImage.src = fullImage;
+        lightboxImage.alt = caption;
+        lightboxCaption.textContent = caption;
+        
+        lightboxImage.classList.add(`slide-in-${direction}`);
+    } catch (error) {
+        showError(`Failed to update image: ${error.message}`);
+    }
 }
 
 
@@ -161,6 +244,34 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+// Add CSS for error messages
+const style = document.createElement('style');
+style.textContent = `
+    .gallery-error {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #ff4444;
+        color: white;
+        padding: 1rem;
+        border-radius: 4px;
+        z-index: 2000;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // TODO: Implementing a video lightbox in the future
 
