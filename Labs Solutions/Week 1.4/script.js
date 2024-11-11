@@ -34,7 +34,13 @@ const imageData = [
         fullImage: 'assets/image (5).jpg',
         thumbImage: 'assets/image (5).jpg',
         caption: 'Mountain area during sunset with cloudy sky'
-    }
+    },
+    //Video object
+    // {
+    //     fullImage: 'assets/video.mp4',
+    //     thumbImage: 'assets/video.mp4',
+    //     caption: 'A video of a city at night'
+    // }
 ];
 
 // Implementation of the thumbnail creation function
@@ -66,7 +72,7 @@ function openLightbox(event) {
         currentImageIndex = Array.from(galleryGrid.children).indexOf(event.target.parentElement);
         lightbox.style.display = 'flex';
         // Force reflow
-        lightbox.offsetWidth;
+        void lightbox.offsetWidth;
         lightbox.classList.add('active');
         updateLightboxImage(currentImageIndex);
         updateNavigationButtons();
@@ -155,3 +161,24 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+// TODO: Implementing a video lightbox in the future
+
+// function openLightbox(event) {
+//     const target = event.target;
+//     const video = target.closest('video');
+//     if (video) {
+//         lightbox.style.display = 'flex';
+//         lightbox.classList.add('active');
+//         lightboxVideo.src = video.src;
+//         lightboxVideo.play();
+//     }
+// }
+// lightbox.addEventListener('click', openLightbox);
+// lightboxClose.addEventListener('click', () => {
+    //     lightbox.classList.remove('active');
+    //     lightboxVideo.pause();
+    //     lightboxVideo.src = '';
+    // });
+    
+
