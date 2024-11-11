@@ -203,6 +203,8 @@ const createTodoElement = (todo) => {
 
 const showStatus = (message, type = "success") => {
   const status = document.getElementById("status-message");
+  if (!status) return;
+  
   status.textContent = message;
   status.className = `status-message show ${type}`;
   setTimeout(() => status.classList.remove("show"), 3000);
