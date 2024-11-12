@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Week 1.4.1</title>
+  </head>
+  <body>
+        <h1>Week 1.4.1- Closures</h1>
+        <p>Open the console to see the output</p>
+        <button id="test-btn">Click me</button>
+  </body>
+  <script>
+    // Referencing the button element using the id
+    const btn = document.getElementById('test-btn');
+    const btnText = document.getElementById('test-btn');
+
+    // Using the traditional function syntax
+    btn.addEventListener('click', function handleClick() {
+        const textContent = this.textContent;
+        console.log('Button text:', textContent);
+    });
+
+    const handleClick = () => {
+        const textContent = this.textContent;
+        console.log('Arrow function Button text:', textContent);
+    }
+
+    // Using the arrow function syntax
+    btnText.addEventListener('click', handleClick ); // => returned undefined
+
+  </script>
+</html>
