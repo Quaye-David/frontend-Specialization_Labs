@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Component</title>
+    <style>
+        /* Optional: Add some basic styling */
+        #timer-display {
+            font-size: 2rem;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer-display">Time remaining: 60 seconds</div>
+    <script src="Components.js"></script>
+    <script>
+        // Usage example
+        const timer = createTimer(60, 'timer-display');
+        timer.start();
+    </script>
+</body>
+</html>
