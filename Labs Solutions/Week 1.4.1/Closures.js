@@ -36,6 +36,7 @@ const person2 = {
 
 // Destructuring the object
 const { name, age } = person;
+const { name2, age2 } = person2;
 
 // Using the Direct Method call
 console.log('Direct call:');
@@ -61,10 +62,11 @@ greetCopy();
 
 // Fixing context loss
 console.log('\nFixed context:');
-const fixedGreet = person.greet.bind(person);
+const fixedGreet = person.greet.bind(person2);
 fixedGreet();
+console.log('\n')
 
-// Example of using the validator
+// testing the inputs with validateInput method
 try {
     validator.validateInput(person);
     console.log('Person object is valid.');
