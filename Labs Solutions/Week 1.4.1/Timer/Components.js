@@ -1,5 +1,9 @@
-// FILE: components.js
 function createTimer(duration, elementId) {
+    // Validate duration
+    if (typeof duration !== 'number' || duration <= 0) {
+        throw new Error('Duration must be a positive number');
+    }
+
     // Private state
     let remainingTime = duration;
     let intervalId = null;
@@ -19,33 +23,29 @@ function createTimer(duration, elementId) {
             intervalId = setInterval(() => {
                 remainingTime--;
                 this.update();
-                
                 if (remainingTime <= 0) {
-                    this.stop();
-                    console.log('Timer completed!');
+                    clearInterval(intervalId);
+                    intervalId = null;
                 }
             }, 1000);
         },
-
+        update: function() {
+            element.textContent = `Time remaining: ${remainingTime} seconds`;
+        },
         stop: function() {
             if (intervalId) {
                 clearInterval(intervalId);
                 intervalId = null;
             }
         },
-
-        reset: function() {
+        reset: function(newDuration) {
+            if (typeof newDuration !== 'number' || newDuration <= 0) {
+                throw new Error('New duration must be a positive number');
+            }
             this.stop();
-            remainingTime = duration;
+            remainingTime = newDuration;
             this.update();
-        },
-
-        update: function() {
-            element.textContent = `Time remaining: ${remainingTime} seconds`;
-        },
-
-        getTimeRemaining: function() {
-            return remainingTime;
+            this.start();
         }
     };
 
