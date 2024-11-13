@@ -14,8 +14,11 @@ const superHero = {
   },
 };
 
-// 3. Object Constructor
+// 3. Object Constructor with Input Validation
 function Superhero(name, secretIdentity, powers, weakness) {
+  if (typeof name !== 'string' || typeof secretIdentity !== 'string' || !Array.isArray(powers) || typeof weakness !== 'string') {
+    throw new Error('Invalid input for Superhero');
+  }
   this.name = name;
   this.secretIdentity = secretIdentity;
   this.powers = powers;
@@ -23,6 +26,9 @@ function Superhero(name, secretIdentity, powers, weakness) {
 }
 
 function SuperVillain(name, secretIdentity, powers, nemeses) {
+  if (typeof name !== 'string' || typeof secretIdentity !== 'string' || !Array.isArray(powers) || typeof nemeses !== 'string') {
+    throw new Error('Invalid input for SuperVillain');
+  }
   this.name = name;
   this.secretIdentity = secretIdentity;
   this.powers = powers;
@@ -46,7 +52,7 @@ SuperVillain.prototype.revealIdentity = function () {
   console.log(`${this.name} is actually ${this.secretIdentity}`);
 };
 
-// Create an array of superheroes and supervillians
+// Create an array of superheroes and supervillains
 // Superheroes
 const superheroes = [
   new Superhero(
