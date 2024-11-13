@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a1a, #4a4a4a);
+    color: white;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #ffd700;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.battle-arena {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.character-select {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.character-select h2 {
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: 1px solid #ffd700;
+    border-radius: 5px;
+}
+
+.character-info {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+
+.battle-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    background: #ffd700;
+    color: #1a1a1a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background: #666;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.battle-log {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    border-radius: 10px;
+    height: 200px;
+    overflow-y: auto;
+    margin-top: 2rem;
+}
+
+.battle-log p {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.winner {
+    color: #ffd700;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .battle-arena {
+        grid-template-columns: 1fr;
+    }
+}
