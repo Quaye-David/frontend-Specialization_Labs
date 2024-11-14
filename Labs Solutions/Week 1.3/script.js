@@ -115,7 +115,7 @@ const updateTodo = (id, updates) => {
 
     saveToStorage();
     renderTodos();
-  } catch (error) {
+  } catch (error) {// Destructure the error object to get the message property
     showStatus(`Update failed: ${error.message}`, "error");
   }
 };
