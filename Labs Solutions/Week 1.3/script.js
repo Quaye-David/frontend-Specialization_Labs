@@ -3,8 +3,10 @@ let todos = [];
 
 // Helper functions for data manipulation and storage
 const generateId = () => Date.now().toString(36) + Math.random().toString(36);
+
 const saveToStorage = () =>
   localStorage.setItem("todos", JSON.stringify(todos));
+
 const loadFromStorage = () => {
   const stored = localStorage.getItem("todos");
   if (stored) {
@@ -78,7 +80,7 @@ const createTodo = (todoData) => {
   }
 };
 
-//Updated the function to return to include error handling
+//Updated the function to include error handling
 const updateTodo = (id, updates) => {
   try {
     if (!id) throw new Error(ValidationErrors.INVALID_ID);
