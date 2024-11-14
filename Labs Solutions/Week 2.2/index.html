@@ -2,30 +2,63 @@
 <html lang="en">
   <head>
     <title>Week 1.4.1</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
   <body>
-        <h1>Week 1.4.1- Closures</h1>
-        <p>Open the console to see the output</p>
-        <button id="test-btn">Click me</button>
-  </body>
-  <script>
-    // Referencing the button element using the id
-    const btn = document.getElementById('test-btn');
-    const btnText = document.getElementById('test-btn');
+    <h1>Week 2.2 - Closures</h1>
+    <p>Open the console to see the output</p>
+    <button id="test-btn">Click me</button>
+    <script>
+      // Referencing the button element using the id
+      const btn = document.getElementById('test-btn');
+      const btnText = document.getElementById('test-btn');
 
-    // Using the traditional function syntax
-    btn.addEventListener('click', function handleClick() {
+      // Using the traditional function syntax
+      btn.addEventListener('click', function handleClick() {
         const textContent = this.textContent;
         console.log('Button text:', textContent);
-    });
+      });
 
-    const handleClick = () => {
-        const textContent = this.textContent;
+      const handleClick = (event) => {
+        const textContent = event.target.textContent;
         console.log('Arrow function Button text:', textContent);
-    }
+        return textContent;
+      };
 
-    // Using the arrow function syntax
-    btnText.addEventListener('click', handleClick ); // => returned undefined
+      console.log(`The arrow function returns undefined when using the this keyword because it's not binded to the function`);
 
-  </script>
+      // Using the arrow function syntax with corrected
+      btnText.addEventListener('click', handleClick);
+    </script>
+  </body>
 </html>
