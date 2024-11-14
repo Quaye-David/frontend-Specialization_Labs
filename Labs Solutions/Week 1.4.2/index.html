@@ -11,12 +11,13 @@
         align-items: center;
         min-height: 100vh;
         margin: 0;
-        background: #f0f0f0;
+        background: #f9f9f9;
       }
 
       .clock-container {
         background: white;
-        padding: 2rem;
+        margin: 2rem;
+        padding: 1rem;
         border-radius: 1rem;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         text-align: center;
@@ -28,13 +29,15 @@
         margin: 1rem 0;
         font-family: monospace;
         color: #333;
+        background-color: #f1f1f1;
       }
 
       .analog-clock {
-        width: 200px;
-        height: 200px;
-        margin: 1rem auto;
-        position: relative;
+        border-radius: 100%;
+        background: #ffffff;
+        font-family: "Montserrat";
+        border: 5px solid white;
+        box-shadow: inset 2px 3px 8px 0 rgba(0, 0, 0, 0.1);
       }
 
       .clock-face {
@@ -51,7 +54,6 @@
       .hour-markers text {
         font-size: 12px;
         text-anchor: middle;
-        dominant-baseline: middle;
         fill: #333;
       }
 
@@ -96,6 +98,15 @@
     <div class="clock-container">
       <div id="digital-display">00:00:00</div>
 
+      <div class="clock">
+        <div class="wrap">
+          <span class="hour"></span>
+          <span class="minute"></span>
+          <span class="second"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+
       <svg
         id="analog-display"
         class="analog-clock hidden"
@@ -105,10 +116,10 @@
 
         <!-- Hour markers -->
         <g class="hour-markers">
-          <text x="100" y="20">12</text>
-          <text x="150" y="100">3</text>
-          <text x="100" y="180">6</text>
-          <text x="50" y="100">9</text>
+          <text x="100" y="17">12</text>
+          <text x="185" y="100">3</text>
+          <text x="100" y="185">6</text>
+          <text x="15" y="100">9</text>
         </g>
 
         <!-- Clock hands -->
@@ -216,9 +227,9 @@
           const time = this.getCurrentTime();
 
           // Calculate angles for hands
-          const secondAngle = time.seconds * 6 - 90; // 6 degrees per second, -90 to start at 12
-          const minuteAngle = time.minutes * 6 + time.seconds * 0.1 - 90; // 6 degrees per minute
-          const hourAngle = time.hours * 30 + time.minutes * 0.5 - 90; // 30 degrees per hour
+          const secondAngle = time.seconds * 6; // 6 degrees per second
+          const minuteAngle = time.minutes * 6 + time.seconds * 0.1; // 6 degrees per minute
+          const hourAngle = (time.hours % 12) * 30 + time.minutes * 0.5; // 30 degrees per hour
 
           // Update hand positions
           const secondHand = this.analogDisplay.querySelector(".second-hand");
