@@ -40,6 +40,7 @@ export function createBattleSimulator(hero, villain, logElement, errorElement) {
             
             while (state.hero.health > 0 && state.villain.health > 0) {
                 state.turnCount++;
+                log(`Turn ${state.turnCount} begins.`, 'turn');
                 await executeTurn();
             }
 
