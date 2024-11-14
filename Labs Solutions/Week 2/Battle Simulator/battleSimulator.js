@@ -1,53 +1,96 @@
-// battleSimulator.js
 export class BattleSimulator {
-    constructor(hero, villain, logElement) {
+    constructor(hero, villain, logElement, errorElement) {
         this.hero = hero;
         this.villain = villain;
         this.logElement = logElement;
+        this.errorElement = errorElement;
         this.turnCount = 0;
+        this.isRunning = false;
     }
 
-    log(message) {
-        const p = document.createElement('p');
-        p.textContent = message;
-        this.logElement.appendChild(p);
-        this.logElement.scrollTop = this.logElement.scrollHeight;
+    log(message, type = 'info') {
+        try {
+            const p = document.createElement('p');
+            p.textContent = message;
+            p.className = `battle-log-${type}`;
+            this.logElement.appendChild(p);
+            this.logElement.scrollTop = this.logElement.scrollHeight;
+        } catch (error) {
+            this.handleError('Failed to log message', error);
+        }
+    }
+
+    handleError(message, error) {
+        console.error(message, error);
+        if (this.errorElement) {
+            this.errorElement.textContent = `Error: ${message}`;
+            this.errorElement.classList.remove('hidden');
+            setTimeout(() => {
+                this.errorElement.classList.add('hidden');
+            }, 5000);
+        }
     }
 
     async startBattle() {
-        this.log(`Battle begins between ${this.hero.name} and ${this.villain.name}!`);
-        
-        while (this.hero.health > 0 && this.villain.health > 0) {
-            this.turnCount++;
-            await this.executeTurn();
-        }
+        try {
+            if (this.isRunning) return;
+            this.isRunning = true;
+            this.log(`Battle begins between ${this.hero.name} and ${this.villain.name}!`, 'start');
+            
+            while (this.hero.health > 0 && this.villain.health > 0) {
+                this.turnCount++;
+                await this.executeTurn();
+            }
 
-        this.declareBattleWinner();
+            this.declareBattleWinner();
+        } catch (error) {
+            this.handleError('Battle simulation failed', error);
+        } finally {
+            this.isRunning = false;
+        }
     }
 
     async executeTurn() {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
-        // Hero's turn
-        const heroDamage = this.hero.attack();
-        this.villain.takeDamage(heroDamage);
-        this.log(`${this.hero.name} attacks for ${heroDamage} damage! ${this.villain.name} has ${this.villain.health} health remaining.`);
+            const { damage: heroDamage, remainingHealth: villainHealth } = this.executeAttack(
+                this.hero,
+                this.villain
+            );
 
-        if (this.villain.health <= 0) return;
+            if (villainHealth <= 0) return;
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
-        // Villain's turn
-        const villainDamage = this.villain.attack();
-        this.hero.takeDamage(villainDamage);
-        this.log(`${this.villain.name} attacks for ${villainDamage} damage! ${this.hero.name} has ${this.hero.health} health remaining.`);
+            const { damage: villainDamage } = this.executeAttack(
+                this.villain,
+                this.hero
+            );
+        } catch (error) {
+            this.handleError('Turn execution failed', error);
+        }
+    }
+
+    executeAttack(attacker, defender) {
+        const damage = attacker.attack();
+        const remainingHealth = defender.takeDamage(damage);
+        this.log(
+            `${attacker.name} attacks for ${damage} damage! ${defender.name} has ${remainingHealth} health remaining.`,
+            'attack'
+        );
+        return { damage, remainingHealth };
     }
 
     declareBattleWinner() {
-        const winner = this.hero.health > 0 ? this.hero : this.villain;
-        const p = document.createElement('p');
-        p.className = 'winner';
-        p.textContent = `${winner.name} wins the battle after ${this.turnCount} turns!`;
-        this.logElement.appendChild(p);
+        try {
+            const winner = this.hero.health > 0 ? this.hero : this.villain;
+            this.log(
+                `${winner.name} wins the battle after ${this.turnCount} turns!`,
+                'winner'
+            );
+        } catch (error) {
+            this.handleError('Failed to declare winner', error);
+        }
     }
 }
