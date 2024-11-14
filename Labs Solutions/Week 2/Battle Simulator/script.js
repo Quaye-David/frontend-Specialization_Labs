@@ -1,28 +1,21 @@
 // script.js
-import { Superhero, SuperVillain } from "./characters.js";
+import { createSuperhero, createSuperVillain } from "./characters.js";
 import { superheroes, supervillains } from "./characterData.js";
-import { BattleSimulator } from "./battleSimulator.js";
+import { createBattleSimulator } from "./battleSimulator.js";
 
-class BattleApp {
-    constructor() {
-        // Initialize state
-        this.selectedHero = null;
-        this.selectedVillain = null;
-        this.battleSimulator = null;
-        this.isSimulating = false;
+function createBattleApp() {
+    const state = {
+        selectedHero: null,
+        selectedVillain: null,
+        battleSimulator: null,
+        isSimulating: false,
+        elements: {}
+    };
 
-        // Wait for DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            this.initializeElements();
-            this.bindEvents();
-            this.initialize();
-        });
-    }
-
-    initializeElements() {
+    function initializeElements() {
         try {
             // Get all required DOM elements
-            this.elements = {
+            state.elements = {
                 heroSelect: document.getElementById('hero-select'),
                 villainSelect: document.getElementById('villain-select'),
                 heroInfo: document.getElementById('hero-info'),
@@ -34,57 +27,57 @@ class BattleApp {
             };
 
             // Validate all elements exist
-            Object.entries(this.elements).forEach(([key, element]) => {
+            Object.entries(state.elements).forEach(([key, element]) => {
                 if (!element) {
                     throw new Error(`Required element ${key} not found in the DOM`);
                 }
             });
 
         } catch (error) {
-            this.handleError('Failed to initialize DOM elements', error);
+            handleError('Failed to initialize DOM elements', error);
         }
     }
 
-    bindEvents() {
+    function bindEvents() {
         try {
             // Character selection events
-            this.elements.heroSelect.addEventListener('change', (e) => {
+            state.elements.heroSelect.addEventListener('change', (e) => {
                 const selectedHero = superheroes.find(hero => hero.name === e.target.value);
                 if (selectedHero) {
-                    this.selectedHero = selectedHero;
-                    this.updateCharacterInfo(selectedHero, this.elements.heroInfo);
-                    this.updateBattleButtonState();
+                    state.selectedHero = selectedHero;
+                    updateCharacterInfo(selectedHero, state.elements.heroInfo);
+                    updateBattleButtonState();
                 }
             });
 
-            this.elements.villainSelect.addEventListener('change', (e) => {
+            state.elements.villainSelect.addEventListener('change', (e) => {
                 const selectedVillain = supervillains.find(villain => villain.name === e.target.value);
                 if (selectedVillain) {
-                    this.selectedVillain = selectedVillain;
-                    this.updateCharacterInfo(selectedVillain, this.elements.villainInfo);
-                    this.updateBattleButtonState();
+                    state.selectedVillain = selectedVillain;
+                    updateCharacterInfo(selectedVillain, state.elements.villainInfo);
+                    updateBattleButtonState();
                 }
             });
 
             // Battle control events
-            this.elements.startBattleBtn.addEventListener('click', () => this.startBattle());
-            this.elements.resetBattleBtn.addEventListener('click', () => this.resetBattle());
+            state.elements.startBattleBtn.addEventListener('click', startBattle);
+            state.elements.resetBattleBtn.addEventListener('click', resetBattle);
 
             // Error display click to dismiss
-            this.elements.errorDisplay.addEventListener('click', () => {
-                this.elements.errorDisplay.classList.add('hidden');
+            state.elements.errorDisplay.addEventListener('click', () => {
+                state.elements.errorDisplay.classList.add('hidden');
             });
 
         } catch (error) {
-            this.handleError('Failed to bind events', error);
+            handleError('Failed to bind events', error);
         }
     }
 
-    updateBattleButtonState() {
-        this.elements.startBattleBtn.disabled = !(this.selectedHero && this.selectedVillain) || this.isSimulating;
+    function updateBattleButtonState() {
+        state.elements.startBattleBtn.disabled = !(state.selectedHero && state.selectedVillain) || state.isSimulating;
     }
 
-    updateCharacterInfo(character, infoElement) {
+    function updateCharacterInfo(character, infoElement) {
         try {
             const { name, secretIdentity, powers, weakness, nemeses } = character;
             infoElement.innerHTML = `
@@ -98,11 +91,11 @@ class BattleApp {
                 </div>
             `;
         } catch (error) {
-            this.handleError('Failed to update character info', error);
+            handleError('Failed to update character info', error);
         }
     }
 
-    populateSelect(selectElement, characters, characterType) {
+    function populateSelect(selectElement, characters, characterType) {
         try {
             // Clear existing options except the default one
             selectElement.innerHTML = `<option value="">Choose a ${characterType}</option>`;
@@ -115,81 +108,81 @@ class BattleApp {
                 selectElement.appendChild(option);
             });
         } catch (error) {
-            this.handleError(`Failed to populate ${characterType} select`, error);
+            handleError(`Failed to populate ${characterType} select`, error);
         }
     }
 
-    async startBattle() {
+    async function startBattle() {
         try {
-            if (!this.selectedHero || !this.selectedVillain) {
+            if (!state.selectedHero || !state.selectedVillain) {
                 throw new Error('Please select both a hero and a villain');
             }
 
-            this.isSimulating = true;
-            this.updateBattleButtonState();
-            this.elements.battleLog.innerHTML = ''; // Clear previous battle log
+            state.isSimulating = true;
+            updateBattleButtonState();
+            state.elements.battleLog.innerHTML = ''; // Clear previous battle log
 
             // Create fresh instances for the battle
-            const hero = new Superhero({
-                name: this.selectedHero.name,
-                secretIdentity: this.selectedHero.secretIdentity,
-                powers: this.selectedHero.powers,
-                weakness: this.selectedHero.weakness
+            const hero = createSuperhero({
+                name: state.selectedHero.name,
+                secretIdentity: state.selectedHero.secretIdentity,
+                powers: state.selectedHero.powers,
+                weakness: state.selectedHero.weakness
             });
 
-            const villain = new SuperVillain({
-                name: this.selectedVillain.name,
-                secretIdentity: this.selectedVillain.secretIdentity,
-                powers: this.selectedVillain.powers,
-                nemeses: this.selectedVillain.nemeses
+            const villain = createSuperVillain({
+                name: state.selectedVillain.name,
+                secretIdentity: state.selectedVillain.secretIdentity,
+                powers: state.selectedVillain.powers,
+                nemeses: state.selectedVillain.nemeses
             });
 
-            this.battleSimulator = new BattleSimulator(
+            state.battleSimulator = createBattleSimulator(
                 hero, 
                 villain, 
-                this.elements.battleLog,
-                this.elements.errorDisplay
+                state.elements.battleLog,
+                state.elements.errorDisplay
             );
 
-            await this.battleSimulator.startBattle();
+            await state.battleSimulator.startBattle();
 
         } catch (error) {
-            this.handleError('Battle failed to start', error);
+            handleError('Battle failed to start', error);
         } finally {
-            this.isSimulating = false;
-            this.updateBattleButtonState();
+            state.isSimulating = false;
+            updateBattleButtonState();
         }
     }
 
-    resetBattle() {
+    function resetBattle() {
         try {
             // Reset selections
-            this.elements.heroSelect.value = '';
-            this.elements.villainSelect.value = '';
+            state.elements.heroSelect.value = '';
+            state.elements.villainSelect.value = '';
             
             // Clear info displays
-            this.elements.heroInfo.innerHTML = '';
-            this.elements.villainInfo.innerHTML = '';
-            this.elements.battleLog.innerHTML = '';
+            state.elements.heroInfo.innerHTML = '';
+            state.elements.villainInfo.innerHTML = '';
+            state.elements.battleLog.innerHTML = '';
             
             // Reset state
-            this.selectedHero = null;
-            this.selectedVillain = null;
-            this.battleSimulator = null;
-            this.isSimulating = false;
+            state.selectedHero = null;
+            state.selectedVillain = null;
+            state.battleSimulator = null;
+            state.isSimulating = false;
             
             // Update UI state
-            this.updateBattleButtonState();
+            updateBattleButtonState();
             
         } catch (error) {
-            this.handleError('Failed to reset battle', error);
+            handleError('Failed to reset battle', error);
         }
     }
 
-    handleError(message, error) {
+    function handleError(message, error) {
         console.error(message, error);
         
-        const errorDisplay = this.elements?.errorDisplay;
+        const errorDisplay = state.elements?.errorDisplay;
         if (errorDisplay) {
             errorDisplay.textContent = `Error: ${message}`;
             errorDisplay.classList.remove('hidden');
@@ -201,20 +194,29 @@ class BattleApp {
         }
     }
 
-    initialize() {
+    function initialize() {
         try {
             // Populate character selects
-            this.populateSelect(this.elements.heroSelect, superheroes, 'Hero');
-            this.populateSelect(this.elements.villainSelect, supervillains, 'Villain');
+            populateSelect(state.elements.heroSelect, superheroes, 'Hero');
+            populateSelect(state.elements.villainSelect, supervillains, 'Villain');
             
             // Initialize battle button state
-            this.updateBattleButtonState();
+            updateBattleButtonState();
             
         } catch (error) {
-            this.handleError('Failed to initialize application', error);
+            handleError('Failed to initialize application', error);
         }
     }
+
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeElements();
+        bindEvents();
+        initialize();
+    });
+
+    return state;
 }
 
 // Initialize the application
-new BattleApp();
+createBattleApp();

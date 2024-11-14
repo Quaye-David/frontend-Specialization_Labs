@@ -1,96 +1,106 @@
-export class BattleSimulator {
-    constructor(hero, villain, logElement, errorElement) {
-        this.hero = hero;
-        this.villain = villain;
-        this.logElement = logElement;
-        this.errorElement = errorElement;
-        this.turnCount = 0;
-        this.isRunning = false;
-    }
+// battleSimulator.js
+export function createBattleSimulator(hero, villain, logElement, errorElement) {
+    const state = {
+        hero,
+        villain,
+        logElement,
+        errorElement,
+        turnCount: 0,
+        isRunning: false
+    };
 
-    log(message, type = 'info') {
+    function log(message, type = 'info') {
         try {
             const p = document.createElement('p');
             p.textContent = message;
             p.className = `battle-log-${type}`;
-            this.logElement.appendChild(p);
-            this.logElement.scrollTop = this.logElement.scrollHeight;
+            state.logElement.appendChild(p);
+            state.logElement.scrollTop = state.logElement.scrollHeight;
         } catch (error) {
-            this.handleError('Failed to log message', error);
+            handleError('Failed to log message', error);
         }
     }
 
-    handleError(message, error) {
+    function handleError(message, error) {
         console.error(message, error);
-        if (this.errorElement) {
-            this.errorElement.textContent = `Error: ${message}`;
-            this.errorElement.classList.remove('hidden');
+        if (state.errorElement) {
+            state.errorElement.textContent = `Error: ${message}`;
+            state.errorElement.classList.remove('hidden');
             setTimeout(() => {
-                this.errorElement.classList.add('hidden');
+                state.errorElement.classList.add('hidden');
             }, 5000);
         }
     }
 
-    async startBattle() {
+    async function startBattle() {
         try {
-            if (this.isRunning) return;
-            this.isRunning = true;
-            this.log(`Battle begins between ${this.hero.name} and ${this.villain.name}!`, 'start');
+            if (state.isRunning) return;
+            state.isRunning = true;
+            log(`Battle begins between ${state.hero.name} and ${state.villain.name}!`, 'start');
             
-            while (this.hero.health > 0 && this.villain.health > 0) {
-                this.turnCount++;
-                await this.executeTurn();
+            while (state.hero.health > 0 && state.villain.health > 0) {
+                state.turnCount++;
+                await executeTurn();
             }
 
-            this.declareBattleWinner();
+            declareBattleWinner();
         } catch (error) {
-            this.handleError('Battle simulation failed', error);
+            handleError('Battle simulation failed', error);
         } finally {
-            this.isRunning = false;
+            state.isRunning = false;
         }
     }
 
-    async executeTurn() {
+    async function executeTurn() {
         try {
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            const { damage: heroDamage, remainingHealth: villainHealth } = this.executeAttack(
-                this.hero,
-                this.villain
+            const { damage: heroDamage, remainingHealth: villainHealth } = executeAttack(
+                state.hero,
+                state.villain
             );
 
             if (villainHealth <= 0) return;
 
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            const { damage: villainDamage } = this.executeAttack(
-                this.villain,
-                this.hero
+            const { damage: villainDamage } = executeAttack(
+                state.villain,
+                state.hero
             );
         } catch (error) {
-            this.handleError('Turn execution failed', error);
+            handleError('Turn execution failed', error);
         }
     }
 
-    executeAttack(attacker, defender) {
+    function executeAttack(attacker, defender) {
         const damage = attacker.attack();
         const remainingHealth = defender.takeDamage(damage);
-        this.log(
+        log(
             `${attacker.name} attacks for ${damage} damage! ${defender.name} has ${remainingHealth} health remaining.`,
             'attack'
         );
         return { damage, remainingHealth };
     }
 
-    declareBattleWinner() {
+    function declareBattleWinner() {
         try {
-            const winner = this.hero.health > 0 ? this.hero : this.villain;
-            this.log(
-                `${winner.name} wins the battle after ${this.turnCount} turns!`,
+            const winner = state.hero.health > 0 ? state.hero : state.villain;
+            log(
+                `${winner.name} wins the battle after ${state.turnCount} turns!`,
                 'winner'
             );
         } catch (error) {
-            this.handleError('Failed to declare winner', error);
+            handleError('Failed to declare winner', error);
         }
     }
+
+    return {
+        startBattle,
+        log,
+        handleError,
+        executeTurn,
+        executeAttack,
+        declareBattleWinner
+    };
 }
