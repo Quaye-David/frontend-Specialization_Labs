@@ -2,97 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Time Master Clock</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        background: #f9f9f9;
-      }
-
-      .clock-container {
-        background: white;
-        margin: 2rem;
-        padding: 1rem;
-        border-radius: 1rem;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        min-width: 300px;
-      }
-
-      #digital-display {
-        font-size: 3rem;
-        margin: 1rem 0;
-        font-family: monospace;
-        color: #333;
-        background-color: #f1f1f1;
-      }
-
-      .analog-clock {
-        border-radius: 100%;
-        background: #ffffff;
-        font-family: "Montserrat";
-        border: 5px solid white;
-        box-shadow: inset 2px 3px 8px 0 rgba(0, 0, 0, 0.1);
-      }
-
-      .clock-face {
-        fill: white;
-        stroke: #333;
-        stroke-width: 2;
-      }
-
-      .hand {
-        transform-origin: 100px 100px;
-        transition: transform 0.5s cubic-bezier(0.4, 2.08, 0.55, 0.44);
-      }
-
-      .hour-markers text {
-        font-size: 12px;
-        text-anchor: middle;
-        fill: #333;
-      }
-
-      .controls {
-        display: flex;
-        gap: 1rem;
-        margin: 1rem 0;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      button {
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 0.5rem;
-        background: #007bff;
-        color: white;
-        cursor: pointer;
-      }
-
-      button:hover {
-        background: #0056b3;
-      }
-
-      .alarm-section {
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid #eee;
-      }
-
-      #alarm-time {
-        padding: 0.5rem;
-        margin-right: 0.5rem;
-      }
-
-      .hidden {
-        display: none;
-      }
-    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div class="clock-container">
@@ -111,10 +26,8 @@
         id="analog-display"
         class="analog-clock hidden"
         viewBox="0 0 200 200">
-        <!-- Clock face -->
-        <circle class="clock-face" cx="100" cy="100" r="95" />
+        <circle class="clock-face" cx="100" cy=" 100" r="95" />
 
-        <!-- Hour markers -->
         <g class="hour-markers">
           <text x="100" y="17">12</text>
           <text x="185" y="100">3</text>
@@ -122,7 +35,6 @@
           <text x="15" y="100">9</text>
         </g>
 
-        <!-- Clock hands -->
         <line
           class="hand hour-hand"
           x1="100"
@@ -151,165 +63,28 @@
           stroke-width="2"
           stroke-linecap="round" />
 
-        <!-- Center dot -->
         <circle cx="100" cy="100" r="3" fill="#333" />
       </svg>
 
       <div class="controls">
-        <button id="toggle-display">Toggle Analog/Digital</button>
-        <button id="toggle-format">Toggle 12/24 Hour</button>
-        <button id="change-color">Change Color</button>
+        <button id="toggle-display">
+          <i class="fas fa-sync-alt icon"></i> Toggle Analog/Digital
+        </button>
+        <button id="toggle-format">
+          <i class="fas fa-clock icon"></i> Toggle 12/24 Hour
+        </button>
+        <button id="change-color">
+          <i class="fas fa-paint-brush icon"></i> Change Color
+        </button>
       </div>
       <div class="alarm-section">
         <input type="time" id="alarm-time" />
-        <button id="set-alarm">Set Alarm</button>
+        <button id="set-alarm">
+          <i class="fas fa-bell icon"></i> Set Alarm
+        </button>
       </div>
     </div>
-
-    <script>
-      function Date(hours, minutes, seconds) {
-        this.hours = 0;
-        this.minutes = 0;
-        this.seconds = 0;
-      }
-
-
-      class Clock {
-        constructor() {
-          this.is24Hour = true;
-          this.isDigital = true;
-          this.alarmTime = null;
-          this.digitalDisplay = document.getElementById("digital-display");
-          this.analogDisplay = document.getElementById("analog-display");
-          this.colors = ["#333", "#e74c3c", "#2ecc71", "#3498db", "#9b59b6"];
-          this.currentColorIndex = 0;
-
-          // Initialize the clock
-          this.updateClock();
-          setInterval(() => this.updateClock(), 1000);
-
-          // Event listeners
-          document
-            .getElementById("toggle-display")
-            .addEventListener("click", () => this.toggleDisplay());
-          document
-            .getElementById("toggle-format")
-            .addEventListener("click", () => this.toggleFormat());
-          document
-            .getElementById("change-color")
-            .addEventListener("click", () => this.changeColor());
-          document
-            .getElementById("set-alarm")
-            .addEventListener("click", () => this.setAlarm());
-        }
-
-        getCurrentTime() {
-          const now = new Date();
-          return {
-            hours: now.getHours(),
-            minutes: now.getMinutes(),
-            seconds: now.getSeconds(),
-          };
-        }
-
-        getFormattedTime() {
-          const time = this.getCurrentTime();
-          if (this.is24Hour) {
-            return `${String(time.hours).padStart(2, "0")}:${String(
-              time.minutes
-            ).padStart(2, "0")}:${String(time.seconds).padStart(2, "0")}`;
-          } else {
-            const hours = time.hours % 12 || 12;
-            const ampm = time.hours >= 12 ? "PM" : "AM";
-            return `${String(hours).padStart(2, "0")}:${String(
-              time.minutes
-            ).padStart(2, "0")}:${String(time.seconds).padStart(
-              2,
-              "0"
-            )} ${ampm}`;
-          }
-        }
-
-        updateAnalogClock() {
-          const time = this.getCurrentTime();
-
-          // Calculate angles for hands
-          const secondAngle = time.seconds * 6; // 6 degrees per second
-          const minuteAngle = time.minutes * 6 + time.seconds * 0.1; // 6 degrees per minute
-          const hourAngle = (time.hours % 12) * 30 + time.minutes * 0.5; // 30 degrees per hour
-
-          // Update hand positions
-          const secondHand = this.analogDisplay.querySelector(".second-hand");
-          const minuteHand = this.analogDisplay.querySelector(".minute-hand");
-          const hourHand = this.analogDisplay.querySelector(".hour-hand");
-
-          secondHand.style.transform = `rotate(${secondAngle}deg)`;
-          minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
-          hourHand.style.transform = `rotate(${hourAngle}deg)`;
-        }
-
-        updateClock() {
-          if (this.isDigital) {
-            this.digitalDisplay.textContent = this.getFormattedTime();
-          } else {
-            this.updateAnalogClock();
-          }
-          this.checkAlarm();
-        }
-
-        toggleDisplay() {
-          this.isDigital = !this.isDigital;
-          this.digitalDisplay.classList.toggle("hidden");
-          this.analogDisplay.classList.toggle("hidden");
-        }
-
-        toggleFormat() {
-          this.is24Hour = !this.is24Hour;
-          if (this.isDigital) {
-            this.updateClock();
-          }
-        }
-
-        changeColor() {
-          this.currentColorIndex =
-            (this.currentColorIndex + 1) % this.colors.length;
-          const newColor = this.colors[this.currentColorIndex];
-
-          if (this.isDigital) {
-            this.digitalDisplay.style.color = newColor;
-          } else {
-            const hands = this.analogDisplay.querySelectorAll(".hand");
-            hands.forEach((hand) => (hand.style.stroke = newColor));
-          }
-        }
-
-        setAlarm() {
-          const alarmInput = document.getElementById("alarm-time");
-          if (alarmInput.value) {
-            this.alarmTime = alarmInput.value;
-            alert(`Alarm set for ${this.alarmTime}`);
-          }
-        }
-
-        checkAlarm() {
-          if (this.alarmTime) {
-            const now = new Date();
-            const currentTime = `${String(now.getHours()).padStart(
-              2,
-              "0"
-            )}:${String(now.getMinutes()).padStart(2, "0")}`;
-
-            if (currentTime === this.alarmTime) {
-              alert("ALARM!");
-              this.alarmTime = null;
-              document.getElementById("alarm-time").value = "";
-            }
-          }
-        }
-      }
-
-      // Initialize the clock
-      const clock = new Clock();
-    </script>
   </body>
+
+  <script src="script.js"></script>
 </html>

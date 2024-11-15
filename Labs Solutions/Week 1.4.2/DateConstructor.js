@@ -20,7 +20,6 @@ CurrentTime.prototype.updateTime = function() {
     this.date = new Date();
 };
 
-// Example usage
 try {
     const currentTime = new CurrentTime();
 
