@@ -1,29 +1,89 @@
-//Referencing the dom elements
+// DOM Elements
 const adviceButton = document.getElementById("adviceButton");
-const advice = document.getElementById("advice");
-const adviceNumber = document.getElementById("adviceNumber");
+const adviceText = document.getElementById("advice");
+const adviceNumberElement = document.querySelector(".advice-number");
 
+// API endpoint (for reference)
+const API_ENDPOINT = 'https://api.adviceslip.com/advice';
+
+// Advice data bank
+const adviceBank = [
+    { advice: "Take one step at a time." },
+    { advice: "Don't be afraid to ask for help." },
+    { advice: "Learn from your mistakes." },
+    { advice: "Practice makes perfect." },
+    { advice: "Stay curious and keep learning." },
+    { advice: "Be kind to yourself." },
+    { advice: "Take breaks when needed." },
+    { advice: "Celebrate small victories." },
+    { advice: "Listen more than you speak." },
+    { advice: "Start before you're ready." }
+];
+
+// Simulate API delay
+const simulateApiCall = async (advice) => {
+    const delay = Math.random() * 2000 + 1000; // Random delay between 1-3 seconds
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (Math.random() > 0.1) { // 90% success rate
+                resolve({
+                    id: Math.floor(Math.random() * 100),
+                    advice: advice
+                });
+            } else {
+                reject(new Error("Failed to fetch advice"));
+            }
+        }, delay);
+    });
+};
+
+// Update UI states
+const updateUIState = {
+    loading: () => {
+        adviceButton.disabled = true;
+        adviceText.classList.add('loading');
+        adviceText.innerText = 'Finding wisdom...';
+        adviceNumberElement.innerText = '';
+    },
+    success: (data) => {
+        adviceButton.disabled = false;
+        adviceText.classList.remove('loading');
+        adviceText.innerText = data.advice;
+        adviceNumberElement.innerText = `ADVICE #${data.id}`;
+    },
+    error: (message) => {
+        adviceButton.disabled = false;
+        adviceText.classList.remove('loading');
+        adviceText.innerText = `🚫 ${message}`;
+        adviceNumberElement.innerText = 'ERROR';
+        adviceText.classList.add('error');
+        setTimeout(() => adviceText.classList.remove('error'), 3000);
+    }
+};
+
+// Fetch advice with retries
+async function fetchAdvice(retries = 3) {
+    const randomAdvice = adviceBank[Math.floor(Math.random() * adviceBank.length)].advice;
+    
+    for (let i = 0; i < retries; i++) {
+        try {
+            updateUIState.loading();
+            const data = await simulateApiCall(randomAdvice);
+            updateUIState.success(data);
+            return;
+        } catch (error) {
+            console.error(`Attempt ${i + 1} failed:`, error);
+            if (i === retries - 1) {
+                updateUIState.error("Couldn't fetch advice. Please try again.");
+            }
+        }
+    }
+}
+
+// Event Listeners
 adviceButton.addEventListener("click", () => {
-  const randomAdvice =
-    adviceBank[Math.floor(Math.random() * adviceBank.length)];
-  advice.innerText = randomAdvice;
+    fetchAdvice();
 });
 
-//Advice Bank
-const adviceBank = [
-  "Do not be afraid to give up the good to go for the great.",
-  "The only limit to our realization of tomorrow will be our doubts of today.",
-  "The only way to do great work is to love what you do.",
-  "The best way to predict the future is to create it.",
-  "The best preparation for tomorrow is doing your best today.",
-  "The future belongs to those who believe in the beauty of their dreams.",
-  "The only thing we have to fear is fear itself.",
-  "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.",
-  "The best way to find yourself is to lose yourself in the service of others.",
-  "The best way to cheer yourself up is to try to cheer somebody else up.",
-  "The best way out is always through.",
-  "The best way to make your dreams come true is to wake up.",
-  "The best way to get started is to quit talking and begin doing.",
-  "The best way to get things done is to simply begin.",
-  "The best way to get ahead is to be your own competition.",
-];
+// Initialize
+document.addEventListener('DOMContentLoaded', fetchAdvice);
