@@ -2,7 +2,6 @@
 const galleryGrid = document.querySelector('#galleryGrid');
 const lightbox = document.querySelector('#lightbox');
 const lightboxImage = document.querySelector('#lightboxImage');
-const lightboxContent = document.getElementsByClassName('lightbox-content');
 const lightboxCaption = document.querySelector('#lightboxCaption');
 const lightboxClose = document.querySelector('#closeButton');
 const lightboxPrev = document.querySelector('#prevButton');
@@ -13,7 +12,7 @@ const imageData = [
     {
         fullImage: 'assets/image (1).jpg',
         thumbImage: 'assets/image (1).jpg',
-        caption: 'A highway in a surburban area during sunset'
+        caption: 'A highway in a suburban area during sunset'
     },
     {
         fullImage: 'assets/image (2).jpg',
@@ -38,17 +37,17 @@ const imageData = [
     {
         fullImage: 'assets/image (6).jpg',
         thumbImage: 'assets/image (6).jpg',
-        caption: 'A close-up photo of a dear'
+        caption: 'A close-up photo of a deer'
     },
-    //Video object
+    // Future Video Object
     // {
     //     fullImage: 'assets/video.mp4',
-    //     thumbImage: 'assets/video.mp4',
+    //     thumbImage: 'assets/video-thumbnail.jpg',
     //     caption: 'A video of a city at night'
     // }
 ];
 
-//Error handling interface
+// Error handling interface
 const GalleryErrors = {
     INVALID_IMAGE: 'Invalid image data provided',
     MISSING_IMAGE: 'Image source is required',
@@ -57,7 +56,7 @@ const GalleryErrors = {
     DOM_ERROR: 'DOM element not found'
 };
 
-//Helper function to validate image object data
+// Helper function to validate image object data
 const validateImageData = ({ fullImage, thumbImage, caption }) => {
     const errors = [];
 
@@ -77,7 +76,7 @@ const validateImageData = ({ fullImage, thumbImage, caption }) => {
     };
 };
 
-//Error display utility function
+// Error display utility function
 const showError = (message, duration = 3000) => {
     const errorContainer = document.createElement('div');
     errorContainer.className = 'gallery-error';
@@ -87,8 +86,7 @@ const showError = (message, duration = 3000) => {
     setTimeout(() => errorContainer.remove(), duration);
 };
 
-
-// Updated Implementation of the thumbnail creation function with error handling
+// Function to create and append thumbnail elements
 function createThumbnails() {
     try {
         imageData.forEach((imageItem, index) => {
@@ -109,7 +107,6 @@ function createThumbnails() {
             thumbnail.style.backgroundPosition = 'center';
             thumbnail.dataset.full = fullImage;
             thumbnail.dataset.caption = caption;
-            thumbnail.addEventListener('click', openLightbox);
 
             galleryItem.appendChild(thumbnail);
             galleryGrid.appendChild(galleryItem);
@@ -122,32 +119,72 @@ function createThumbnails() {
 // Show the thumbnails
 createThumbnails();
 
-// When the thumbnail is clicked, open the lightbox
-// Updated openLightbox with error handling
+// Initialize current image index
+let currentImageIndex = 0;
+
+// Function to update the lightbox image
+function updateLightboxImage(index, direction = 'next') {
+    try {
+        if (index < 0 || index >= imageData.length) {
+            throw new Error(GalleryErrors.INVALID_INDEX);
+        }
+
+        const { fullImage, caption } = imageData[index];
+        
+        // Update image and caption
+        lightboxImage.src = fullImage;
+        lightboxImage.alt = caption;
+        lightboxCaption.textContent = caption;
+
+        // Add slide-in animation class based on direction
+        lightboxImage.classList.remove('slide-in-next', 'slide-in-prev');
+        lightboxImage.classList.add(`slide-in-${direction}`);
+    } catch (error) {
+        showError(`Failed to update image: ${error.message}`);
+    }
+}
+
+// Function to update navigation buttons state
+function updateNavigationButtons() {
+    const disablePrev = currentImageIndex === 0;
+    const disableNext = currentImageIndex === imageData.length - 1;
+
+    toggleButtonState(lightboxPrev, disablePrev);
+    toggleButtonState(lightboxNext, disableNext);
+}
+
+// Helper function to toggle button state
+function toggleButtonState(button, shouldDisable) {
+    button.disabled = shouldDisable;
+    button.classList.toggle('disabled', shouldDisable);
+}
+
+// Function to open the lightbox
 function openLightbox(event) {
     try {
-        const { target } = event;
+        const target = event.target;
         if (!target.classList.contains('gallery-thumbnail')) {
             throw new Error(GalleryErrors.INVALID_IMAGE);
         }
 
         const galleryItems = Array.from(galleryGrid.children);
         const currentItem = target.parentElement;
-        
+
         if (!currentItem) {
             throw new Error(GalleryErrors.DOM_ERROR);
         }
 
-        currentImageIndex = galleryItems.indexOf(currentItem);
-        
-        if (currentImageIndex === -1) {
+        const newIndex = galleryItems.indexOf(currentItem);
+        if (newIndex === -1) {
             throw new Error(GalleryErrors.INVALID_INDEX);
         }
+
+        currentImageIndex = newIndex;
 
         lightbox.style.display = 'flex';
         void lightbox.offsetWidth; // Force reflow
         lightbox.classList.add('active');
-        
+
         updateLightboxImage(currentImageIndex);
         updateNavigationButtons();
     } catch (error) {
@@ -155,97 +192,55 @@ function openLightbox(event) {
     }
 }
 
-
-// Close the lightbox
-lightboxClose.addEventListener('click', () => {
-    lightbox.style.display = 'none';
-});
-
-// Adding an event listener to the gallery grid
-galleryGrid.addEventListener('click', openLightbox);
-
-// Function to update the navigation buttons
-function updateNavigationButtons() {
-    // Disable previous button if at start
-    if (currentImageIndex === 0) {
-        lightboxPrev.disabled = true;
-        lightboxPrev.classList.add('disabled');
-    } else {
-        lightboxPrev.disabled = false;
-        lightboxPrev.classList.remove('disabled');
-    }
-
-    // Disable next button if at end
-    if (currentImageIndex === imageData.length - 1) {
-        lightboxNext.disabled = true;
-        lightboxNext.classList.add('disabled');
-    } else {
-        lightboxNext.disabled = false;
-        lightboxNext.classList.remove('disabled');
-    }
-}
-
-let currentImageIndex = 0;
-
-// Updated updateLightboxImage with error handling
-function updateLightboxImage(index) {
-    try {
-        if (index < 0 || index >= imageData.length) {
-            throw new Error(GalleryErrors.INVALID_INDEX);
-        }
-
-        const { fullImage, caption } = imageData[index];
-        const direction = index > currentImageIndex ? 'next' : 'prev';
-
-        lightboxImage.classList.remove('slide-in-next', 'slide-in-prev');
-        
-        lightboxImage.src = fullImage;
-        lightboxImage.alt = caption;
-        lightboxCaption.textContent = caption;
-        
-        lightboxImage.classList.add(`slide-in-${direction}`);
-    } catch (error) {
-        showError(`Failed to update image: ${error.message}`);
-    }
-}
-
-
-lightboxClose.addEventListener('click', () => {
+// Function to close the lightbox
+function closeLightbox() {
     lightbox.classList.remove('active');
     setTimeout(() => {
         lightbox.style.display = 'none';
     }, 300); // Match the transition duration in CSS
-});
+}
 
-lightboxNext.addEventListener('click', () => {
-    if (!lightboxNext.disabled) {
-        currentImageIndex = (currentImageIndex + 1) % imageData.length;
-        updateLightboxImage(currentImageIndex);
+// Function to navigate to the next image
+function nextImage() {
+    if (currentImageIndex < imageData.length - 1) {
+        currentImageIndex++;
+        updateLightboxImage(currentImageIndex, 'next');
         updateNavigationButtons();
     }
-});
+}
 
-lightboxPrev.addEventListener('click', () => {
-    if (!lightboxPrev.disabled) {
-        currentImageIndex = (currentImageIndex - 1 + imageData.length) % imageData.length;
-        updateLightboxImage(currentImageIndex);
+// Function to navigate to the previous image
+function prevImage() {
+    if (currentImageIndex > 0) {
+        currentImageIndex--;
+        updateLightboxImage(currentImageIndex, 'prev');
         updateNavigationButtons();
     }
-});
+}
 
+// Event Listeners
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxNext.addEventListener('click', nextImage);
+lightboxPrev.addEventListener('click', prevImage);
+
+// Event delegation for gallery grid
+galleryGrid.addEventListener('click', openLightbox);
+
+// Keyboard navigation
 document.addEventListener('keydown', (e) => {
     if (lightbox.classList.contains('active')) {
         if (e.key === 'Escape') {
-            lightboxClose.click();
-        } else if (e.key === 'ArrowRight' && !lightboxNext.disabled) {
-            lightboxNext.click();
-        } else if (e.key === 'ArrowLeft' && !lightboxPrev.disabled) {
-            lightboxPrev.click();
+            closeLightbox();
+        } else if (e.key === 'ArrowRight') {
+            nextImage();
+        } else if (e.key === 'ArrowLeft') {
+            prevImage();
         }
     }
 });
 
-// Add CSS for error messages
+// Adding CSS for error messages
+// It's better to include this in your CSS file instead of injecting via JS
 const style = document.createElement('style');
 style.textContent = `
     .gallery-error {
@@ -270,26 +265,32 @@ style.textContent = `
             opacity: 1;
         }
     }
+
+    /* Example styles for slide-in animations */
+    .slide-in-next {
+        animation: slideInNext 0.3s forwards;
+    }
+
+    .slide-in-prev {
+        animation: slideInPrev 0.3s forwards;
+    }
+
+    @keyframes slideInNext {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+    }
+
+    @keyframes slideInPrev {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(0); }
+    }
+
+    /* Disabled button styles */
+    .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
 `;
 document.head.appendChild(style);
 
 // TODO: Implementing a video lightbox in the future
-
-// function openLightbox(event) {
-//     const target = event.target;
-//     const video = target.closest('video');
-//     if (video) {
-//         lightbox.style.display = 'flex';
-//         lightbox.classList.add('active');
-//         lightboxVideo.src = video.src;
-//         lightboxVideo.play();
-//     }
-// }
-// lightbox.addEventListener('click', openLightbox);
-// lightboxClose.addEventListener('click', () => {
-    //     lightbox.classList.remove('active');
-    //     lightboxVideo.pause();
-    //     lightboxVideo.src = '';
-    // });
-    
-
