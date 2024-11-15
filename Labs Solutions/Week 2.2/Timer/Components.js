@@ -17,9 +17,9 @@ function createTimer(duration, elementId) {
   // Timer object with methods
   const timer = {
     start: function () {
-      if (intervalId) return; // Prevent multiple starts
+      if (intervalId) return;
 
-      this.update(); // Initial update
+      this.update();
       intervalId = setInterval(() => {
         remainingTime--;
         this.update();

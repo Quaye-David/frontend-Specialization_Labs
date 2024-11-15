@@ -39,11 +39,9 @@
     <p>Open the console to see the output</p>
     <button id="test-btn">Click me</button>
     <script>
-      // Referencing the button element using the id
       const btn = document.getElementById('test-btn');
       const btnText = document.getElementById('test-btn');
 
-      // Using the traditional function syntax
       btn.addEventListener('click', function handleClick() {
         const textContent = this.textContent;
         console.log('Button text:', textContent);
@@ -57,7 +55,6 @@
 
       console.log(`The arrow function returns undefined when using the this keyword because it's not binded to the function`);
 
-      // Using the arrow function syntax with corrected
       btnText.addEventListener('click', handleClick);
     </script>
   </body>
