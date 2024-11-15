@@ -39,6 +39,12 @@ const simulateApiCall = async (advice) => {
 
 // Update UI states
 const updateUIState = {
+    idle: () => {
+        adviceButton.disabled = false;
+        adviceText.classList.remove('loading', 'error');
+        adviceText.innerText = 'Click the button to get advice';
+        adviceNumberElement.innerText = '';
+    },
     loading: () => {
         adviceButton.disabled = true;
         adviceText.classList.add('loading');
@@ -60,6 +66,8 @@ const updateUIState = {
         setTimeout(() => adviceText.classList.remove('error'), 3000);
     }
 };
+
+updateUIState.idle();
 
 // Fetch advice with retries
 async function fetchAdvice(retries = 3) {

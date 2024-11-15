@@ -16,7 +16,7 @@
 
 body {
   min-height: 100vh;
-  background: url("./wallpaper.jpg");
+  background: url("./assets/wallpaper.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -40,7 +40,7 @@ body::before {
 
 main {
   width: 100%;
-  max-width: 800px;
+  max-width: 600px;
   text-align: center;
 }
 
@@ -48,7 +48,7 @@ main {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 2rem;
   margin: 2rem auto;
   box-shadow: 0 8px 32px var(--shadow-color);
@@ -84,9 +84,9 @@ h1 {
 #adviceButton {
   background: var(--primary-color);
   color: var(--text-color);
-  border: none;
+  border: var(--glass-border);
   padding: 1rem 2rem;
-  border-radius: 50px;
+  border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -138,22 +138,11 @@ h1 {
   align-items: center;
   flex-direction: column;
   margin: 10px;
+  position: relative;
 }
 
 .subject {
-  background-color: var(--glass-bg);
-  padding: 10px;
-  border-radius: 10px;
-  margin: 10px;
-  box-shadow: 0 8px 32px var(--shadow-color);
-  transition: transform 0.3s ease;
-  display: flex;
-  justify-content: center;
-  font-size: 1rem;
-  position: absolute;
-  bottom: 0;
-  left: 10%;
-  margin-bottom: 10px;
-  font-weight: light;
-  font-weight: 300;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    
 }
