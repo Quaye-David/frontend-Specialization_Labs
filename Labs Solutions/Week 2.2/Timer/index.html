@@ -29,7 +29,7 @@
 
         .card {
             position: relative;
-            background: url(./background.jpg) center/cover no-repeat;
+            background: url("./background.jpg") center/cover no-repeat;
             padding: 30px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -109,64 +109,73 @@
 </head>
 <body>
     <div class="card">
-        <div id="timer-display"></div>
+        <div id="timer-display">Enter Time to Start Timer</div>
         <div>
-            <input type="number" id="timer-input" class="button" placeholder="Set timer" min="1">
+            <input type="number" id="timer-input" class="button" placeholder="Set timer (in seconds)" min="1">
             <button id="start-btn" class="button" style="margin-top: 15px;"><i class="fas fa-play"></i></button>
             <button id="reset-btn" class="button"><i class="fas fa-sync-alt"></i></button>
             <div id="error-message" class="error"></div>
         </div>
     </div>
     <script>
+        function CreateTimer(duration, elementId) {
+            let remainingTime = duration;
+            const element = document.getElementById(elementId);
+            let timerInterval = null;
+
+            const updateDisplay = () => {
+                const minutes = Math.floor(remainingTime / 60);
+                const seconds = remainingTime % 60;
+                element.textContent = `Time remaining: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            };
+
+            this.start = function() {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                }
+                updateDisplay();
+                timerInterval = setInterval(() => {
+                    remainingTime--;
+                    if (remainingTime <= 0) {
+                        clearInterval(timerInterval);
+                        console.log('Time is up!');
+                        element.textContent = 'Time is up!';
+                    } else {
+                        updateDisplay();
+                    }
+                }, 1000);
+            };
+
+            this.reset = function() {
+                clearInterval(timerInterval);
+                remainingTime = duration;
+                element.textContent = 'Timer reset.';
+            };
+        }
+
         const timerDisplay = document.getElementById('timer-display');
         const timerInput = document.getElementById('timer-input');
         const startBtn = document.getElementById('start-btn');
         const resetBtn = document.getElementById('reset-btn');
         const errorMessage = document.getElementById('error-message');
 
-        let timer;
-        let isTimerRunning = false;
+        let timerInstance;
 
-        function startTimer(duration) {
-            let timeLeft = duration;
-            isTimerRunning = true;
-
-            timer = setInterval(() => {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerDisplay.textContent = `Time remaining: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    isTimerRunning = false;
-                    console.log('Time is up!');
-                    timerDisplay.textContent = 'Time is up!';
-                } else {
-                    timeLeft--;
-                }
-            }, 1000);
-        }
-
-        function resetTimer() {
-            clearInterval(timer);
-            isTimerRunning = false;
-            timerDisplay.textContent = '';
-        }
-
-        startBtn.addEventListener('click', () => {
-            const inputValue = parseInt(timerInput.value);
-
-            if (isNaN(inputValue) || inputValue <= 0) {
+        startBtn.addEventListener('click', function() {
+            const duration = parseInt(timerInput.value);
+            if (isNaN(duration) || duration <= 0) {
                 errorMessage.textContent = 'Please enter a valid positive number.';
                 return;
             }
-
             errorMessage.textContent = '';
-            startTimer(inputValue);
+            timerInstance = new CreateTimer(duration, 'timer-display');
+            timerInstance.start();
         });
 
-        resetBtn.addEventListener('click', () => {
-            resetTimer();
+        resetBtn.addEventListener('click', function() {
+            if (timerInstance) {
+                timerInstance.reset();
+            }
             timerInput.value = '';
             errorMessage.textContent = '';
         });
