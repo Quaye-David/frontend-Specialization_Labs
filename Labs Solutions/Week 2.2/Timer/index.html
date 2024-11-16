@@ -67,7 +67,7 @@
         }
 
         #timer-display {
-            font-size: 3rem;
+            font-size: 2rem;
             color: var(--text-color);
             margin-top: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -109,7 +109,7 @@
 </head>
 <body>
     <div class="card">
-        <div id="timer-display">Time remaining: 60 seconds</div>
+        <div id="timer-display"></div>
         <div>
             <input type="number" id="timer-input" class="button" placeholder="Set timer" min="1">
             <button id="start-btn" class="button" style="margin-top: 15px;"><i class="fas fa-play"></i></button>
@@ -139,6 +139,7 @@
                 if (timeLeft <= 0) {
                     clearInterval(timer);
                     isTimerRunning = false;
+                    console.log('Time is up!');
                     timerDisplay.textContent = 'Time is up!';
                 } else {
                     timeLeft--;
@@ -149,7 +150,7 @@
         function resetTimer() {
             clearInterval(timer);
             isTimerRunning = false;
-            timerDisplay.textContent = 'Time remaining: 60 seconds';
+            timerDisplay.textContent = '';
         }
 
         startBtn.addEventListener('click', () => {
