@@ -21,12 +21,18 @@ export function createSuperhero(props) {
     if (!props.weakness) {
         throw new Error("Superhero must have a weakness defined");
     }
+    if (props.nemeses) {
+        throw new Error("Superhero must not have nemeses defined");
+    }
     return createCharacter(props);
 }
 
  export function createSuperVillain(props) {
     if (!props.nemeses) {
         throw new Error("Supervillain must have nemeses defined");
+    }
+    if (props.weakness) {
+        throw new Error("Supervillain must not have a weakness defined");
     }
     return createCharacter(props);
 }
