@@ -1,11 +1,11 @@
-// 1. Object Creation Basics
-const superHero = {
+// 1. Creating a superhero object with its properties
+const superman = {
   name: "Superman",
   secretIdentity: "Clark Kent",
   powers: ["super strength", "flight", "heat vision"],
   weakness: "Kryptonite",
 
-  // 2. Methods and functionality
+// 2. Adding a method to the superhero object
   usePower(powerName) {
     console.log(`${this.name} is using ${powerName}`);
   },
@@ -14,146 +14,118 @@ const superHero = {
   },
 };
 
-// 3. Object Constructor with Input Validation
+// 3. Creating a Parent constructor function to streamline the object creation
+function Character(name, secretIdentity, powers) {
+  // Basic checks for required fields
+  if (!name || !secretIdentity || !powers?.length) {
+    throw new Error('Missing required character info');
+  }
+
+  this.name = name;
+  this.secretIdentity = secretIdentity;
+  this.powers = powers;
+}
+
+// 4. Using Prototypal Inheritance to extend the functionality of the superhero objects
+Character.prototype.usePower = function(powerName) {
+  console.log(`${this.name} is using ${powerName}`);
+};
+
+Character.prototype.revealIdentity = function() {
+  console.log(`${this.name} is actually ${this.secretIdentity}`);
+};
+
+// Hero constructor
 function Superhero(name, secretIdentity, powers, weakness) {
-  if (typeof name !== 'string' || typeof secretIdentity !== 'string' || !Array.isArray(powers) || typeof weakness !== 'string') {
-    throw new Error('Invalid input for Superhero');
-  }
-  this.name = name;
-  this.secretIdentity = secretIdentity;
-  this.powers = powers;
-  this.weakness = weakness;
+  Character.call(this, name, secretIdentity, powers);
+  this.weakness = weakness || 'Unknown';
 }
 
-function SuperVillain(name, secretIdentity, powers, nemeses) {
-  if (typeof name !== 'string' || typeof secretIdentity !== 'string' || !Array.isArray(powers) || typeof nemeses !== 'string') {
-    throw new Error('Invalid input for SuperVillain');
-  }
-  this.name = name;
-  this.secretIdentity = secretIdentity;
-  this.powers = powers;
-  this.nemeses = nemeses;
+// Villain constructor
+function SuperVillain(name, secretIdentity, powers, nemesis) {
+  Character.call(this, name, secretIdentity, powers);
+  this.nemesis = nemesis || 'Unknown';
 }
 
-// 4. Prototypal Inheritance
-Superhero.prototype.usePower = function (powerName) {
-  console.log(`${this.name} is using ${powerName}`);
-};
+// Set up inheritance
+Superhero.prototype = Object.create(Character.prototype);
+SuperVillain.prototype = Object.create(Character.prototype);
 
-Superhero.prototype.revealIdentity = function () {
-  console.log(`${this.name} is actually ${this.secretIdentity}`);
-};
-
-SuperVillain.prototype.usePower = function (powerName) {
-  console.log(`${this.name} is using ${powerName}`);
-};
-
-SuperVillain.prototype.revealIdentity = function () {
-  console.log(`${this.name} is actually ${this.secretIdentity}`);
-};
-
-// Create an array of superheroes and supervillains
-// Superheroes
-const superheroes = [
+// Create some heroes
+const heroes = [
   new Superhero(
     "Superman",
-    "Clark Kent",
+    "Clark Kent", 
     ["super strength", "flight", "heat vision"],
     "Kryptonite"
   ),
-  new Superhero("Batman", "Bruce Wayne", ["martial arts", "gadgets"], "Joker"),
+  new Superhero(
+    "Batman",
+    "Bruce Wayne",
+    ["martial arts", "gadgets"],
+    "Joker"
+  ),
   new Superhero(
     "Spiderman",
     "Peter Parker",
     ["web swinging", "super strength"],
     "Green Goblin"
-  ),
-  new Superhero(
-    "Iron Man",
-    "Tony Stark",
-    ["flight", "repulsor technology"],
-    "Ultron"
-  ),
-  new Superhero(
-    "Captain America",
-    "Steve Rogers",
-    ["super strength", "shield throwing"],
-    "Red Skull"
-  ),
+  )
 ];
 
-// Supervillains
-const supervillains = [
+// Create some villains
+const villains = [
   new SuperVillain(
     "Lex Luthor",
     "Lex Luthor",
-    ["genius level intellect"],
+    ["genius intellect", "advanced technology"],
     "Superman"
   ),
-  new SuperVillain("Ultron", "Ultron", ["artificial intelligence"], "Iron Man"),
   new SuperVillain(
     "Joker",
-    "Joker",
-    ["chaos manipulation", "genius level intellect"],
+    "Unknown",
+    ["chaos manipulation", "criminal mastermind"],
     "Batman"
   ),
   new SuperVillain(
     "Green Goblin",
-    "Oscorp",
-    ["genius level intellect", "explosives"],
+    "Norman Osborn",
+    ["enhanced strength", "advanced weapons"],
     "Spiderman"
-  ),
+  )
 ];
 
-// Iterate over the arrays and log the names of the superheroes and supervillains
-console.log("\n------------------------");
-console.log(" }=== Superheroes ==={");
-console.log("------------------------\n");
+// Helper function to show character info
+function showCharacterInfo(characters, type) {
+  console.log(`\n=== ${type} ===\n`);
+  
+  characters.forEach(char => {
+    console.log(`Name: ${char.name}`);
+    console.log(`Powers: ${char.powers.join(", ")}`);
+    console.log(type === 'Heroes' ? `Weakness: ${char.weakness}` : `Nemesis: ${char.nemesis}`);
+    console.log('-------------------\n');
+  });
+}
 
-superheroes.forEach((superhero) => {
-  console.log(`Name: ${superhero.name}`);
-  console.log(`Powers: ${superhero.powers.join(", ")}`);
-  console.log(`Weakness: ${superhero.weakness}`);
-  console.log("-------------------\n");
-});
+// Show all characters
+showCharacterInfo(heroes, 'Heroes');
+showCharacterInfo(villains, 'Villains');
 
-console.log("[][][][][][][][][][][][][][][][][][][][][][][][][][]\n");
-
-console.log("------------------------");
-console.log("<=== Supervillains ===>");
-console.log("------------------------\n");
-
-supervillains.forEach((supervillain) => {
-  console.log(`Name: ${supervillain.name}`);
-  console.log(`Powers: ${supervillain.powers.join(", ")}`);
-  console.log(`Nemesis: ${supervillain.nemeses}`);
-  console.log("-------------------\n");
-});
-
-console.log("\n[][][][][][][][][][][][][][][][][][][][][][][][][][]\n");
-
-//* Map a list of nemesis for the supervillains
-const nemesesList = supervillains.map((supervillain) => {
-  return `${supervillain.name} -> ${supervillain.nemeses}`;
-});
-
-console.log("== SuperVillain <==> Nemesis ==");
-nemesesList.forEach((nemesis) => console.log(nemesis));
-
-console.log("\n[][][][][][][][][][][][][][][][][][][][][][][][][][]\n");
-
-//* Filter the list of superheroes to only include those with the power of "super strength"
-const strongHeroes = superheroes.filter((superhero) =>
-  superhero.powers.includes("super strength")
+// Find heroes with super strength
+const strongHeroes = heroes.filter(hero => 
+  hero.powers.includes("super strength")
 );
-console.log("== Superheroes with Super Strength ==");
-console.log(strongHeroes);
+console.log("Heroes with super strength:", strongHeroes.map(hero => hero.name));
 
-console.log("\n[][][][][][][][][][][][][][][][][][][][][][][][][][]\n");
+// Find heroes with multiple powers
+const multiPowerHeroes = heroes
+  .filter(hero => hero.powers.length > 1)
+  .map(hero => hero.name);
+console.log("\nHeroes with multiple powers:", multiPowerHeroes);
 
-//* Map with filter: Find and list superheroes who have more than one power.
-const multiPowersHeroes = superheroes
-  .filter((superhero) => superhero.powers.length > 1)
-  .map((superhero) => superhero.name);
-console.log("Heroes with multiple powers:");
-console.log(multiPowersHeroes);
+// Show villain-nemesis pairs
+console.log("\nVillain vs Hero matchups:");
+console.log('-------------------');
+villains.forEach(villain => {
+  console.log(`${villain.name} vs ${villain.nemesis}`);
+});
