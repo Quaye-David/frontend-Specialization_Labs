@@ -1,36 +1,46 @@
-// Function constructor to create a Date object representing the current time
-function CurrentTime() {
-    this.date = new Date();
+// Clock Constructor to represent the time
+function Clock(hours, minutes, seconds) {
+    this.hours = hours;
+    this.minutes = minutes;
+    this.seconds = seconds;
 }
 
-// Add methods to the prototype to access the current hour, minute, and second
-CurrentTime.prototype.getHours = function() {
-    return this.date.getHours();
+Clock.prototype.getFormattedTime = function () {
+    const pad = (num) => String(num).padStart(2, '0');
+    return `${pad(this.hours)}:${pad(this.minutes)}:${pad(this.seconds)}`;
 };
 
-CurrentTime.prototype.getMinutes = function() {
-    return this.date.getMinutes();
+Clock.prototype.get12HourTime = function () {
+    const isPM = this.hours >= 12;
+    const hours12 = this.hours % 12 || 12;
+    const pad = (num) => String(num).padStart(2, '0');
+    return `${pad(hours12)}:${pad(this.minutes)}:${pad(this.seconds)} ${isPM ? 'PM' : 'AM'}`;
 };
 
-CurrentTime.prototype.getSeconds = function() {
-    return this.date.getSeconds();
-};
+// Factory function to create a Clock instance with the current time
+function createCurrentClock() {
+    const now = new Date();
+    return new Clock(now.getHours(), now.getMinutes(), now.getSeconds());
+}
 
-CurrentTime.prototype.updateTime = function() {
-    this.date = new Date();
+Clock.prototype.update = function () {
+    const now = new Date();
+    this.hours = now.getHours();
+    this.minutes = now.getMinutes();
+    this.seconds = now.getSeconds();
 };
 
 try {
-    const currentTime = new CurrentTime();
+    const currentClock = createCurrentClock();
 
-    // Function to log the current time
-    function logCurrentTime() {
-        currentTime.updateTime();
-        console.log(`Current Time: ${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`);
+    function logCurrentClock() {
+        currentClock.update(); // Update time
+        console.log("Formatted Time:", currentClock.getFormattedTime());
+        console.log("12-Hour Time:", currentClock.get12HourTime());
+        console.log("-------------------------------");
     }
 
-    // Log the current time every second
-    setInterval(logCurrentTime, 1000);
+    setInterval(logCurrentClock, 1000);
 } catch (error) {
     console.error('Error:', error.message);
 }
