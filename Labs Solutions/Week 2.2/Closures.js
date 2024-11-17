@@ -11,8 +11,8 @@ const createValidator = () => {
             if (Object.keys(input).length === 0) {
                 throw new Error('Input object cannot be empty');
             }
-            if (!input.hasOwnProperty('name') || !input.hasOwnProperty('age')) {
-                throw new Error('Input object must have name and age properties');
+            if (typeof input.name !== 'string' || typeof input.age !== 'number') {
+                throw new Error('Name must be a string and age must be a number');
             }
         }
     };
@@ -75,7 +75,7 @@ try {
 }
 
 try {
-    validator.validateInput({ name: 'Alice' }); // Missing age property
+    validator.validateInput({ name: 'Alice' });
 } catch (error) {
     console.error(error.message);
 }
