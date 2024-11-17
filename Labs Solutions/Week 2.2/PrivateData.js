@@ -13,6 +13,7 @@ function createCounter() {
                 console.error('Error incrementing count:', error.message);
             }
         },
+        
         getCount: function() {
             return count;
         }
