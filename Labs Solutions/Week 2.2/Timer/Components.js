@@ -1,53 +1,61 @@
-function createTimer(duration, elementId) {
-  // Validate duration
-  if (typeof duration !== "number" || duration <= 0) {
-    throw new Error("Duration must be a positive number");
-  }
-
-  // Private state
+function CreateTimer(duration, elementId) {
   let remainingTime = duration;
-  let intervalId = null;
-
-  // Get DOM element
   const element = document.getElementById(elementId);
-  if (!element) {
-    throw new Error(`Element with id ${elementId} not found`);
-  }
+  let timerInterval = null;
 
-  // Timer object with methods
-  const timer = {
-    start: function () {
-      if (intervalId) return;
-
-      this.update();
-      intervalId = setInterval(() => {
-        remainingTime--;
-        this.update();
-        if (remainingTime <= 0) {
-          clearInterval(intervalId);
-          intervalId = null;
-        }
-      }, 1000);
-    },
-    update: function () {
-      element.textContent = `Time remaining: ${remainingTime} seconds`;
-    },
-    stop: function () {
-      if (intervalId) {
-        clearInterval(intervalId);
-        intervalId = null;
-      }
-    },
-    reset: function (newDuration) {
-      if (typeof newDuration !== "number" || newDuration <= 0) {
-        throw new Error("New duration must be a positive number");
-      }
-      this.stop();
-      remainingTime = newDuration;
-      this.update();
-      this.start();
-    },
+  const updateDisplay = () => {
+      const minutes = Math.floor(remainingTime / 60);
+      const seconds = remainingTime % 60;
+      element.textContent = `Time remaining: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  return timer;
+  this.start = function () {
+      if (timerInterval) {
+          clearInterval(timerInterval);
+      }
+      updateDisplay();
+      timerInterval = setInterval(() => {
+          remainingTime--;
+          if (remainingTime <= 0) {
+              clearInterval(timerInterval);
+              console.log('Time is up!');
+              element.textContent = 'Time is up!';
+          } else {
+              updateDisplay();
+          }
+      }, 1000);
+  };
+
+  this.reset = function () {
+      clearInterval(timerInterval);
+      remainingTime = duration;
+      element.textContent = 'Timer reset.';
+  };
 }
+
+const timerDisplay = document.getElementById('timer-display');
+const timerInput = document.getElementById('timer-input');
+const startBtn = document.getElementById('start-btn');
+const resetBtn = document.getElementById('reset-btn');
+const errorMessage = document.getElementById('error-message');
+
+let timerInstance;
+
+startBtn.addEventListener('click', function () {
+  const duration = parseInt(timerInput.value);
+  if (isNaN(duration) || duration <= 0) {
+      errorMessage.textContent = 'Please enter a valid positive number.';
+      return;
+  }
+  errorMessage.textContent = '';
+  timerInstance = new CreateTimer(duration, 'timer-display');
+  timerInstance.start();
+});
+
+resetBtn.addEventListener('click', function () {
+  if (timerInstance) {
+      timerInstance.reset();
+  }
+  timerInput.value = '';
+  errorMessage.textContent = '';
+});

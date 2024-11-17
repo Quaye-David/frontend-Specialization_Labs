@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,8 @@
             --transition-duration: 0.3s;
         }
 
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -29,7 +31,7 @@
 
         .card {
             position: relative;
-            background: url("./background.jpg") center/cover no-repeat;
+            background: var(--background-color);
             padding: 30px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -61,7 +63,7 @@
             z-index: 1;
         }
 
-        .card > * {
+        .card>* {
             position: relative;
             z-index: 2;
         }
@@ -107,6 +109,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="card">
         <div id="timer-display">Enter Time to Start Timer</div>
@@ -129,7 +132,7 @@
                 element.textContent = `Time remaining: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             };
 
-            this.start = function() {
+            this.start = function () {
                 if (timerInterval) {
                     clearInterval(timerInterval);
                 }
@@ -146,7 +149,7 @@
                 }, 1000);
             };
 
-            this.reset = function() {
+            this.reset = function () {
                 clearInterval(timerInterval);
                 remainingTime = duration;
                 element.textContent = 'Timer reset.';
@@ -161,7 +164,7 @@
 
         let timerInstance;
 
-        startBtn.addEventListener('click', function() {
+        startBtn.addEventListener('click', function () {
             const duration = parseInt(timerInput.value);
             if (isNaN(duration) || duration <= 0) {
                 errorMessage.textContent = 'Please enter a valid positive number.';
@@ -172,7 +175,7 @@
             timerInstance.start();
         });
 
-        resetBtn.addEventListener('click', function() {
+        resetBtn.addEventListener('click', function () {
             if (timerInstance) {
                 timerInstance.reset();
             }
@@ -181,4 +184,5 @@
         });
     </script>
 </body>
+
 </html>
