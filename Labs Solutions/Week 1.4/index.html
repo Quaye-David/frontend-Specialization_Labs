@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Image Gallery</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1 class="hero-title">Interactive Image Gallery</h1>
+        <p class="hero-subtitle">
+          This is an Interactive Image Gallery created using HTML, CSS and
+          JavaScript
+        </p>
+      </div>
+    </section>
+
+    <section class="gallery">
+      <div class="gallery-container">
+        <div class="gallery-grid" id="galleryGrid">
+        </div>
+      </div>
+
+      <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+          <img id="lightboxImage" class="lightbox-image" alt="">
+          <div class="lightbox-caption" id="lightboxCaption"></div>
+          <button class="nav-button prev-button" id="prevButton">←</button>
+          <button class="nav-button next-button" id="nextButton">→</button>
+          <button class="close-button" id="closeButton">×</button>
+        </div>
+      </div>
+    </section>
+  </body>
+    <script src="script.js"></script>
+</html>
