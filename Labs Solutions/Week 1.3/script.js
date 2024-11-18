@@ -93,18 +93,6 @@ const updateTodo = (id, updates) => {
 
     const { title, description, dueDateTime } = updates;
 
-    if (title || description || dueDateTime) {
-      const validation = validateTodoData({
-        title: title || todos[index].title,
-        description: description || todos[index].description,
-        dueDateTime: dueDateTime || todos[index].dueDateTime,
-      });
-
-      if (!validation.isValid) {
-        throw new Error(validation.errors.join(", "));
-      }
-    }
-
     todos[index] = {
       ...todos[index],
       ...updates,
@@ -115,7 +103,8 @@ const updateTodo = (id, updates) => {
 
     saveToStorage();
     renderTodos();
-  } catch (error) {// Destructure the error object to get the message property
+  } catch (error) {
+    // Destructure the error object to get the message property
     showStatus(`Update failed: ${error.message}`, "error");
   }
 };
