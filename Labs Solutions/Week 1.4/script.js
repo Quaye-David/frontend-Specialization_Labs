@@ -125,10 +125,6 @@ let currentImageIndex = 0;
 // Function to update the lightbox image
 function updateLightboxImage(index, direction = 'next') {
     try {
-        if (index < 0 || index >= imageData.length) {
-            throw new Error(GalleryErrors.INVALID_INDEX);
-        }
-
         const { fullImage, caption } = imageData[index];
         
         // Update image and caption
@@ -182,7 +178,7 @@ function openLightbox(event) {
         currentImageIndex = newIndex;
 
         lightbox.style.display = 'flex';
-        void lightbox.offsetWidth; // Force reflow
+        void lightbox.offsetWidth;
         lightbox.classList.add('active');
 
         updateLightboxImage(currentImageIndex);
@@ -192,30 +188,35 @@ function openLightbox(event) {
     }
 }
 
-// Function to close the lightbox
+
 function closeLightbox() {
     lightbox.classList.remove('active');
     setTimeout(() => {
         lightbox.style.display = 'none';
-    }, 300); // Match the transition duration in CSS
+    }, 300);
+}
+
+// Unified function to navigate images
+function navigateImage(direction) {
+    if (direction === 'next' && currentImageIndex < imageData.length - 1) {
+        currentImageIndex++;
+    } else if (direction === 'prev' && currentImageIndex > 0) {
+        currentImageIndex--;
+    } else {
+        return;
+    }
+    updateLightboxImage(currentImageIndex, direction);
+    updateNavigationButtons();
 }
 
 // Function to navigate to the next image
 function nextImage() {
-    if (currentImageIndex < imageData.length - 1) {
-        currentImageIndex++;
-        updateLightboxImage(currentImageIndex, 'next');
-        updateNavigationButtons();
-    }
+    navigateImage('next');
 }
 
 // Function to navigate to the previous image
 function prevImage() {
-    if (currentImageIndex > 0) {
-        currentImageIndex--;
-        updateLightboxImage(currentImageIndex, 'prev');
-        updateNavigationButtons();
-    }
+    navigateImage('prev');
 }
 
 // Event Listeners
@@ -238,58 +239,5 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
-
-// Adding CSS for error messages
-const style = document.createElement('style');
-style.textContent = `
-    .gallery-error {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #ff4444;
-        color: white;
-        padding: 1rem;
-        border-radius: 4px;
-        z-index: 2000;
-        animation: slideIn 0.3s ease-out;
-    }
-
-    @keyframes slideIn {
-        from {
-            transform: translateY(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    /* Example styles for slide-in animations */
-    .slide-in-next {
-        animation: slideInNext 0.3s forwards;
-    }
-
-    .slide-in-prev {
-        animation: slideInPrev 0.3s forwards;
-    }
-
-    @keyframes slideInNext {
-        from { transform: translateX(100%); }
-        to { transform: translateX(0); }
-    }
-
-    @keyframes slideInPrev {
-        from { transform: translateX(-100%); }
-        to { transform: translateX(0); }
-    }
-
-    /* Disabled button styles */
-    .disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-`;
-document.head.appendChild(style);
 
 // TODO: Implementing a video lightbox in the future
