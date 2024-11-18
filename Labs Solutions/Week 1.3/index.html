@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Todo List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Interactive Todo List</h1>
+        </header>
+        
+        <main class="main-container">
+            <section class="col form-col">
+                <form id="todo-form">
+                    <div class="form-group">
+                        <label for="todo-title">Title</label>
+                        <input type="text" id="todo-title" name="title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="todo-description">Description</label>
+                        <textarea id="todo-description" name="description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="todo-due-date">Due Date &amp; Time</label>
+                        <input type="datetime-local" id="todo-due-date" name="dueDateTime" required>
+                    </div>
+
+                    <button type="submit">Add Todo</button>
+                </form>
+            </section>
+            <section class="col list-col">
+                <div class="controls">
+                    <select id="sort-select">
+                        <option value="due-asc">Due Date ↑</option>
+                        <option value="due-desc">Due Date ↓</option>
+                        <option value="created-asc">Created ↑</option>
+                        <option value="created-desc">Created ↓</option>
+                    </select>
+
+                    <select id="filter-select">
+                        <option value="all">All Tasks</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+
+                <ul id="todo-list"></ul>
+            </section>
+        </main>
+
+        <div id="status-message" role="alert"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
