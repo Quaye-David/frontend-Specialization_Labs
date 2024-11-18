@@ -270,22 +270,28 @@ body {
 .strength-label {
     text-transform: uppercase;
     color: var(--grey);
+    margin-right: 1rem; /* Reduced from 4rem for better spacing */
 }
 
 .strength-meter {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 1rem; /* Add gap between label and bars */
+}
+
+.bars-container {
+    display: flex;
     gap: 8px;
-    color: var(--almost-white);
-    text-transform: uppercase;
+    margin-left: auto; /* Push bars to the right */
 }
 
 .strength-bars {
     width: 10px;
     height: 28px;
-    border: 2px solid var(--almost-white);
+    border: 2px solid var(--white);
+    background-color: transparent;
 }
-
 /* Strength States */
 .strength-meter[data-strength="too-weak"] .strength-bars:nth-child(1) {
     background-color: var(--red-1);
