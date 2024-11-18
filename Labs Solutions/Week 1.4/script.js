@@ -240,7 +240,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 // Adding CSS for error messages
-// It's better to include this in your CSS file instead of injecting via JS
 const style = document.createElement('style');
 style.textContent = `
     .gallery-error {
