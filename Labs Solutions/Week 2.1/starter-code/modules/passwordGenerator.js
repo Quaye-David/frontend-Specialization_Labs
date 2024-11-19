@@ -1,6 +1,5 @@
 // passwordGenerator.js
 import { CHAR_SETS } from './characterSets.js';
-import { checkStrength } from './strengthChecker.js';
 
 export class PasswordGenerator {
   constructor() {
