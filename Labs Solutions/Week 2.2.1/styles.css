@@ -30,27 +30,38 @@
     --primary-color: #1F1F1F;
     --light-text-color: #2D2D2D;
     --secondary-color: #E9E9E9;
+    --search-color: #F4F4F4;
     --tertiary-color: #757575;
     /* --success-color: #3A3A3A;
     
-    --info-color: #F4F4F4; */
+    */
     --dark-text-color: #FFFFFF;
     --accent-color: #A445ED;
 
 }
 
-body {
-    /* The font family will be dynamically updated from the JavaScript file*/
+body { 
     font-family: var(--font-family);
     font-size: 1.125rem;
     line-height: 1.5;
     margin: 0;
     padding: 0;
+    max-width: 737px;
+    margin-inline: auto; /* Center content horizontally */
+    padding-inline: 1.5rem; /* Side padding for mobile */
+    padding-block: 2rem; /* Top/bottom padding */
+}
+
+@media (min-width: 768px) {
+    body {
+        padding-block: 3.5rem;
+    }
 }
 
 .header {
     color: var(--dark-text-color);
     padding: 1rem;
+    margin-bottom: 2rem;
 }
 
 .nav {
@@ -106,7 +117,7 @@ body {
 .theme-toggle__toggler {
     position: relative;
     width: 40px;
-    height: 20px;
+    height: 22px;
     background-color: var(--tertiary-color);
     border-radius: 10px;
     transition: background-color 0.3s ease;
@@ -115,8 +126,8 @@ body {
 .theme-toggle__toggler::before {
     content: '';
     position: absolute;
-    left: 3px;
-    top: 2px;
+    left: 2px;
+    top: 3px;
     width: 16px;
     height: 16px;
     background-color: var(--dark-text-color);
@@ -140,4 +151,252 @@ body {
 
 .theme-toggle__button.active .theme-toggle__icon {
     opacity: 0.7;
+}
+
+.search-form {
+    position: relative;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+/* Element: Search Input */
+.search-form__input {
+    width: 100%;
+    padding: 1rem 3rem 1rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--search-color);
+    color: var(--light-text-color);
+    font-weight: bold;
+    font-size: 1.25rem;
+    font-family: var(--font-family);
+    transition: outline 0.3s ease;
+}
+
+.search-form__input::placeholder {
+    color: var(--medium-grey);
+    opacity: 0.5;
+    font-weight: 700;
+}
+
+/* Element: Search Button */
+.search-form__button {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.search-form__button-icon {
+    width: 20px;
+    height: 20px;
+    transition: filter 0.3s ease;
+}
+
+/* Modifiers */
+.search-form__input--error {
+    outline: 1px solid var(--warning-color);
+}
+
+/* States */
+.search-form__input:focus {
+    outline: 1px solid var(--neon-green);
+}
+
+.search-form__button:hover .search-form__button-icon {
+    filter: brightness(0) saturate(100%) invert(79%) sepia(61%) saturate(464%) hue-rotate(95deg) brightness(198%) contrast(139%);
+}
+
+/* Results Section */
+.results {
+    padding: 2rem 0;
+}
+
+/* Header Styles */
+.results__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.results__word-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.results__title {
+    font-size: 2rem;
+    color: var(--light-text-color);
+    margin: 0;
+}
+
+.results__phonetic {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+}
+.results__audio-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: relative;
+    width: 75px;
+    height: 75px;
+}
+
+.results__audio-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+/* Hide hovered icon by default */
+.results__audio-icon:nth-child(2) {
+    opacity: 0;
+}
+
+/* Show hovered icon and hide default on hover */
+.results__audio-btn:hover .results__audio-icon:first-child {
+    opacity: 0;
+}
+
+.results__audio-btn:hover .results__audio-icon:nth-child(2) {
+    opacity: 1;
+}
+
+.results__meanings {
+    margin-bottom: 2rem;
+}
+
+.results__part-speech {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.results__part-speech-text {
+    font-style: italic;
+    color: var(--background-color);
+    margin: 0;
+}
+
+.results__divider {
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--secondary-color);
+    border: none;
+}
+
+/* Meaning Section */
+.results__meaning {
+    margin-bottom: 2rem;
+}
+
+.results__meaning-title {
+    color: var(--medium-grey);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.results__definition-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem;
+}
+
+.results__definition-list-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.875rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.results__definition-list-item::before {
+    content: "•";
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    font-size: 1rem;
+}
+
+.results__definition {
+    color: var(--almost-white);
+    line-height: 1.5;
+    font-size: 1.125rem;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .results__meaning {
+        margin-bottom: 2.5rem;
+    }
+
+    .results__definition-list-item {
+        padding-left: 2rem;
+    }
+
+    .results__definition {
+        font-size: 1.25rem;
+    }
+}
+
+.results__synonym-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Source Footer */
+.results__source {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--medium-grey);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.results__source-title {
+    color: var(--medium-grey);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.results__source-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--almost-white);
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.results__source-link:hover {
+    color: var(--neon-green);
+}
+
+.results__source-icon {
+    width: 12px;
+    height: 12px;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .results__title {
+        font-size: 2.5rem;
+    }
+    
+    .results__phonetic {
+        font-size: 1.25rem;
+    }
 }
