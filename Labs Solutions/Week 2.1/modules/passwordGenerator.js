@@ -1,6 +1,9 @@
-// passwordGenerator.js
-import { CHAR_SETS } from './characterSets.js';
-
+const CHAR_SETS = {
+  uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  lowercase: 'abcdefghijklmnopqrstuvwxyz',
+  numbers: '0123456789',
+  symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+};
 export class PasswordGenerator {
   constructor() {
     this.length = 10;

@@ -3,90 +3,78 @@ import { PasswordGenerator } from './modules/passwordGenerator.js';
 import { checkStrength } from './modules/strengthChecker.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const generator = new PasswordGenerator();
-
-    const lengthSlider = document.getElementById('character-length');
-    const lengthDisplay = document.querySelector('.settings-number');
-    const generateBtn = document.getElementById('generate-btn');
-    const strengthIndicator = document.getElementById('strength-indicator');
-    const passwordDisplay = document.getElementById('generated-password');
-    const copyBtn = document.getElementById('copy-btn');
-
-    const checkboxes = {
-        uppercase: document.getElementById('include-uppercase'),
-        lowercase: document.getElementById('include-lowercase'),
-        numbers: document.getElementById('include-numbers'),
-        symbols: document.getElementById('include-symbols')
+    // Cache DOM elements
+    const elements = {
+        lengthSlider: document.getElementById('character-length'),
+        lengthDisplay: document.querySelector('.settings-number'),
+        generateBtn: document.getElementById('generate-btn'),
+        strengthIndicator: document.getElementById('strength-indicator'),
+        passwordDisplay: document.getElementById('generated-password'),
+        copyBtn: document.getElementById('copy-btn'),
+        checkboxes: {
+            uppercase: document.getElementById('include-uppercase'),
+            lowercase: document.getElementById('include-lowercase'),
+            numbers: document.getElementById('include-numbers'),
+            symbols: document.getElementById('include-symbols')
+        },
     };
 
-    // Generate and display initial password
-    const initialPassword = generator.generate();
-    passwordDisplay.textContent = initialPassword;
-    updateStrengthIndicator(initialPassword);
+    elements.copyBtn.disabled = true;
+    elements.copyBtn.classList.add('disabled');
+    
+    const generator = new PasswordGenerator();
+    
+    const updatePassword = (password) => {
+        elements.passwordDisplay.textContent = password;
+        elements.passwordDisplay.parentElement.classList.add('has-password');
+        elements.copyBtn.disabled = false;
+        elements.copyBtn.classList.remove('disabled');
+        updateStrengthIndicator(password);
+    };
 
-    function updateStrengthIndicator(password) {
+    const updateStrengthIndicator = (password) => {
         const strength = checkStrength(password, generator.options);
-        const strengthMeter = document.getElementById('strength-indicator');
+        const strengthLevel = getStrengthLevel(strength.score);
+        elements.strengthIndicator.textContent = strength.label;
+        elements.strengthIndicator.setAttribute('data-strength', strengthLevel);
+        const barsContainer = createStrengthBars();
+        elements.strengthIndicator.appendChild(barsContainer);
+    };
 
-        // Update text and data attribute
-        strengthMeter.textContent = strength.label;
+    const getStrengthLevel = (score) => {
+        const levels = {
+            1: 'too-weak',
+            2: 'weak',
+            3: 'medium',
+            4: 'strong',
+            5: 'strong'
+        };
+        return levels[score] || 'too-weak';
+    };
 
-        // Map score to strength levels
-        let strengthLevel;
-        switch (strength.score) {
-            case 1:
-                strengthLevel = 'too-weak';
-                break;
-            case 2:
-                strengthLevel = 'weak';
-                break;
-            case 3:
-                strengthLevel = 'medium';
-                break;
-            case 4:
-            case 5:
-                strengthLevel = 'strong';
-                break;
-            default:
-                strengthLevel = 'too-weak';
-        }
-
-        // Set data attribute for CSS styling
-        strengthMeter.setAttribute('data-strength', strengthLevel);
-
-        // Clear previous content and recreate bars
-        strengthMeter.innerHTML = strength.label;
-
-        //Function to show the copied text
-        copyBtn.addEventListener('click', async () => {
-            const copyText = copyBtn.querySelector('.copy-text');
-
-            try {
-                await navigator.clipboard.writeText(passwordDisplay.textContent);
-                copyText.classList.add('show');
-
-                setTimeout(() => {
-                    copyText.classList.remove('show');
-                }, 2000); // Hide after 2 seconds
-            } catch (err) {
-                console.error('Failed to copy:', err);
-            }
-        });
-
-        // Create and append strength bars
-        const barsContainer = document.createElement('div');
-        barsContainer.className = 'bars-container';
-
-        for (let i = 0; i < 4; i++) {
+    const createStrengthBars = () => {
+        const container = document.createElement('div');
+        container.className = 'bars-container';
+        container.append(...Array(4).fill(0).map(() => {
             const bar = document.createElement('div');
             bar.className = 'strength-bars';
-            barsContainer.appendChild(bar);
+            return bar;
+        }));
+        return container;
+    };
+
+    // Event Listeners
+    elements.copyBtn.addEventListener('click', async () => {
+        const copyText = elements.copyBtn.querySelector('.copy-text');
+        try {
+            await navigator.clipboard.writeText(elements.passwordDisplay.textContent);
+            copyText.classList.add('show');
+            setTimeout(() => copyText.classList.remove('show'), 2000);
+        } catch (err) {
+            console.error('Failed to copy:', err);
         }
+    });
 
-        strengthMeter.appendChild(barsContainer);
-    }
-
-    // Slider functionality
     function updateSliderBackground(slider) {
         const value = slider.value;
         const min = slider.min || 0;
@@ -94,39 +82,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const percentage = ((value - min) * 100) / (max - min);
         slider.style.background = `linear-gradient(to right, var(--neon-green) ${percentage}%, var(--very-dark-grey) ${percentage}%)`;
     }
-
-    lengthSlider.addEventListener('input', (e) => {
+    
+    // Update event listener
+    elements.lengthSlider.addEventListener('input', (e) => {
         generator.length = +e.target.value;
-        lengthDisplay.textContent = e.target.value;
-        updateSliderBackground(lengthSlider);
+        elements.lengthDisplay.textContent = e.target.value;
+        updateSliderBackground(e.target);
     });
 
-    // Checkbox updates
-    Object.entries(checkboxes).forEach(([option, checkbox]) => {
+    Object.entries(elements.checkboxes).forEach(([option, checkbox]) => {
         checkbox.addEventListener('change', (e) => {
             generator.options[option] = e.target.checked;
         });
     });
 
-    // Function to check if at least one checkbox is selected
-    function isAnyOptionSelected() {
-        return Object.values(checkboxes).some(checkbox => checkbox.checked);
-    }
-
-    // Update generate button event listener
-    generateBtn.addEventListener('click', () => {
-        if (!isAnyOptionSelected()) {
-            passwordDisplay.textContent = 'Please select at least one option';
-            passwordDisplay.style.fontSize = '16px';
-            passwordDisplay.style.color = 'var(--red-1)';
+    elements.generateBtn.addEventListener('click', () => {
+        if (!Object.values(elements.checkboxes).some(checkbox => checkbox.checked)) {
+            elements.passwordDisplay.textContent = 'Please select at least one option';
+            elements.passwordDisplay.classList.add('error-message');
             return;
         }
-
-        passwordDisplay.style.color = 'var(--almost-white)'; // Reset color
-        const password = generator.generate();
-        passwordDisplay.textContent = password;
-        updateStrengthIndicator(password);
+        elements.passwordDisplay.classList.remove('error-message');
+        updatePassword(generator.generate());
     });
-    // Initial slider setup
-    updateSliderBackground(lengthSlider);
+
+    // Initial Setup
+    updateSliderBackground(elements.lengthSlider);
 });

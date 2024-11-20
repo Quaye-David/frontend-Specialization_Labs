@@ -1,7 +1,7 @@
 @font-face {
     font-family: "JetBrains Mono";
     src: url("./assets/fonts/JetBrainsMono-VariableFont_wght.ttf") format("truetype"),
-        url("./assets/fonts/JetBrainsMono-Regular.woff") format("truetype");
+        url("./assets/fonts/JetBrainsMono-Regular.woff") format("woff");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -11,7 +11,7 @@
 @font-face {
     font-family: "JetBrains Mono";
     src: url("./assets/fonts/static/JetBrainsMono-Bold.ttf") format("truetype"),
-        url("./assets/fonts/static/JetBrainsMono-Bold.ttf") format("woff");
+        url("./assets/fonts/static/JetBrainsMono-Bold.woff") format("woff");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -21,7 +21,7 @@
 @font-face {
     font-family: "JetBrains Mono";
     src: url("./assets/fonts/static/JetBrainsMono-BoldItalic.ttf") format("truetype"),
-        url("./assets/fonts/static/JetBrainsMono-BoldItalic.ttf") format("truetype");
+        url("./assets/fonts/static/JetBrainsMono-BoldItalic.ttf") format("woff");
     font-weight: 400;
     font-style: italic;
     font-display: swap;
@@ -31,7 +31,7 @@
 @font-face {
     font-family: "JetBrains Mono";
     src: url("./assets/fonts/static/JetBrainsMono-Bold.ttf") format("truetype"),
-        url("./assets/fonts/static/JetBrainsMono-Bold.ttf") format("truetype");
+        url("./assets/fonts/static/JetBrainsMono-Bold.ttf") format("woff");
     font-weight: 700;
     font-style: italic;
     font-display: swap;
@@ -54,6 +54,8 @@
     --very-dark-grey: #18171f;
     --dark-grey: #24232c;
     --body-font: "JetBrains Mono", monospace;
+    --heading-font: "JetBrains Mono", monospace;
+    --heading-font: "JetBrains Mono", monospace;
 }
 
 body {
@@ -77,13 +79,6 @@ body {
     height: 632px;
     text-align: center;
 }
-
-@media (max-width: 768px) {
-    .container {
-        height: 695px;
-    }
-}
-
 @media (max-width: 375px) {
     .container {
         width: 343px;
@@ -95,6 +90,11 @@ body {
     }
 }
 
+@media (max-width: 768px) {
+    .container {
+        height: 695px;
+    }
+}
 
 .title {
     font-size: 24px;
@@ -114,43 +114,72 @@ body {
 
 .password-display {
     font-size: 24px;
-    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
     background-color: var(--dark-grey);
     width: 100%;
-    padding: 1.5rem;
+    padding: 2rem;
     margin: 1rem 0 2rem 0;
 }
 
 .generated-password {
-    color: var(--almost-white);
-    font-size: 24px;
     font-family: var(--heading-font);
+    color: var(--grey);
+    transition: color 0.3s ease;
+}
+
+.has-password .generated-password {
+    color: var(--almost-white);
 }
 
 .copy-btn {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.copy-btn img {
+    filter: brightness(0) saturate(100%) invert(54%) sepia(7%) saturate(892%) hue-rotate(211deg) brightness(91%) contrast(82%);
+}
+
+.password-display.has-password .copy-btn {
+    opacity: 1;
+}
+
+.password-display.has-password .copy-btn:hover {
+    color: var(--neon-green);
+}
+
+.password-display.has-password .copy-btn img {
+    filter: none;
 }
 
 .copy-text {
-  color: var(--neon-green);
-  font-size: 18px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.1s ease, visibility 0.3s ease;
+    color: var(--neon-green);
+    font-size: 18px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease, visibility 0.3s ease;
+}
+
+.copy-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.copy-btn.disabled:hover {
+    filter: none;
 }
 
 .copy-text.show {
-  opacity: 1;
-  visibility: visible;
+    opacity: 1;
+    visibility: visible;
 }
 
 .sub-container {
@@ -160,7 +189,7 @@ body {
     flex-direction: column;
     width: 100%;
     background-color: var(--dark-grey);
-    padding: 1.5rem;
+    padding: 2rem;
 }
 
 .settings {
@@ -196,6 +225,7 @@ body {
     font-size: 32px;
     color: var(--neon-green);
 }
+
 .setting-input {
     width: 100%;
     border: none;
@@ -207,6 +237,7 @@ body {
     outline: none;
     transition: background 0.3s ease;
 }
+
 .setting-input::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -236,6 +267,7 @@ body {
     background: var(--very-dark-grey);
     border: 2px solid var(--neon-green);
 }
+
 .setting-input::-moz-range-track {
     background: transparent;
 }
@@ -245,6 +277,7 @@ body {
     background: transparent;
     border: none;
 }
+
 .options {
     display: flex;
     justify-content: center;
@@ -262,7 +295,6 @@ body {
 }
 
 .option input {
-    margin-right: 0.5rem;
     appearance: none;
     -webkit-appearance: none;
     width: 16px;
@@ -285,6 +317,11 @@ body {
     border-color: var(--neon-green);
 }
 
+.error-message {
+    color: var(--red-1);
+    font-size: 16px;
+}
+
 .option input:checked::after {
     content: url("./assets/images/icon-check.svg");
     position: absolute;
@@ -294,6 +331,7 @@ body {
     width: 15px;
     height: 14px;
 }
+
 .strength {
     display: flex;
     justify-content: space-between;
@@ -307,20 +345,20 @@ body {
 .strength-label {
     text-transform: uppercase;
     color: var(--grey);
-    margin-right: 1rem; /* Reduced from 4rem for better spacing */
+    margin-right: 1rem;
 }
 
 .strength-meter {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem; /* Add gap between label and bars */
+    gap: 0.4rem;
 }
 
 .bars-container {
     display: flex;
     gap: 8px;
-    margin-left: auto; /* Push bars to the right */
+    margin-left: auto;
 }
 
 .strength-bars {
@@ -329,26 +367,27 @@ body {
     border: 2px solid var(--almost-white);
     background-color: transparent;
 }
-/* Strength States */
+
 .strength-meter[data-strength="too-weak"] .strength-bars:nth-child(1) {
     background-color: var(--red-1);
-  
+
 }
 
 .strength-meter[data-strength="weak"] .strength-bars:nth-child(-n+2) {
     background-color: var(--orange-1);
-   
+
 }
 
 .strength-meter[data-strength="medium"] .strength-bars:nth-child(-n+3) {
     background-color: var(--yellow-1);
-   
+
 }
 
 .strength-meter[data-strength="strong"] .strength-bars {
     background-color: var(--neon-green);
- 
+
 }
+
 .generate-button {
     color: var(--very-dark-grey);
     background-color: var(--neon-green);
@@ -384,5 +423,5 @@ body {
 }
 
 .generate-button:hover img {
-    filter: invert(93%) sepia(98%) saturate(379%) hue-rotate(53deg) brightness(99%) contrast(109%);
+    filter: brightness(0) saturate(100%) invert(83%) sepia(34%) saturate(409%) hue-rotate(70deg) brightness(101%) contrast(106%);
 }
