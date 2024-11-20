@@ -15,7 +15,7 @@ const superman = {
 };
 
 // 3. Creating a Parent constructor function to streamline the object creation
-function Character(name, secretIdentity, powers) {
+function character(name, secretIdentity, powers) {
   // Basic checks for required fields
   if (!name || !secretIdentity || !powers?.length) {
     throw new Error('Missing required character info');
@@ -27,45 +27,45 @@ function Character(name, secretIdentity, powers) {
 }
 
 // 4. Using Prototypal Inheritance to extend the functionality of the superhero objects
-Character.prototype.usePower = function(powerName) {
+character.prototype.usePower = function(powerName) {
   console.log(`${this.name} is using ${powerName}`);
 };
 
-Character.prototype.revealIdentity = function() {
+character.prototype.revealIdentity = function() {
   console.log(`${this.name} is actually ${this.secretIdentity}`);
 };
 
 // Hero constructor
-function Superhero(name, secretIdentity, powers, weakness) {
-  Character.call(this, name, secretIdentity, powers);
+function superhero(name, secretIdentity, powers, weakness) {
+  character.call(this, name, secretIdentity, powers);
   this.weakness = weakness || 'Unknown';
 }
 
 // Villain constructor
-function SuperVillain(name, secretIdentity, powers, nemesis) {
-  Character.call(this, name, secretIdentity, powers);
+function superVillain(name, secretIdentity, powers, nemesis) {
+  character.call(this, name, secretIdentity, powers);
   this.nemesis = nemesis || 'Unknown';
 }
 
 // Set up inheritance
-Superhero.prototype = Object.create(Character.prototype);
-SuperVillain.prototype = Object.create(Character.prototype);
+superhero.prototype = Object.create(character.prototype);
+superVillain.prototype = Object.create(character.prototype);
 
 // Create some heroes
 const heroes = [
-  new Superhero(
+  new superhero(
     "Superman",
     "Clark Kent", 
     ["super strength", "flight", "heat vision"],
     "Kryptonite"
   ),
-  new Superhero(
+  new superhero(
     "Batman",
     "Bruce Wayne",
     ["martial arts", "gadgets"],
     "Joker"
   ),
-  new Superhero(
+  new superhero(
     "Spiderman",
     "Peter Parker",
     ["web swinging", "super strength"],
@@ -75,19 +75,19 @@ const heroes = [
 
 // Create some villains
 const villains = [
-  new SuperVillain(
+  new superVillain(
     "Lex Luthor",
     "Lex Luthor",
     ["genius intellect", "advanced technology"],
     "Superman"
   ),
-  new SuperVillain(
+  new superVillain(
     "Joker",
     "Unknown",
     ["chaos manipulation", "criminal mastermind"],
     "Batman"
   ),
-  new SuperVillain(
+  new superVillain(
     "Green Goblin",
     "Norman Osborn",
     ["enhanced strength", "advanced weapons"],
