@@ -1,7 +1,12 @@
-function CreateTimer(duration, elementId) {
+function createTimer(duration, elementId) {
   let remainingTime = duration;
   const element = document.getElementById(elementId);
   let timerInterval = null;
+
+if (!element || element.tagName !== 'DIV' || typeof element.className !== 'string') {
+        console.error('Element not found or invalid element.');
+        return;
+}
 
   const updateDisplay = () => {
       const minutes = Math.floor(remainingTime / 60);
@@ -13,7 +18,6 @@ function CreateTimer(duration, elementId) {
       if (timerInterval) {
           clearInterval(timerInterval);
       }
-      updateDisplay();
       timerInterval = setInterval(() => {
           remainingTime--;
           if (remainingTime <= 0) {
@@ -48,7 +52,7 @@ startBtn.addEventListener('click', function () {
       return;
   }
   errorMessage.textContent = '';
-  timerInstance = new CreateTimer(duration, 'timer-display');
+  timerInstance = new createTimer(duration, 'timer-display');
   timerInstance.start();
 });
 

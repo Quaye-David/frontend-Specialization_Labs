@@ -44,16 +44,21 @@
 
       btn.addEventListener('click', function handleClick() {
         const textContent = this.textContent;
+        const buttonId = this.id;
         console.log('Button text:', textContent);
+        console.log('Button id:', buttonId);
+        return [textContent, buttonId];
       });
 
       const handleClick = (event) => {
         const textContent = event.target.textContent;
+        const buttonId = event.target.id;
         console.log('Arrow function Button text:', textContent);
-        return textContent;
+        console.log('Arrow function Button id:', buttonId);
+        return [textContent, buttonId];
       };
 
-      console.log(`The arrow function returns undefined when using the this keyword because it's not binded to the function`);
+      console.log(`The arrow function returns undefined when using the this keyword because it's not bound to the function`);
 
       btnText.addEventListener('click', handleClick);
     </script>
