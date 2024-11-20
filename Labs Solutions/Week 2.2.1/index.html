@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary App</title>
+    <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+       <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <img class="logo__image" src="./assets/images/logo.svg" alt="logo"/>
+            </div>
+            <div class="theme-toggle">
+                <select class="theme-toggle__select" id="font-select">
+                    <option value="sans-serif">Sans Serif</option>
+                    <option value="serif">Serif</option>
+                    <option value="monospace">Mono</option>
+                    <img src="./assets/images/icon-arrow-down.svg" alt="arrow icon">
+                </select>
+                <span class="vertical-divider"></span>
+                <button class="theme-toggle__button" id="theme-switch">
+                    <span class="theme-toggle__toggler"></span>
+                    <img class="theme-toggle__icon" src="./assets/images/icon-moon.svg" alt="moon icon" />
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="search-section">
+            <form class="search-form">
+                <input 
+                    type="search" 
+                    id="search-input"
+                    placeholder="Search for any word..."
+                    required
+                >
+                <button type="submit" class="search-button">
+                   <img src="./assets/images/icon-search.svg" alt="search icon" />
+                </button>
+            </form>
+        </section>
+
+        <section class="results-section">
+            <div class="word-header">
+                <div class="word-info">
+                    <h1 class="word-title" aria-label="Word Title">Word Title</h1>
+                    <span class="phonetic"></span>
+                </div>
+                <button class="play-audio">
+                    <img src="./assets/images/icon-play.svg" alt="volume icon" />
+                </button>
+            </div>
+
+            <div class="meanings">
+                <div class="part-of-speech">
+                    <h2>noun</h2>
+                    <hr>
+                </div>
+                <div class="meaning-list">
+                    <h3>Meaning</h3>
+                    <ul class="definitions"></ul>
+                </div>
+                <div class="synonyms">
+                    <h3>Synonyms</h3>
+                    <div class="synonym-tags"></div>
+                </div>
+            </div>
+
+            <footer class="source">
+                <h3>Source</h3>
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                    <span class="source-url"></span>
+                   <img src="./assets/images/icon-new-window.svg" alt="link icon" />
+                </a>
+            </footer>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
