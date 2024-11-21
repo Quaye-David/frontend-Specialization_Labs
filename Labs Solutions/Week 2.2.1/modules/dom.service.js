@@ -61,6 +61,12 @@ export class DOMService {
                         </li>
                     `).join('')}
                 </ul>
+                ${meaning.synonyms && meaning.synonyms.length > 0 ? `
+                    <div class="synonyms">
+                        <span class="synonyms-label">Synonyms:</span>
+                        <span class="synonyms-list">${meaning.synonyms.join(', ')}</span>
+                    </div>
+                ` : ''}
             </div>
         `).join('');
     }

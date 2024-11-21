@@ -34,3 +34,12 @@ class DictionaryState {
 }
 
 export const state = new DictionaryState();
+
+/**
+ * The state.js module exports a DictionaryState class instance named state. The class has the following methods:
+ *  - setState: updates the current word in the state and notifies all listeners.
+ * - setFont: updates the current font in the state and notifies all font listeners.
+ * - subscribe: adds a listener to the state and returns a function to remove the listener.
+ * - subscribeFontChange: adds a font listener to the state and returns a function to remove the listener.
+ * - notify: notifies all listeners with the provided data.
+ */

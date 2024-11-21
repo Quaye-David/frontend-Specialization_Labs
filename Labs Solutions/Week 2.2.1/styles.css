@@ -154,3 +154,17 @@ body {
     color: var(--text-secondary);
     text-decoration: underline;
 }
+
+.synonyms {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.synonyms-label {
+    color: var(--text-secondary);
+    margin-right: 0.5rem;
+}
+
+.synonyms-list {
+    color: var(--accent-color);
+}
