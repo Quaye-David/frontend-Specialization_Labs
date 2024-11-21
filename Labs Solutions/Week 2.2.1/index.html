@@ -1,49 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dictionary App</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-        <header class="header">
-            <div class="header-top">
-                <h1>Dictionary App</h1>
-                <div class="header-controls">
-                    <select id="font-selector" class="font-selector">
-                        <option value="Inter">Inter</option>
-                        <option value="Lora">Lora</option>
-                        <option value="Inconsolata">Inconsolata</option>
-                    </select>
-                    <button id="theme-toggle" class="theme-toggle">
-                        <span class="light-icon">☀️</span>
-                        <span class="dark-icon">🌙</span>
-                    </button>
-                </div>
-            </div>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Search for a word...">
-                <button id="search-btn">Search</button>
-            </div>
-            
-        </header>
-        <main id="result-container">
-            <div class="word-details hidden">
-                <div class="word-header">
-                    <h2 id="word"></h2>
-                    <div class="phonetic">
-                        <span id="phonetic-text"></span>
-                        <button id="play-audio" class="play-button">🔊</button>
-                    </div>
-                </div>
-                <div class="meanings" id="meanings"></div>
-                <div class="source-link">
-                    <span>Source:</span>
-                    <a id="source-url" target="_blank" rel="noopener noreferrer"></a>
-                </div>
-            </div>
-        </main>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <div class="nav__logo">
+          <img
+            class="nav__logo-image"
+            src="./assets/images/logo.svg"
+            alt="Dictionary logo" />
+        </div>
+        <div class="nav__controls">
+          <div class="font-selector">
+            <select class="font-selector__select" id="font-selector">
+              <option value="Inter">Inter</option>
+              <option value="Lora">Lora</option>
+              <option value="Inconsolata">Inconsolata</option>
+            </select>
+            <img
+              class="font-selector__icon"
+              src="./assets/images/icon-arrow-down.svg"
+              alt="Select font" />
+          </div>
+          <span class="nav__divider"></span>
+          <div class="theme-toggle">
+            <button class="theme-toggle__button" id="theme-toggle">
+              <span class="theme-toggle__indicator"></span>
+            </button>
+            <img
+            class="theme-toggle__icon"
+            src="./assets/images/icon-moon.svg"
+            alt="Toggle theme" />
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main">
+      <div class="search">
+        <div class="search__container">
+          <input
+            type="text"
+            class="search__input"
+            id="search-input"
+            placeholder="Search for a word..." />
+          <button class="search__button" id="search-btn">Search</button>
+        </div>
+      </div>
+
+      <div class="word word--hidden" id="result-container">
+        <div class="word__header">
+          <h2 class="word__title" id="word"></h2>
+          <div class="word__phonetic">
+            <span class="word__phonetic-text" id="phonetic-text"></span>
+            <button class="word__audio-button" id="play-audio">
+              <span class="word__audio-icon">🔊</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="word__meanings" id="meanings"></div>
+
+        <div class="word__source">
+          <span class="word__source-label">Source:</span>
+          <a
+            class="word__source-link"
+            id="source-url"
+            target="_blank"
+            rel="noopener noreferrer">Source Link</a>
+        </div>
+      </div>
+    </main>
     <script src="script.js" type="module"></script>
-</body>
+  </body>
 </html>

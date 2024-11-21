@@ -1,4 +1,3 @@
-// api.service.js
 const API_BASE_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en';
 
 export async function fetchWord(word) {

@@ -1,170 +1,283 @@
 /* Add to styles.css */
 /* Import Variable Font */
 @font-face {
-    font-family: "Inconsolata";
-    src: url("./assets/fonts/inconsolata/Inconsolata-VariableFont_wdth\,wght.ttf")
+  font-family: "Inconsolata";
+  src: url("./assets/fonts/inconsolata/Inconsolata-VariableFont_wdth\,wght.ttf")
+    format("truetype-variations");
+  font-weight: 200 900;
+  font-variation-settings: "wdth" 75, "wght" 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/inter/Inter-VariableFont_slnt\,wght.ttf")
+    format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("./assets/fonts/lora/Lora-VariableFont_wght.ttf")
+      format("truetype-variations"),
+    url("./assets/fonts/lora/Lora-Italic-VariableFont_wght.ttf")
       format("truetype-variations");
-    font-weight: 200 900;
-    font-variation-settings: "wdth" 75, "wght" 200;
-    font-style: normal;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: "Inter";
-    src: url("./assets/fonts/inter/Inter-VariableFont_slnt\,wght.ttf")
-      format("truetype-variations");
-    font-weight: 100 900;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: "Lora";
-    src: url("./assets/fonts/lora/Lora-VariableFont_wght.ttf")
-        format("truetype-variations"),
-      url("./assets/fonts/lora/Lora-Italic-VariableFont_wght.ttf")
-        format("truetype-variations");
-    font-weight: 400 700;
-    font-style: normal, italic;
-  }
+  font-weight: 400 700;
+  font-style: normal, italic;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
-    /* Light theme variables */
-    --bg-color: #f5f5f5;
-    --text-color: #333;
-    --card-bg: #ffffff;
-    --shadow-color: rgba(0,0,0,0.1);
-    --button-bg: #4CAF50;
-    --button-text: #ffffff;
-    --input-bg: #ffffff;
-    --border-color: #ddd;
+  /* Light theme variables */
+  --background-color: #ffffff;
+  --text-color: #2d2d2d;
+  --accent-color: #a445ed;
+  --search-color: #f4f4f4;
+  --secondary-color: #e9e9e9;
+  --search-color: #f4f4f4;
+  --tertiary-color: #757575;
+  --warning-color: #ff5252;
+
+  /* Typography */
+  --fs-small: 0.875rem; /* 14px */
+  --fs-base: 1rem; /* 16px */
+  --fs-medium: 1.125rem; /* 18px */
+  --fs-large: 1.5rem; /* 24px */
+  --fs-xlarge: 2rem;
 }
 
 [data-theme="dark"] {
-    --bg-color: #1a1a1a;
-    --text-color: #ffffff;
-    --card-bg: #2d2d2d;
-    --shadow-color: rgba(0,0,0,0.3);
-    --button-bg: #5cb85c;
-    --button-text: #ffffff;
-    --input-bg: #3d3d3d;
-    --border-color: #444;
+  --background-color: #050505;
+  --text-color: #ffffff;
 }
 
 body {
-    background-color: var(--bg-color);
+    font-family: var(--font-family, 'Inter');
+    font-size: var(--fs-base);
+    line-height: 1.5;
+    background-color: var(--background-color);
     color: var(--text-color);
-}
+    padding: 1.5rem;
+    max-width: 100%;
+  }
 
-.word-details {
-    background-color: var(--card-bg);
-    box-shadow: 0 2px 5px var(--shadow-color);
-}
-
-.search-box input {
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-}
-
-.theme-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-    padding: 5px;
-}
-
-.header-top {
+  .header {
+    padding: 1rem 0;
+  }
+  
+  .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+  }
+  
+  .nav__logo-image {
+    width: 28px;
+    height: auto;
+  }
+  
+ /* Nav controls layout */
+.nav__controls {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
-[data-theme="dark"] .light-icon,
-[data-theme="light"] .dark-icon {
-    display: none;
+.nav__divider {
+  width: 1px;
+  height: 2rem;
+  background-color: var(--secondary-color);
+  margin: 0 1rem;
 }
 
-.header-controls {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
+/* Font selector styles */
 .font-selector {
-    padding: 5px 10px;
-    border-radius: 4px;
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+  position: relative;
+  width: 100px; /* Contain select width */
 }
 
-.header-top {
+.font-selector__select {
+  appearance: none;
+  font-family: var(--font-family, 'Inter');
+  font-size: var(--fs-base);
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 5px 20px 5px 5px; /* Right padding for arrow */
+  width: 100%;
+  outline: none; /* Remove focus outline */
+}
+
+/* Dropdown styling */
+.font-selector__select option {
+  font-family: var(--font-family, 'Inter');
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 10px;
+  min-width: 150px; /* Wider dropdown */
+}
+
+.font-selector__icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 12px;
+  height: 6px;
+}
+
+/* Theme toggle styles */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle__button {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: var(--tertiary-color);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.theme-toggle__indicator {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.theme-toggle__icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+/* Theme toggle state */
+[data-theme="dark"] .theme-toggle__indicator {
+  transform: translateX(20px);
+}
+
+[data-theme="dark"] .theme-toggle__button {
+    background-color: var(--accent-color);
+    }
+
+[data-theme="dark"] .theme-toggle__icon {
+    filter: brightness(0) saturate(100%) invert(34%) sepia(65%) saturate(1684%) hue-rotate(250deg) brightness(92%) contrast(102%);
+}
+
+  .search {
+    margin: 1.5rem 0;
+  }
+  
+  .search__container {
+    position: relative;
+  }
+  
+  .search__input {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--search-color);
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    font-size: var(--fs-base);
+  }
+  
+  .search__button {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Word result styles */
+  .word {
+    margin-top: 2rem;
+  }
+  
+  .word__header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.word-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.phonetic {
+    align-items: flex-start;
+  }
+  
+  .word__title {
+    font-size: var(--fs-large);
+    margin-bottom: 0.5rem;
+  }
+  
+  .word__phonetic {
     display: flex;
     align-items: center;
     gap: 1rem;
-}
-
-.play-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-}
-
-.definitions-list {
-    list-style-type: disc;
-    padding-left: 1.5rem;
-}
-
-.definition {
-    margin-bottom: 1rem;
-}
-
-.example {
-    color: var(--text-secondary);
-    font-style: italic;
-    margin-top: 0.5rem;
-}
-
-.source-link {
+  }
+  
+  /* Tablet styles */
+  @media (min-width: 768px) {
+    body {
+      padding: 2.5rem;
+    }
+  
+    .word__title {
+      font-size: var(--fs-xlarge);
+    }
+  
+    .search__input {
+      font-size: var(--fs-medium);
+    }
+  }
+  
+  /* Desktop styles */
+  @media (min-width: 1024px) {
+    body {
+      padding: 3.5rem;
+      max-width: 737px;
+      margin: 0 auto;
+    }
+  
+    .nav__logo-image {
+      width: 32px;
+    }
+  
+    .word {
+      margin-top: 3rem;
+    }
+  }
+  
+  /* Meanings section */
+  .word__meanings {
+    margin-top: 2rem;
+  }
+  
+  .meaning {
+    margin-bottom: 2rem;
+  }
+  
+  .meaning:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Source section */
+  .word__source {
     margin-top: 2rem;
     padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.9rem;
-}
-
-.source-link a {
-    color: var(--text-secondary);
-    text-decoration: underline;
-}
-
-.synonyms {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.synonyms-label {
-    color: var(--text-secondary);
-    margin-right: 0.5rem;
-}
-
-.synonyms-list {
-    color: var(--accent-color);
-}
+    border-top: 1px solid var(--secondary-color);
+    font-size: var(--fs-small);
+    color: var(--tertiary-color);
+  }
