@@ -4,94 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dictionary App</title>
-    <link rel="icon" href="./assets/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-       <header class="header">
-        <nav class="nav">
-            <div class="logo">
-                <img class="logo__image" src="./assets/images/logo.svg" alt="logo"/>
-            </div>
-            <div class="theme-toggle">
-                <select class="theme-toggle__select" id="font-select">
-                    <option value="sans-serif">Sans Serif</option>
-                    <option value="serif">Serif</option>
-                    <option value="monospace">Mono</option>
-                    <img src="./assets/images/icon-arrow-down.svg" alt="arrow icon">
-                </select>
-                <span class="vertical-divider"></span>
-                <button class="theme-toggle__button" id="theme-switch">
-                    <span class="theme-toggle__toggler"></span>
-                    <img class="theme-toggle__icon" src="./assets/images/icon-moon.svg" alt="moon icon" />
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container">
-        <section class="search-section">
-            <form class="search-form">
-                <input 
-                    type="search" 
-                    class="search-form__input"
-                    id="search-input"
-                    placeholder="Search for any word..."
-                    required
-                >
-                <button type="submit" class="search-form__button">
-                    <img class="search-form__button-icon" src="./assets/images/icon-search.svg" alt="search icon" />
-                </button>
-            </form>
-        </section>
-
-              <section class="results">
-            <div class="results__header">
-                <div class="results__word-info">
-                    <h1 class="results__title" aria-label="Word Title">Word Title</h1>
-                    <span class="results__phonetic">/ˈkiːbɔːd/</span>
-                </div>
-                <button class="results__audio-btn">
-                    <img class="results__audio-icon" src="./assets/images/icon-play.svg" alt="volume icon" />
-                    <img class="results__audio-icon" src="./assets/images/icon-play-hovered.svg" alt="icon-play-hovered" />
-                </button>
-            </div>
-        
-            <div class="results__meanings">
-                <div class="results__part-speech">
-                    <h2 class="results__part-speech-text">noun</h2>
-                    <hr class="results__divider">
-                </div>
-                <div class="results__meaning">
-                    <h3 class="results__meaning-title">Meaning</h3>
-                    <ul class="results__definition-list">
-                        <li class="results__definition-list-item">
-                            <span class="results__definition">A panel of keys that operate a computer or typewriter.</span>
-                        </li>
-                        <li class="results__definition-list-item">
-                            <span class="results__definition">A component of many instruments including the piano, organ, and harpsichord consisting of usually black and white keys that cause different tones to be produced when struck.</span>
-                        </li>
-                        <li class="results__definition-list-item">
-                            <span class="results__definition">A device with keys of a musical keyboard, used to control electronic sound-producing devices which may be built into or separate from the keyboard device.</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="results__synonyms">
-                    <h3 class="results__synonyms-title">Synonyms</h3>
-                    <div class="results__synonym-container">electronic keyboard</div>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1>Dictionary App</h1>
+                <div class="header-controls">
+                    <select id="font-selector" class="font-selector">
+                        <option value="Inter">Inter</option>
+                        <option value="Lora">Lora</option>
+                        <option value="Inconsolata">Inconsolata</option>
+                    </select>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <span class="light-icon">☀️</span>
+                        <span class="dark-icon">🌙</span>
+                    </button>
                 </div>
             </div>
-        
-            <footer class="results__source">
-                <h3 class="results__source-title">Source</h3>
-                <a class="results__source-link" href="#" target="_blank" rel="noopener noreferrer">
-                    <span class="results__source-url"></span>
-                    <img class="results__source-icon" src="./assets/images/icon-new-window.svg" alt="link icon" />
-                </a>
-            </footer>
-        </section>
-    </main>
-
-    <script src="script.js"></script>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search for a word...">
+                <button id="search-btn">Search</button>
+            </div>
+            
+        </header>
+        <main id="result-container">
+            <div class="word-details hidden">
+                <div class="word-header">
+                    <h2 id="word"></h2>
+                    <div class="phonetic">
+                        <span id="phonetic-text"></span>
+                        <button id="play-audio" class="play-button">🔊</button>
+                    </div>
+                </div>
+                <div class="meanings" id="meanings"></div>
+                <div class="source-link">
+                    <span>Source:</span>
+                    <a id="source-url" target="_blank" rel="noopener noreferrer"></a>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js" type="module"></script>
 </body>
 </html>

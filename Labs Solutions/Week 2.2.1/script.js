@@ -1,93 +1,73 @@
-// app.js
-import { appState } from './modules/state.js';
-import { ThemeManager } from './modules/themeManager.js';
-import { FontManager } from './modules/fontManager.js';
-import { DictionaryAPI } from './modules/api.js';
+// State management
+const state = {
+    currentWord: null
+};
 
-class DictionaryApp {
-  constructor() {
-    this.state = appState;
-    this.themeManager = new ThemeManager(this.state);
-    this.fontManager = new FontManager(this.state);
-    this.setupSearchForm();
-    this.setupStateSubscription();
-  }
+// DOM elements
+const searchInput = document.getElementById('search-input');
+const searchBtn = document.getElementById('search-btn');
+const resultContainer = document.querySelector('.word-details');
 
-  setupSearchForm() {
-    const form = document.querySelector('.search-form');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      await this.handleSearch();
-    });
-  }
-
-  async handleSearch() {
-    const input = document.getElementById('search-input');
-    const searchTerm = input.value.trim();
-    
-    if (!searchTerm) return;
-
-    this.state.setState({ loading: true, error: null });
-    
-    try {
-      const data = await DictionaryAPI.searchWord(searchTerm);
-      this.state.setState({ 
-        wordData: data[0],
-        loading: false 
-      });
-      this.updateUI(data[0]);
-    } catch (error) {
-      this.state.setState({ 
-        error: error.message,
-        loading: false 
-      });
-      this.showError(error.message);
-    }
-  }
-
-  updateUI(wordData) {
-    // Update word title
-    document.querySelector('.results__title').textContent = wordData.word;
-    
-    // Update phonetic
-    document.querySelector('.results__phonetic').textContent = 
-      wordData.phonetic || wordData.phonetics[0]?.text || '';
-    
-    // Update audio
-    const audioUrl = wordData.phonetics.find(p => p.audio)?.audio;
-    if (audioUrl) {
-      this.setupAudioButton(audioUrl);
-    }
-
-    // Update meanings
-    this.updateMeanings(wordData.meanings);
-    
-    // Update source
-    this.updateSource(wordData.sourceUrls);
-  }
-
-  setupAudioButton(audioUrl) {
-    const audioBtn = document.querySelector('.results__audio-btn');
-    const audio = new Audio(audioUrl);
-    
-    audioBtn.onclick = () => audio.play();
-  }
-
-  showError(message) {
-    const input = document.getElementById('search-input');
-    input.classList.add('search-form__input--error');
-    // Add error message display logic
-  }
-
-  setupStateSubscription() {
-    this.state.subscribe((state) => {
-      document.body.setAttribute('data-theme', state.theme);
-      document.body.style.setProperty('--font-family', state.font);
-    });
-  }
+// Mock API function (replace with actual API call)
+async function fetchWordDefinition(word) {
+    // Simulating API call with the provided data
+    const mockData = [
+        // Your provided JSON data here
+    ];
+    return mockData.find(item => item.word.toLowerCase() === word.toLowerCase());
 }
 
-// Initialize app
-document.addEventListener('DOMContentLoaded', () => {
-  new DictionaryApp();
+// Render functions
+function renderWord(data) {
+    if (!data) {
+        resultContainer.classList.add('hidden');
+        return;
+    }
+
+    document.getElementById('word').textContent = data.word;
+    document.getElementById('phonetic-text').textContent = data.phonetic || '';
+    
+    // Set audio if available
+    const audioElement = document.getElementById('pronunciation');
+    const audioSource = data.phonetics.find(p => p.audio)?.audio;
+    if (audioSource) {
+        audioElement.src = audioSource;
+        audioElement.style.display = 'block';
+    } else {
+        audioElement.style.display = 'none';
+    }
+
+    document.getElementById('origin').textContent = data.origin;
+
+    // Render meanings
+    const meaningsContainer = document.getElementById('meanings');
+    meaningsContainer.innerHTML = data.meanings.map(meaning => `
+        <div class="meaning">
+            <h3 class="part-of-speech">${meaning.partOfSpeech}</h3>
+            ${meaning.definitions.map(def => `
+                <div class="definition">
+                    <p>${def.definition}</p>
+                    ${def.example ? `<p class="example">Example: "${def.example}"</p>` : ''}
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+
+    resultContainer.classList.remove('hidden');
+}
+
+// Event handlers
+searchBtn.addEventListener('click', async () => {
+    const word = searchInput.value.trim();
+    if (!word) return;
+
+    const definition = await fetchWordDefinition(word);
+    state.currentWord = definition;
+    renderWord(definition);
+});
+
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        searchBtn.click();
+    }
 });
