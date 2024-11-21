@@ -1,81 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dictionary App</title>
     <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <header class="header">
-      <nav class="nav">
-        <div class="nav__logo">
-          <img
-            class="nav__logo-image"
-            src="./assets/images/logo.svg"
-            alt="Dictionary logo" />
-        </div>
-        <div class="nav__controls">
-          <div class="font-selector">
-            <select class="font-selector__select" id="font-selector">
-              <option value="Inter">Inter</option>
-              <option value="Lora">Lora</option>
-              <option value="Inconsolata">Inconsolata</option>
-            </select>
-            <img
-              class="font-selector__icon"
-              src="./assets/images/icon-arrow-down.svg"
-              alt="Select font" />
-          </div>
-          <span class="nav__divider"></span>
-          <div class="theme-toggle">
-            <button class="theme-toggle__button" id="theme-toggle">
-              <span class="theme-toggle__indicator"></span>
-            </button>
-            <img
-            class="theme-toggle__icon"
-            src="./assets/images/icon-moon.svg"
-            alt="Toggle theme" />
-          </div>
-        </div>
-      </nav>
+        <nav class="nav">
+            <div class="nav__logo">
+                <img class="nav__logo-image" src="./assets/images/logo.svg" alt="Dictionary logo" />
+            </div>
+            <div class="nav__controls">
+                <div class="font-selector">
+                    <select class="font-selector__select" id="font-selector">
+                        <option value="Inter">Inter</option>
+                        <option value="Lora">Lora</option>
+                        <option value="Inconsolata">Inconsolata</option>
+                    </select>
+                    <img class="font-selector__icon" src="./assets/images/icon-arrow-down.svg" alt="Select font" />
+                </div>
+                <span class="nav__divider"></span>
+                <div class="theme-toggle">
+                    <button class="theme-toggle__button" id="theme-toggle">
+                        <span class="theme-toggle__indicator"></span>
+                    </button>
+                    <img class="theme-toggle__icon" src="./assets/images/icon-moon.svg" alt="Toggle theme" />
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main class="main">
-      <div class="search">
-        <div class="search__container">
-          <input
-            type="text"
-            class="search__input"
-            id="search-input"
-            placeholder="Search for a word..." />
-          <button class="search__button" id="search-btn">Search</button>
-        </div>
-      </div>
+        <section class="search">
+            <div class="search__container">
+                <input type="text" class="search__input" id="search-input" placeholder="Search for any word..." />
+                <button class="search__button" id="search-btn">
+                    <img class="search-form__button-icon" src="./assets/images/icon-search.svg" alt="search icon" />
+                </button>
+                <span class="search__error" id="search-error"></span>
+            </div>
+        </section>
 
-      <div class="word word--hidden" id="result-container">
-        <div class="word__header">
-          <h2 class="word__title" id="word"></h2>
-          <div class="word__phonetic">
-            <span class="word__phonetic-text" id="phonetic-text"></span>
-            <button class="word__audio-button" id="play-audio">
-              <span class="word__audio-icon">🔊</span>
-            </button>
-          </div>
-        </div>
+        <section class="word word--hidden" id="result-container">
+            <div class="word__header">
+                <div class="word__info">
+                    <h2 class="word__title" id="word">Test</h2>
+                    <div class="word__phonetic">
+                        <span class="word__phonetic-text" id="phonetic-text">/ˈkiːbɔːd/</span>
+                    </div>
+                </div>
+                <button class="word__audio-button" id="play-audio">
+                    <img class="word__audio-icon" src="./assets/images/icon-play.svg" alt="volume icon" />
+                    <img class="word__audio-icon" src="./assets/images/icon-play-hovered.svg" alt="icon-play-hovered" />
+                </button>
+            </div>
 
-        <div class="word__meanings" id="meanings"></div>
+            <div class="word__meanings" id="meanings"></div>
 
-        <div class="word__source">
-          <span class="word__source-label">Source:</span>
-          <a
-            class="word__source-link"
-            id="source-url"
-            target="_blank"
-            rel="noopener noreferrer">Source Link</a>
-        </div>
-      </div>
+            <div class="word__source">
+                <span class="word__source-label">Source:</span>
+                <a class="word__source-link" id="source-url" target="_blank" rel="noopener noreferrer">Source Link</a>
+            </div>
+        </section>
     </main>
     <script src="script.js" type="module"></script>
-  </body>
+</body>
+
 </html>
