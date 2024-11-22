@@ -28,7 +28,7 @@ export class EventsService {
 
     validateInput(word) {
         if (!word) {
-            throw new Error('Please enter a word');
+            throw new Error('Whoops, can\'t be empty...');
         }
         if (!/^[a-zA-Z\s-]+$/.test(word)) {
             throw new Error('Please enter valid characters (a-z, A-Z, spaces, hyphens)');

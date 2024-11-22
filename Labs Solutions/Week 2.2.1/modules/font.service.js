@@ -4,7 +4,11 @@ import { state } from './state.js';
 export class FontService {
     constructor() {
         this.fontSelector = document.getElementById('font-selector');
-        this.fonts = ['Inter', 'Lora', 'Inconsolata'];
+        this.fonts = {
+            'Inter': 'var(--font-inter)',
+            'Lora': 'var(--font-lora)',
+            'Inconsolata': 'var(--font-inconsolata)'
+        };
         this.initialize();
     }
 
@@ -18,7 +22,7 @@ export class FontService {
     }
 
     setupFontSelector() {
-        this.fontSelector.innerHTML = this.fonts
+        this.fontSelector.innerHTML = Object.keys(this.fonts)
             .map(font => `<option value="${font}" ${font === state.currentFont ? 'selected' : ''}>${font}</option>`)
             .join('');
 
@@ -28,7 +32,7 @@ export class FontService {
     }
 
     applyFont(font) {
-        document.body.style.fontFamily = font;
+        document.documentElement.style.setProperty('--font-family', this.fonts[font]);
         this.fontSelector.value = font;
     }
 }
