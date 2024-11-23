@@ -78,6 +78,9 @@
 
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
+
+  --transition-duration: 0.3s;
+  --transition-timing: ease;
 }
 
 [data-theme="dark"] {
@@ -92,9 +95,47 @@ body {
     line-height: 1.5;
     background-color: var(--background-color);
     color: var(--text-color);
+    transition: 
+    background-color var(--transition-duration) var(--transition-timing),
+    color var(--transition-duration) var(--transition-timing);
     padding: 1.5rem;
     max-width: 100%;
   }
+
+.search__input,
+.font-selector__select,
+.word__title,
+.word__phonetic-text,
+.meaning__part-speech-text,
+.results__definition,
+.results__source-title,
+.results__source-link,
+.not-found__title,
+.not-found__message {
+  transition: color var(--transition-duration) var(--transition-timing);
+}
+
+.search__input,
+.meaning__divider,
+.results__source {
+  transition: 
+    background-color var(--transition-duration) var(--transition-timing),
+    border-color var(--transition-duration) var(--transition-timing);
+}
+
+.theme-toggle {
+  transition: background-color var(--transition-duration) var(--transition-timing);
+}
+
+.theme-toggle__indicator {
+  transition: 
+    transform var(--transition-duration) var(--transition-timing),
+    background-color var(--transition-duration) var(--transition-timing);
+}
+
+.nav__divider {
+  transition: background-color var(--transition-duration) var(--transition-timing);
+}
 
 .header {
   padding: 1rem 0;
@@ -613,4 +654,43 @@ body {
   .word {
     margin-top: 3rem;
   }
+}
+
+.word--hidden{
+    display: none;
+}
+
+.not-found {
+    text-align: center;
+    padding: 2rem;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.not-found--hidden {
+    display: none;
+    opacity: 0;
+}
+
+.not-found__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.not-found__emoji {
+    font-size: 4rem;
+}
+
+.not-found__title {
+    font-size: var(--fs-heading-m);
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.not-found__message {
+    color: var(--tertiary-color);
+    font-size: var(--fs-body-m);
+    line-height: var(--lh-body-m);
 }

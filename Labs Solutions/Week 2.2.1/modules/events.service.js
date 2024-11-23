@@ -1,6 +1,7 @@
 // events.service.js
 import { fetchWord } from './api.service.js';
 import { state } from './state.js';
+import { DOMService } from './dom.service.js';
 export class EventsService {
     constructor(domService) {
        this.domService = domService;
@@ -42,25 +43,31 @@ export class EventsService {
         try {
             const word = this.searchInput.value.trim();
             this.validateInput(word);
-
+    
             if (this.isLoading) return;
             this.isLoading = true;
             this.setLoadingState(true);
-
+    
             const definition = await fetchWord(word);
-            state.setState(definition);
-
+            if (definition) {
+                // Hide not found container first
+                this.domService.notFoundContainer.classList.add('not-found--hidden');
+                // Update state and show results
+                state.setState(definition);
+                this.domService.showResults();
+            }
         } catch (error) {
-            let errorMessage = 'An unexpected error occurred';
+            // Always hide results first
+            this.domService.resultContainer.classList.add('word--hidden');
             
             if (error.type === 'NOT_FOUND') {
-                errorMessage = `Sorry, we couldn't find definitions for "${this.searchInput.value}"`;
-            } else if (error.message) {
-                errorMessage = error.message;
+                this.domService.showNotFound(
+                    `Sorry, we couldn't find definitions for "${this.searchInput.value}"`
+                );
+            } else {
+                this.searchInput.classList.add('search__input--error');
+                this.domService.handleError(error.message, error);
             }
-
-            this.searchInput.classList.add('search__input--error');
-            this.domService.handleError(errorMessage);
         } finally {
             this.isLoading = false;
             this.setLoadingState(false);
