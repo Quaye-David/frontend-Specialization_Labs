@@ -18,7 +18,6 @@ class DictionaryApp {
             this.domService.renderWord(wordData);
         });
 
-        this.initializeWordOfDay();
     }
 
     async initializeWordOfDay() {
@@ -32,3 +31,4 @@ class DictionaryApp {
 }
 
 const app = new DictionaryApp();
+app.initializeWordOfDay();

@@ -61,9 +61,7 @@ export class EventsService {
             this.domService.resultContainer.classList.add('word--hidden');
             
             if (error.type === 'NOT_FOUND') {
-                this.domService.showNotFound(
-                    `Sorry, we couldn't find definitions for "${this.searchInput.value}"`
-                );
+                this.domService.showNotFound();
             } else {
                 this.searchInput.classList.add('search__input--error');
                 this.domService.handleError(error.message, error);
