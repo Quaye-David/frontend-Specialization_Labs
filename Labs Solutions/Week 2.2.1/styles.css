@@ -174,8 +174,8 @@ body {
     background: transparent;
     color: var(--text-color);
     cursor: pointer;
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 18px 20px;
+    border-radius: 10px;
     outline: none;
   }
   
@@ -206,7 +206,7 @@ body {
     font-family: var(--font-family);
     color: var(--text-color);
     padding: 12px 15px;
-    min-width: 150px;
+    min-width: 200px;
     background-color: var(--background-color);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -310,7 +310,7 @@ body {
   font-size: var(--fs-base);
   font-weight: bold;
   color: var(--text-color);
-  transition: 0.3s border-color ease;
+  transition: background-color var(--transition-duration) var(--transition-timing);
 }
 
 .search__input:focus {
