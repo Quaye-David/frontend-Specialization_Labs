@@ -1,7 +1,6 @@
 // events.service.js
 import { fetchWord } from './api.service.js';
 import { state } from './state.js';
-import { DOMService } from './dom.service.js';
 export class EventsService {
     constructor(domService) {
        this.domService = domService;
