@@ -1,0 +1,201 @@
+:root {
+    --background-color: #f0f4f8;
+    --clock-bg-color: #ffffff;
+    --text-color: #333;
+    --digital-text-color : #d8d8d8;
+    --primary-color:  rgb(175, 175, 175);
+    --secondary-color:  rgb(74, 74, 74);
+    --shadow-color: rgb(74, 74, 74);
+    --border-radius: 12px;
+    --font-family: "Arial", sans-serif;
+    --border-color: rgb(74, 74, 74);
+  }
+
+  body {
+    font-family: var(--font-family);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: url("./assets/wallpapaer\ 2.jpg");
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+  }
+
+  .clock-container {
+    background: var(--clock-bg-color);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 10px 10px 0px var(--shadow-color);
+    text-align: center;
+    min-width: 320px;
+  }
+
+  #digital-display {
+    font-size: 4rem;
+    margin: 1rem 0;
+    font-family: monospace;
+    color: var(--digital-text-color);
+    background-color: var(--shadow-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: inset 5px 5px 8px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .analog-clock {
+    border-radius: 50%;
+    background: var(--clock-bg-color);
+    border: 5px solid var(--clock-bg-color);
+    box-shadow: inset 3px 3px 8px 0 var(--shadow-color);
+    margin: 1rem 0;
+  }
+
+  .clock-face {
+    fill: var(--clock-bg-color);
+    stroke: var(--text-color);
+    stroke-width: 2;
+  }
+
+  .hand {
+    transform-origin: 100px 100px;
+  }
+
+  .hour-markers text {
+    font-size: 12px;
+    text-anchor: middle;
+    fill: var(--text-color);
+  }
+
+  .controls {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+/* Existing Button Styles */
+button {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 5px 5px 0px var(--shadow-color);
+    font-size: 1rem;
+    flex: 0 1 auto; /* Prevents buttons from stretching */
+}
+
+
+button:hover {
+    border: 2px solid var(--primary-color);
+    box-shadow: 5px 5px 0px var(--shadow-color);
+    background: var(--secondary-color);
+    color: white;
+}
+
+button:active {
+    transform: translateY(2px) translateX(2px);
+    box-shadow: 7px 7px 0px var(--shadow-color);
+    background: var(--accent-color);
+    color: white;
+}
+/* Alarm Section Styles */
+.alarm-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    gap: 1rem; /* Space between items */
+}
+
+#alarm-time {
+    flex: 1 1 200px;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border-color);
+    background: var(--primary-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s ease, background 0.3s ease;
+}
+
+#alarm-time:focus {
+    border: 2px solid var(--accent-color);
+    background: var(--secondary-color);
+    color: white;
+}
+
+#set-alarm {
+    flex: 0 0 auto; 
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    border: none;
+    background: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 5px 5px 0px var(--shadow-color);
+}
+
+#set-alarm:hover {
+    background: var(--secondary-color);
+    color: white;
+}
+
+#set-alarm:active {
+    transform: translateY(-2px) translateX(-2px);
+    box-shadow: 7px 7px 0px var(--shadow-color);
+    background: var(--accent-color);
+    color: white;
+}
+
+#set-alarm .icon {
+    font-size: 1.2rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    .alarm-section {
+        flex-direction: column; /* Stacks items vertically on small screens */
+        padding-top: 1rem;
+    }
+
+    #alarm-time {
+        width: 100%; /* Full width on small screens */
+    }
+
+    #set-alarm {
+        width: 100%; /* Full width button on small screens */
+        justify-content: center;
+    }
+}
+
+  .hidden {
+    display: none;
+  }
+
+  .icon {
+    font-size: 1.2rem;
+  }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Master Clock</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="clock-container">
+      <div id="digital-display">00:00:00</div>
+
+      <div class="clock">
+        <div class="wrap">
+          <span class="hour"></span>
+          <span class="minute"></span>
+          <span class="second"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <svg
+        id="analog-display"
+        class="analog-clock hidden"
+        viewBox="0 0 200 200">
+        <circle class="clock-face" cx="100" cy=" 100" r="95" />
+
+        <g class="hour-markers">
+          <text x="100" y="17">12</text>
+          <text x="185" y="100">3</text>
+          <text x="100" y="185">6</text>
+          <text x="15" y="100">9</text>
+        </g>
+
+        <line
+          class="hand hour-hand"
+          x1="100"
+          y1="100"
+          x2="100"
+          y2="50"
+          stroke="#333"
+          stroke-width="4"
+          stroke-linecap="round" />
+        <line
+          class="hand minute-hand"
+          x1="100"
+          y1="100"
+          x2="100"
+          y2="40"
+          stroke="#666"
+          stroke-width="3"
+          stroke-linecap="round" />
+        <line
+          class="hand second-hand"
+          x1="100"
+          y1="100"
+          x2="100"
+          y2="30"
+          stroke="#e74c3c"
+          stroke-width="2"
+          stroke-linecap="round" />
+
+        <circle cx="100" cy="100" r="3" fill="#333" />
+      </svg>
+
+      <div class="controls">
+        <button id="toggle-display">
+          <i class="fas fa-sync-alt icon"></i> Toggle Analog/Digital
+        </button>
+        <button id="toggle-format">
+          <i class="fas fa-clock icon"></i> Toggle 12/24 Hour
+        </button>
+        <button id="change-color">
+          <i class="fas fa-paint-brush icon"></i> Change Color
+        </button>
+      </div>
+      <div class="alarm-section">
+        <input type="time" id="alarm-time" />
+        <button id="set-alarm">
+          <i class="fas fa-bell icon"></i> Set Alarm
+        </button>
+      </div>
+    </div>
+  </body>
+
+  <script src="script.js"></script>
+</html>
