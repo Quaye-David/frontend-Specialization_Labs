@@ -79,6 +79,7 @@ body {
     height: 632px;
     text-align: center;
 }
+
 @media (max-width: 375px) {
     .container {
         width: 343px;
