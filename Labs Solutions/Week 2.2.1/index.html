@@ -10,22 +10,23 @@
 
 <body>
     <header class="header">
-        <nav class="nav">
+        <nav class="nav" aria-label="Main Navigation">
             <div class="nav__logo">
                 <img class="nav__logo-image" src="./assets/images/logo.svg" alt="Dictionary logo" />
             </div>
             <div class="nav__controls">
                 <div class="font-selector">
-                    <select class="font-selector__select" id="font-selector">
+                    <label for="font-selector" class="visually-hidden">Select Font</label>
+                    <select class="font-selector__select" id="font-selector" aria-label="Select Font">
                         <option value="Inter">Inter</option>
                         <option value="Lora">Lora</option>
                         <option value="Inconsolata">Inconsolata</option>
                     </select>
                     <img class="font-selector__icon" src="./assets/images/icon-arrow-down.svg" alt="Select font" />
                 </div>
-                <span class="nav__divider"></span>
+                <span class="nav__divider" aria-hidden="true"></span>
                 <div class="theme-toggle">
-                    <button class="theme-toggle__button" id="theme-toggle">
+                    <button class="theme-toggle__button" id="theme-toggle" aria-label="Toggle Theme">
                         <span class="theme-toggle__indicator"></span>
                     </button>
                     <img class="theme-toggle__icon" src="./assets/images/icon-moon.svg" alt="Toggle theme" />
@@ -35,52 +36,55 @@
     </header>
 
     <main class="main">
-        <section class="search">
+        <section class="search" aria-labelledby="search-heading">
+            <h1 id="search-heading" class="visually-hidden">Search for a Word</h1>
             <div class="search__container">
-                <input type="text" class="search__input" id="search-input" placeholder="Search for any word..." />
-                <button class="search__button" id="search-btn">
-                    <img class="search-form__button-icon" src="./assets/images/icon-search.svg" alt="search icon" />
+                <input type="text" class="search__input" id="search-input" placeholder="Search for any word..." aria-label="Search for any word" />
+                <button class="search__button" id="search-btn" aria-label="Search">
+                    <img class="search-form__button-icon" src="./assets/images/icon-search.svg" alt="Search icon" />
                 </button>
-                <span class="search__error" id="search-error"></span>
+                <span class="search__error" id="search-error" role="alert" aria-live="assertive"></span>
             </div>
         </section>
 
-        <section class="not-found not-found--hidden" id="not-found-container">
+        <output class="not-found not-found--hidden" id="not-found-container" aria-labelledby="not-found-title">
             <div class="not-found__content">
-                <span class="not-found__emoji">😕</span>
-                <h3 class="not-found__title">No Definitions Found</h3>
+                <span class="not-found__emoji" aria-hidden="true">😕</span>
+                <h2 class="not-found__title" id="not-found-title">No Definitions Found</h2>
                 <p class="not-found__message" id="not-found-message">
-                    Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again at later time or head to the web instead.
+                    Sorry pal, we couldn't find definitions for the word you were looking for. You can try the search again at a later time or head to the web instead.
                 </p>
             </div>
-        </section>
+        </output>
 
-        <section class="word" id="result-container">
-            <div class="word__header">
+        <article class="word" id="result-container">
+            <header class="word__header">
                 <div class="word__info">
-                    <span class="word__title" id="word"></span>
+                    <h2 class="word__title" id="word" aria-live="polite">Word Title</h2>
                     <div class="word__phonetic">
                         <span class="word__phonetic-text" id="phonetic-text"></span>
                     </div>
                 </div>
-                <button class="word__audio-button" id="play-audio">
-                    <img class="word__audio-icon" src="./assets/images/icon-play.svg" alt="icon-play" />
-                    <img class="word__audio-icon" src="./assets/images/icon-play-hovered.svg" alt="icon-play-hovered" />
+                <button class="word__audio-button" id="play-audio" aria-label="Play Pronunciation">
+                    <img class="word__audio-icon" src="./assets/images/icon-play.svg" alt="Play icon" />
+                    <img class="word__audio-icon" src="./assets/images/icon-play-hovered.svg" alt="Play hovered icon" />
                 </button>
-            </div>
+            </header>
 
-            <div class="word__meanings" id="meanings"></div>
- 
-                    <footer class="results__source">
-                        <h3 class="results__source-title">Source</h3>
-                        <a class="results__source-link"  target="_blank" rel="noopener noreferrer">
-                            <span class="results__source-url" id="source-url"></span>
-                            <img class="results__source-icon" src="assets/images/icon-new-window.svg" alt="link icon" />
-                        </a>
-                    </footer>
-        </section>
+            <section class="word__meanings" id="meanings" aria-labelledby="meanings-heading">
+                <h3 id="meanings-heading" class="visually-hidden">Meanings</h3>
+                <!-- Meanings content will be injected here -->
+            </section>
+
+            <footer class="results__source">
+                <h3 class="results__source-title">Source</h3>
+                <a class="results__source-link" target="_blank" rel="noopener noreferrer" aria-label="Visit Source URL">
+                    <span class="results__source-url" id="source-url"></span>
+                    <img class="results__source-icon" src="assets/images/icon-new-window.svg" alt="Open in new window icon" />
+                </a>
+            </footer>
+        </article>
     </main>
     <script src="script.js" type="module"></script>
 </body>
-
 </html>

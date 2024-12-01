@@ -1,5 +1,3 @@
-/* Add to styles.css */
-/* Import Variable Font */
 @font-face {
   font-family: "Inconsolata";
   src: url("./assets/fonts/inconsolata/Inconsolata-VariableFont_wdth\,wght.ttf")
@@ -45,11 +43,11 @@
   --tertiary-color: #757575;
   --warning-color: #ff5252;
 
-   /* Font families */
-   --font-inter: 'Inter', sans-serif;
-   --font-lora: 'Lora', serif;
-   --font-inconsolata: 'Inconsolata', monospace;
-   --font-family: var(--font-inter); /* default font */
+  /* Font families */
+  --font-inter: "Inter", sans-serif;
+  --font-lora: "Lora", serif;
+  --font-inconsolata: "Inconsolata", monospace;
+  --font-family: var(--font-inter);
 
   /* Typography */
   --fs-heading-l: 4rem;
@@ -90,17 +88,17 @@
 }
 
 body {
-    font-family: var(--font-family);
-    font-size: var(--fs-base);
-    line-height: 1.5;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    transition: 
-    background-color var(--transition-duration) var(--transition-timing),
+  font-family: var(--font-family);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-duration)
+      var(--transition-timing),
     color var(--transition-duration) var(--transition-timing);
-    padding: 1.5rem;
-    max-width: 100%;
-  }
+  padding: 1.5rem;
+  max-width: 100%;
+}
 
 .search__input,
 .font-selector__select,
@@ -118,8 +116,8 @@ body {
 .search__input,
 .meaning__divider,
 .results__source {
-  transition: 
-    background-color var(--transition-duration) var(--transition-timing),
+  transition: background-color var(--transition-duration)
+      var(--transition-timing),
     border-color var(--transition-duration) var(--transition-timing);
 }
 
@@ -139,9 +137,9 @@ body {
 }
 
 @media screen and (max-width: 767px) {
-    .nav__logo-image {
-        width: 28px;
-    }
+  .nav__logo-image {
+    width: 28px;
+  }
 }
 
 .nav__controls {
@@ -154,98 +152,107 @@ body {
   height: 2rem;
   background-color: var(--secondary-color);
   margin: 0 1rem;
-  transition: background-color var(--transition-duration) var(--transition-timing);
+  transition: background-color var(--transition-duration)
+    var(--transition-timing);
 }
 
 .font-selector {
-    position: relative;
-    width: auto;
+  position: relative;
+  width: auto;
 }
-/* Select Element */
+
 .font-selector__select {
-    appearance: none;
-    font-family: inherit;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: var(--fs-small);
-    border: none;
-    background: transparent;
-    color: var(--text-color);
-    cursor: pointer;
-    padding: 18px 20px;
-    border-radius: 10px;
-    outline: none;
-  }
-  
-  /* Custom styling for the dropdown list */
-  .font-selector__select:focus {
-    outline: none;
-  }
-  
-  /* Option styles with specific font families */
-  .font-selector__select option[value="default"] {
-    font-family: var(--font-family, "Inter");
-  }
-  
-  .font-selector__select option[value="Inter"] {
-    font-family: "Inter", sans-serif;
-  }
-  
-  .font-selector__select option[value="Lora"] {
-    font-family: "Lora", serif;
-  }
-  
-  .font-selector__select option[value="Inconsolata"] {
-    font-family: "Inconsolata", monospace;
-  }
-  
-  /* Enhanced dropdown styling */
-  .font-selector__select option {
-    font-family: var(--font-family);
-    color: var(--text-color);
-    padding: 12px 15px;
-    min-width: 200px;
-    background-color: var(--background-color);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s ease;
-  }
-  
-  /* Hover state for options */
-  .font-selector__select option:hover {
-    background-color: transparent;
-    border-bottom-color: var(--accent-color, #A445ED);
-  }
-  
-  /* Dropdown list container styling */
-  .font-selector__select:focus > option {
-    box-shadow: 0 4px 15px var(--accent-color, #A445ED);
-  }
-  
-  /* Arrow icon */
-  .font-selector__icon {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    width: 15px;
-    height: auto;
-    transition: transform 0.2s ease;
-  }
-  
-  /* Rotate arrow when select is opened */
-  .font-selector__select:focus + .font-selector__icon {
-    transform: translateY(-50%) rotate(180deg);
-  }
+  appearance: none;
+  font-family: inherit;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-small);
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 18px 20px;
+  border-radius: 10px;
+  outline: none;
+}
+
+.font-selector__select:focus {
+  outline: none;
+}
+
+.font-selector__select option[value="default"] {
+  font-family: var(--font-family, "Inter");
+}
+
+.font-selector__select option[value="Inter"] {
+  font-family: "Inter", sans-serif;
+}
+
+.font-selector__select option[value="Lora"] {
+  font-family: "Lora", serif;
+}
+
+.font-selector__select option[value="Inconsolata"] {
+  font-family: "Inconsolata", monospace;
+}
+
+.font-selector__select option {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  padding: 12px 15px;
+  min-width: 200px;
+  background-color: var(--background-color);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.font-selector__select option:hover {
+  background-color: transparent;
+  border-bottom-color: var(--accent-color, #a445ed);
+}
+
+.font-selector__select:focus > option {
+  box-shadow: 0 4px 15px var(--accent-color, #a445ed);
+}
+
+/* Arrow icon */
+.font-selector__icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 15px;
+  height: auto;
+  transition: transform 0.2s ease;
+}
+
+/* Rotate arrow when select is opened */
+.font-selector__select:focus + .font-selector__icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .theme-toggle {
   display: flex;
   align-items: center;
-  transition: background-color var(--transition-duration) var(--transition-timing);
+  transition: background-color var(--transition-duration)
+    var(--transition-timing);
 }
 
 .theme-toggle__button {
@@ -267,9 +274,8 @@ body {
   height: 14px;
   background-color: white;
   border-radius: 50%;
-  transition: 
-  transform var(--transition-duration) var(--transition-timing),
-  background-color var(--transition-duration) var(--transition-timing);
+  transition: transform var(--transition-duration) var(--transition-timing),
+    background-color var(--transition-duration) var(--transition-timing);
 }
 
 .theme-toggle__icon {
@@ -310,7 +316,8 @@ body {
   font-size: var(--fs-base);
   font-weight: bold;
   color: var(--text-color);
-  transition: background-color var(--transition-duration) var(--transition-timing);
+  transition: background-color var(--transition-duration)
+    var(--transition-timing);
 }
 
 .search__input:focus {
@@ -648,41 +655,41 @@ body {
   }
 }
 
-.word--hidden{
-    display: none;
+.word--hidden {
+  display: none;
 }
 
 .not-found {
-    text-align: center;
-    padding: 2rem;
-    opacity: 1;
-    transition: opacity 0.3s ease;
+  text-align: center;
+  padding: 2rem;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .not-found--hidden {
-    display: none;
-    opacity: 0;
+  display: none;
+  opacity: 0;
 }
 
 .not-found__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .not-found__emoji {
-    font-size: 4rem;
+  font-size: 4rem;
 }
 
 .not-found__title {
-    font-size: var(--fs-heading-m);
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
+  font-size: var(--fs-heading-m);
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
 }
 
 .not-found__message {
-    color: var(--tertiary-color);
-    font-size: var(--fs-body-m);
-    line-height: var(--lh-body-m);
+  color: var(--tertiary-color);
+  font-size: var(--fs-body-m);
+  line-height: var(--lh-body-m);
 }

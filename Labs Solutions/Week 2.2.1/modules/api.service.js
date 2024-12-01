@@ -26,6 +26,10 @@ export async function fetchWord(word) {
         if (error instanceof APIError) {
             throw error;
         }
+        if (error instanceof TypeError) {
+            // Throws a typed error when there is a network issue
+            throw new APIError('Network Error: Please check your connection.', 'NETWORK_ERROR');
+        }
         throw new APIError(error.message, 'API_ERROR');
     }
 }

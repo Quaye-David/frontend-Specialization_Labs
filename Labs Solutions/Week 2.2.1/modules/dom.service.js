@@ -1,3 +1,4 @@
+// dom.service.js
 export class DOMService {
   constructor() {
     this.resultContainer = document.getElementById("result-container");
@@ -6,7 +7,6 @@ export class DOMService {
     this.playButton = document.getElementById("play-audio");
     this.searchError = document.getElementById("search-error");
     this.notFoundContainer = document.getElementById("not-found-container");
-    this.searchError = document.getElementById("search-error");
     this.audio = new Audio();
 
     if (!this.resultContainer) {
@@ -58,6 +58,8 @@ export class DOMService {
       }
 
       this.resultContainer.classList.remove("word--hidden");
+      this.showResults();
+      this.hideError();
     } catch (error) {
       console.error("Error rendering word:", error);
       this.handleError("Failed to display word information");
@@ -71,42 +73,42 @@ export class DOMService {
     meaningsContainer.innerHTML = meanings
       .map(
         (meaning) => `
-                <div class="meaning">
-                    <div class="meaning__part-speech">
-                        <h3 class="meaning__part-speech-text">${
-                          meaning.partOfSpeech
-                        }</h3>
-                            <hr class="meaning__divider">
-                    </div>
-                    <div class="results__meaning">
-                        <h3 class="results__meaning-title">Meaning</h3>
-                        <ul class="results__definition-list">
+            <div class="meaning">
+                <div class="meaning__part-speech">
+                    <h3 class="meaning__part-speech-text">
+                        ${meaning.partOfSpeech}
+                    </h3>
+                    <hr class="meaning__divider">
+                </div>
+                <div class="results__meaning">
+                    <h3 class="results__meaning-title">Meaning</h3>
+                    <ul class="results__definition-list">
                         ${meaning.definitions
                           .map(
                             (def) => `
-                        <li class="results__definition-list-item">
-                            <p class="results__definition">${def.definition}</p>
-                            ${
-                              def.example
-                                ? `<p class="definition__example">"${def.example}"</p>`
-                                : ""
-                            }
-                        </li>
-                    `
+                            <li class="results__definition-list-item">
+                                <p class="results__definition">${def.definition}</p>
+                                ${
+                                  def.example
+                                    ? `<p class="definition__example">"${def.example}"</p>`
+                                    : ""
+                                }
+                            </li>
+                        `
                           )
                           .join("")}
-                </ul>
+                    </ul>
                 </div>
                 ${
                   meaning.synonyms && meaning.synonyms.length > 0
                     ? `
-                   <div class="results__synonyms">
+                    <div class="results__synonyms">
                         <span class="results__synonyms-title">Synonyms:</span>
                         <span class="results__synonym-container">${meaning.synonyms.join(
                           ", "
                         )}</span>
                     </div>
-                `
+                    `
                     : ""
                 }
             </div>
@@ -127,7 +129,7 @@ export class DOMService {
     if (messageElement && message) {
         messageElement.textContent = message;
     }
-}
+  }
 
   showResults() {
     // Show results container
@@ -140,28 +142,29 @@ export class DOMService {
   handleError(message, error) {
     // Show error message in search input
     if (this.searchError) {
-        this.searchError.textContent = message;
-        this.searchError.classList.add('search__error--visible');
+      this.searchError.textContent = message;
+      this.searchError.classList.add('search__error--visible');
     }
 
-    // Handle different error types
-    if (error?.type === 'NOT_FOUND') {
-        // Hide results first
-        this.resultContainer.classList.add('word--hidden');
-        // Then show not found message
-        this.showNotFound(message);
+    if (error?.type === 'NOT_FOUND' || error?.type === 'NETWORK_ERROR') {
+      // Hide results first
+      this.resultContainer.classList.add('word--hidden');
+      // Then show not found message
+      this.showNotFound(message);
     } else {
-        // For other errors, hide both containers
-        this.resultContainer.classList.add('word--hidden');
-        this.notFoundContainer.classList.add('not-found--hidden');
-        this.showError(message);
+      // For other errors, hide both containers
+      this.resultContainer.classList.add('word--hidden');
+      this.notFoundContainer.classList.add('not-found--hidden');
+      this.showError(message);
     }
-}
-
+  }
 
   hideError() {
     if (this.searchError) {
       this.searchError.classList.remove("search__error--visible");
     }
+  }
+  showError(message) {
+    console.error(message);
   }
 }
