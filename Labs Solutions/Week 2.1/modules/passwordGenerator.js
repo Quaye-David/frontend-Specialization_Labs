@@ -4,29 +4,31 @@ const CHAR_SETS = {
   numbers: '0123456789',
   symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
 };
+
 export class PasswordGenerator {
-  constructor() {
-    this.length = 10;
+  constructor(options = {}) {
+    this.length = options.length || 10;
     this.options = {
-      uppercase: true,
-      lowercase: true,
-      numbers: true,
-      symbols: false
+      uppercase: options.uppercase !== undefined ? options.uppercase : true,
+      lowercase: options.lowercase !== undefined ? options.lowercase : true,
+      numbers: options.numbers !== undefined ? options.numbers : true,
+      symbols: options.symbols !== undefined ? options.symbols : false
     };
   }
 
-  generate() {
-    let chars = '';
-    if (this.options.uppercase) chars += CHAR_SETS.uppercase;
-    if (this.options.lowercase) chars += CHAR_SETS.lowercase;
-    if (this.options.numbers) chars += CHAR_SETS.numbers;
-    if (this.options.symbols) chars += CHAR_SETS.symbols;
-
-    if (!chars) return '';
-
-    return Array.from(
-      { length: this.length },
-      () => chars[Math.floor(Math.random() * chars.length)]
-    ).join('');
+    generate() {
+      const enabledSets = Object.keys(this.options).filter(key => this.options[key]);
+      if (enabledSets.length === 0) {
+        console.error('No character sets selected');
+        return '';
+      }
+  
+      const chars = enabledSets.map(set => CHAR_SETS[set]).join('');
+  
+      const password = Array.from({ length: this.length }, () => 
+        chars[Math.floor(Math.random() * chars.length)]
+      ).join('');
+  
+      return password;
+    }
   }
-}

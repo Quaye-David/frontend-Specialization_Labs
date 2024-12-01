@@ -7,7 +7,6 @@
     font-display: swap;
 }
 
-/* Import JetBrains Mono Bold */
 @font-face {
     font-family: "JetBrains Mono";
     src: url("./assets/fonts/static/JetBrainsMono-Bold.ttf") format("truetype"),
@@ -17,7 +16,6 @@
     font-display: swap;
 }
 
-/* Import JetBrains Mono Bold Italic */
 @font-face {
     font-family: "JetBrains Mono";
     src: url("./assets/fonts/static/JetBrainsMono-BoldItalic.ttf") format("truetype"),
@@ -27,7 +25,6 @@
     font-display: swap;
 }
 
-/* Import JetBrains Mono Bold */
 @font-face {
     font-family: "JetBrains Mono";
     src: url("./assets/fonts/static/JetBrainsMono-Bold.ttf") format("truetype"),

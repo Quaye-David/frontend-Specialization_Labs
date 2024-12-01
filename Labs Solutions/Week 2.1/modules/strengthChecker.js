@@ -1,4 +1,12 @@
 // strengthChecker.js
+const STRENGTH_CONFIG = {
+  1: { label: 'TOO WEAK!', level: 'too-weak' },
+  2: { label: 'WEAK', level: 'weak' },
+  3: { label: 'MEDIUM', level: 'medium' },
+  4: { label: 'STRONG', level: 'strong' },
+  5: { label: 'VERY STRONG', level: 'strong' }
+};
+
 export const checkStrength = (password, options) => {
   // Initialize base score
   let score = 0;
@@ -40,17 +48,10 @@ export const checkStrength = (password, options) => {
     score = 5; // Very Strong
   }
 
-  const strengthLabels = {
-    1: 'TOO WEAK!',
-    2: 'WEAK',
-    3: 'MEDIUM',
-    4: 'STRONG',
-    5: 'VERY STRONG'
-  };
-
   return {
     score,
-    label: strengthLabels[score],
+    label: STRENGTH_CONFIG[score].label,
+    level: STRENGTH_CONFIG[score].level,
     details: {
       length: password.length,
       hasUppercase,
