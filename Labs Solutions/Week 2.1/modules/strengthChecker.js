@@ -25,22 +25,17 @@ export const checkStrength = (password, options) => {
     hasSymbols
   ].filter(Boolean).length;
 
-  // Determine strength based on length and character types
+   // Determine strength based on length and character types
   if (password.length < 8) {
-    score = 1; // Too Weak
+    score = 1;
   } else if (password.length >= 8 && charTypesCount === 1) {
-    score = 2; // Weak
-  } else if (password.length >= 8 && charTypesCount === 2) {
-    score = 3; // Medium
+    score = 2;
+  } else if (password.length >= 8 && charTypesCount >= 2) {
+    score = 3;
   } else if (password.length >= 12 && charTypesCount >= 3) {
-    score = 4; // Strong
+    score = 4;
   } else {
-    score = 2; // Default to Weak
-  }
-
-  // Additional criteria
-  if (options.repeat && /(\w)\1\1/.test(password)) {
-    score = Math.max(1, score - 1); // Penalize repeated characters
+    score = 2;
   }
 
   // Bonus points
