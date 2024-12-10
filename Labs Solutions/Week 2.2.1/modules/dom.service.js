@@ -164,7 +164,4 @@ export class DOMService {
       this.searchError.classList.remove("search__error--visible");
     }
   }
-  showError(message) {
-    console.error(message);
-  }
 }
