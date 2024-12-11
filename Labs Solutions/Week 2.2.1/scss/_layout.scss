@@ -19,7 +19,6 @@
 .main {
   @include container;
   min-height: 100vh;
-  padding-top: 3.5rem;
 }
 
 // Header Layout
@@ -32,6 +31,7 @@
   @include flex(row, space-between, center);
   position: relative;
   width: 100%;
+  padding-inline: 1.5rem;
 
   &__logo {
     @include flex(row, flex-start, center);
