@@ -1,0 +1,96 @@
+// _typography.scss
+
+// Font Face Declarations
+@font-face {
+  font-family: "Inconsolata";
+  src: url("../assets/fonts/inconsolata/Inconsolata-VariableFont_wdth\,wght.ttf")
+    format("truetype-variations");
+  font-weight: 200 900;
+  font-variation-settings: "wdth" 75, "wght" 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/inter/Inter-VariableFont_slnt\,wght.ttf")
+    format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("../assets/fonts/lora/Lora-VariableFont_wght.ttf")
+      format("truetype-variations"),
+    url("../assets/fonts/lora/Lora-Italic-VariableFont_wght.ttf")
+      format("truetype-variations");
+  font-weight: 400 700;
+  font-style: normal, italic;
+}
+
+// Typography Mixins
+@mixin heading($size) {
+  @if $size == 'l' {
+    font-size: map-get(map-get($font-sizes, heading), l);
+    line-height: map-get(map-get($line-heights, heading), l);
+  } @else if $size == 'm' {
+    font-size: map-get(map-get($font-sizes, heading), m);
+    line-height: map-get(map-get($line-heights, heading), m);
+  } @else if $size == 's' {
+    font-size: map-get(map-get($font-sizes, heading), s);
+    line-height: map-get(map-get($line-heights, heading), s);
+  }
+  font-weight: 700;
+}
+
+@mixin body($size) {
+  @if $size == 'm' {
+    font-size: map-get(map-get($font-sizes, body), m);
+    line-height: map-get(map-get($line-heights, body), m);
+  } @else if $size == 's' {
+    font-size: map-get(map-get($font-sizes, body), s);
+    line-height: map-get(map-get($line-heights, body), s);
+  }
+}
+
+// Font Family Mixins
+@mixin font-inter {
+  font-family: nth(map-get($fonts, inter), 1);
+}
+
+@mixin font-lora {
+  font-family: nth(map-get($fonts, lora), 1);
+}
+
+@mixin font-inconsolata {
+  font-family: nth(map-get($fonts, inconsolata), 1);
+}
+
+// Text Style Classes
+.text {
+  &-heading {
+    &-l { @include heading('l'); }
+    &-m { @include heading('m'); }
+    &-s { @include heading('s'); }
+  }
+
+  &-body {
+    &-m { @include body('m'); }
+    &-s { @include body('s'); }
+  }
+}
+
+// Font Family Classes
+.font {
+  &-inter { @include font-inter; }
+  &-lora { @include font-lora; }
+  &-inconsolata { @include font-inconsolata; }
+}
+
+// Utility Classes
+.text-weight {
+  &-regular { font-weight: 400; }
+  &-medium { font-weight: 500; }
+  &-bold { font-weight: 700; }
+}
