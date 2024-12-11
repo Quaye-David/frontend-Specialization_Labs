@@ -9,7 +9,7 @@
 }
 @font-face {
   font-family: "Inter";
-  src: url("../assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf") format("truetype-variations");
+  src: url("../assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf") format("truetype-variations"), format("truetype-variations");
   font-weight: 100 900;
   font-style: normal;
 }
@@ -130,12 +130,17 @@
 }
 .search__button {
   position: absolute;
-  right: 1.5rem;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 1.3rem;
+  top: 1rem;
   background: none;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  height: auto;
+  width: 20px;
 }
 
 .word__header {
