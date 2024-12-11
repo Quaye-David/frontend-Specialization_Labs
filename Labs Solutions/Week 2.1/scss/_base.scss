@@ -1,0 +1,26 @@
+// _base.scss
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $body-font;
+}
+
+body {
+    background-color: $very-dark-grey;
+    color: $almost-white;
+    font-family: $body-font;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Selection Styles */
+::selection {
+    background-color: $neon-green;
+    color: $very-dark-grey;
+}

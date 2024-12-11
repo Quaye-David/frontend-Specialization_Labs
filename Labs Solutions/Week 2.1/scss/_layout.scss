@@ -1,0 +1,26 @@
+// _layout.scss
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 540px;
+    max-height: 632px;
+    width: 540px;
+    height: 632px;
+    text-align: center;
+
+    @media (max-width: 768px) {
+        height: 695px;
+    }
+
+    @media (max-width: 375px) {
+        width: 343px;
+        padding: 0 0.5rem;
+
+        .title {
+            font-size: 18px;
+        }
+    }
+}

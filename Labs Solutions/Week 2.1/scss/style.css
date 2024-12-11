@@ -142,10 +142,6 @@ body {
     opacity: 0.5;
 }
 
-.copy-btn img {
-    filter: brightness(0) saturate(100%) invert(54%) sepia(7%) saturate(892%) hue-rotate(211deg) brightness(91%) contrast(82%);
-}
-
 .password-display.has-password .copy-btn {
     opacity: 1;
 }
@@ -169,6 +165,14 @@ body {
 .copy-btn.disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.copy-btn.disabled:hover img {
+    color: var(--grey);
+}
+
+.copy-btn.disabled img {
+    filter: grayscale(1);
 }
 
 .copy-btn.disabled:hover {

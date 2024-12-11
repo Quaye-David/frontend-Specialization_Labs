@@ -17,7 +17,7 @@ export class PasswordGenerator {
     this.options = { uppercase, lowercase, numbers, symbols };
   }
 
-  generate() {
+  generate = () => {
     const { options } = this;
     const enabledSets = Object.keys(options).filter(key => options[key]);
     

@@ -4,7 +4,6 @@ const STRENGTH_CONFIG = {
   2: { label: 'WEAK', level: 'weak' },
   3: { label: 'MEDIUM', level: 'medium' },
   4: { label: 'STRONG', level: 'strong' },
-  5: { label: 'VERY STRONG', level: 'strong' }
 };
 
 export const checkStrength = (password, options) => {
@@ -25,23 +24,18 @@ export const checkStrength = (password, options) => {
     hasSymbols
   ].filter(Boolean).length;
 
-   // Determine strength based on length and character types
-  if (password.length < 8) {
-    score = 1;
-  } else if (password.length >= 8 && charTypesCount === 1) {
-    score = 2;
-  } else if (password.length >= 8 && charTypesCount >= 2) {
-    score = 3;
-  } else if (password.length >= 12 && charTypesCount >= 3) {
-    score = 4;
-  } else {
-    score = 2;
-  }
-
-  // Bonus points
-  if (password.length >= 14 && charTypesCount === 4) {
-    score = 5; // Very Strong
-  }
+ // Revised strength determination
+ if (password.length < 8) {
+  score = 1; // Too Weak
+} else if (password.length >= 12 && charTypesCount >= 3) {
+  score = 4; // Strong
+} else if (password.length >= 8 && charTypesCount >= 2) {
+  score = 3; // Medium
+} else if (password.length >= 8 && charTypesCount === 1) {
+  score = 2; // Weak
+} else {
+  score = 2; // Default to Weak for any unhandled cases
+}
 
   return {
     score,
