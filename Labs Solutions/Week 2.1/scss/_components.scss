@@ -1,0 +1,365 @@
+// _components.scss
+
+.title {
+    font-size: 24px;
+    margin-bottom: 1rem;
+    color: $grey;
+}
+
+.password-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.password-display {
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background-color: $dark-grey;
+    width: 100%;
+    padding: 2rem;
+    margin: 1rem 0 2rem 0;
+
+    .generated-password {
+        font-family: $heading-font;
+        color: $grey;
+        transition: color 0.3s ease;
+
+        .has-password & {
+            color: $almost-white;
+        }
+    }
+
+    .copy-btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        opacity: 0.5;
+
+        &.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+
+            &:hover img {
+                color: $grey;
+            }
+
+            img {
+                filter: grayscale(1);
+            }
+
+            &:hover {
+                filter: none;
+            }
+        }
+
+        &:hover {
+            filter: none;
+
+            span {
+                color: $neon-green;
+            }
+
+            img {
+                filter: brightness(0) saturate(100%) invert(83%) sepia(34%) saturate(409%) hue-rotate(70deg) brightness(101%) contrast(106%);
+            }
+        }
+
+        &:not(.disabled) {
+            opacity: 1;
+
+            &:hover {
+                color: $neon-green;
+            }
+
+            img {
+                filter: none;
+            }
+        }
+
+        img {
+            transition: filter 0.3s ease;
+        }
+
+        span {
+            margin-right: 1rem;
+            font-weight: bold;
+            color: $very-dark-grey;
+            transition: color 0.3s ease;
+        }
+
+        &::after {
+            content: url("../assets/images/icon-check.svg");
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 14px;
+        }
+    }
+
+    .copy-text {
+        color: $neon-green;
+        font-size: 18px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.1s ease, visibility 0.3s ease;
+
+        &.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+/* Additional Components (e.g., .sub-container, .settings, .strength, etc.) */
+.sub-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    background-color: $dark-grey;
+    padding: 2rem;
+}
+
+.settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    width: 100%;
+
+    .setting {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 2rem;
+
+        .character-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .setting-label {
+            font-size: 18px;
+            color: $almost-white;
+        }
+
+        .settings-number {
+            font-size: 32px;
+            color: $neon-green;
+        }
+
+        .setting-input {
+            width: 100%;
+            border: none;
+            font-size: 16px;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: linear-gradient(to right, $neon-green 0%, $neon-green 50%, $very-dark-grey 50%, $very-dark-grey 100%);
+            outline: none;
+            transition: background 0.3s ease;
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 25px;
+                height: 25px;
+                background: $almost-white;
+                cursor: pointer;
+                border-radius: 50%;
+                margin-top: -8.5px;
+            }
+
+            &::-webkit-slider-thumb:hover {
+                background: $very-dark-grey;
+                border: 2px solid $neon-green;
+            }
+
+            &::-moz-range-thumb {
+                width: 25px;
+                height: 25px;
+                background: $almost-white;
+                cursor: pointer;
+                border-radius: 50%;
+                border: none;
+            }
+
+            &::-moz-range-thumb:hover {
+                background: $very-dark-grey;
+                border: 2px solid $neon-green;
+            }
+
+            &::-moz-range-track {
+                background: transparent;
+            }
+
+            &::-webkit-slider-runnable-track {
+                height: 8px;
+                background: transparent;
+                border: none;
+            }
+        }
+    }
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin-bottom: 1.5rem;
+    flex-direction: column;
+    width: 100%;
+
+    .option {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid $almost-white;
+            position: relative;
+            cursor: pointer;
+            background-color: transparent;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-right: 20px;
+
+            &:checked {
+                background-color: $neon-green;
+                border-color: $neon-green;
+
+                &::after {
+                    content: url("../assets/images/icon-check.svg");
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 15px;
+                    height: 14px;
+                }
+            }
+        }
+
+        label {
+            font-size: 12px;
+            color: $almost-white;
+        }
+    }
+}
+
+.error-message {
+    color: $red-1;
+    font-size: 16px;
+}
+
+.strength {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: $very-dark-grey;
+    width: 100%;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+
+    .strength-label {
+        text-transform: uppercase;
+        color: $grey;
+        margin-right: 1rem;
+    }
+
+    .strength-meter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.4rem;
+
+        .bars-container {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+
+            .strength-bars {
+                width: 10px;
+                height: 28px;
+                border: 2px solid $almost-white;
+                background-color: transparent;
+            }
+        }
+
+        &[data-strength="too-weak"] .strength-bars:nth-child(1) {
+            background-color: $red-1;
+        }
+
+        &[data-strength="weak"] .strength-bars:nth-child(-n+2) {
+            background-color: $orange-1;
+        }
+
+        &[data-strength="medium"] .strength-bars:nth-child(-n+3) {
+            background-color: $yellow-1;
+        }
+
+        &[data-strength="strong"] .strength-bars {
+            background-color: $neon-green;
+        }
+    }
+}
+
+.generate-button {
+    color: $very-dark-grey;
+    background-color: $neon-green;
+    border: 2px solid transparent;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    span {
+        margin-right: 1rem;
+        font-weight: bold;
+        color: $very-dark-grey;
+        transition: color 0.3s ease;
+    }
+
+    img {
+        transition: filter 0.3s ease;
+    }
+
+    &:hover {
+        background-color: transparent;
+        border: 2px solid $neon-green;
+
+        span {
+            color: $neon-green;
+        }
+
+        img {
+            filter: brightness(0) saturate(100%) invert(83%) sepia(34%) saturate(409%) hue-rotate(70deg) brightness(101%) contrast(106%);
+        }
+    }
+}

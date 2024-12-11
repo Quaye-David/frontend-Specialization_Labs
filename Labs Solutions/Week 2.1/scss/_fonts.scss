@@ -1,0 +1,37 @@
+// _fonts.scss
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("../assets/fonts/JetBrainsMono-VariableFont_wght.ttf") format("truetype"),
+         url("../assets/fonts/JetBrainsMono-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("../assets/fonts/static/JetBrainsMono-Bold.ttf") format("truetype"),
+         url("../assets/fonts/static/JetBrainsMono-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("../assets/fonts/static/JetBrainsMono-BoldItalic.ttf") format("truetype"),
+         url("../assets/fonts/static/JetBrainsMono-BoldItalic.woff") format("woff");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    src: url("../assets/fonts/static/JetBrainsMono-BoldItalic.ttf") format("truetype"),
+         url("../assets/fonts/static/JetBrainsMono-BoldItalic.woff") format("woff");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
